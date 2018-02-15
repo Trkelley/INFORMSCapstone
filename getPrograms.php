@@ -2,13 +2,13 @@
 require('conn.php');
 $id = $_GET['id'];
 
-if (isset($_POST['submit'])) {
+/* if (isset($_POST['submit'])) {
     $id = $_POST['InstitutionId'];
     $collegeName = $_POST['CollegeName'];
     $institutionName = $_POST['InstitutionName'];
     $conn->query("UPDATE `details` SET `CollegeName` = '$collegeName', `InstitutionName` = '$institutionName', WHERE `InstitutionId`='$id'");
     header("location:Index.php");
-}
+} */
 
 $result = $conn->query("SELECT InstitutionId, CollegeName FROM colleges WHERE InstitutionId = $id ;");
 $sqlRes = mysqli_fetch_assoc($result);
