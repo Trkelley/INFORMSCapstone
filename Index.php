@@ -12,12 +12,12 @@
 <body>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="programModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="memberModalLabel">Edit Member Detail</h4>
+                <h4 class="modal-title" id="programModalLabel">Edit Program Detail</h4>
             </div>
             <div class="dash">
              <!-- Content goes in here -->
@@ -93,7 +93,7 @@ while($row = mysqli_fetch_assoc($result)) :
 <script>
     $('#exampleModal').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget) // Button that triggered the modal
-          var recipient = button.data('InstitutionId') // Extract info from data-* attributes
+          var recipient = button.data('whatever') // Extract info from data-* attributes
           var modal = $(this);
           var dataString = 'id=' + recipient;
 
