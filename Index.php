@@ -1,16 +1,14 @@
-<!doctype html>
-<html>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<style>
 
-table, th, td {
-    border: 1px solid;
-}
-th, td {
-padding: 10px;
-}
-</style>
+<html lang="en">
+<head>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+    <title>Edit Programs</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet"></link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
 <body>
 
 <!-- Modal -->
@@ -27,18 +25,8 @@ padding: 10px;
         </div>
     </div>
 </div>
-
-<!-- Create Table and Table Headers --> 
-<table class="table table-hover" data-link="row">
-
-<tr>
-<!-- <td>InstitutionId</td> -->
-<td>Institution Name</td>
-<td>College Name</td>
-<td>Program Name</td>
-</tr>
-
 <?php
+
 require('conn.php');
 // Display table
 $sql = "SELECT a.InstitutionId, b.InstitutionName, a.CollegeName, c.ProgramName
@@ -48,30 +36,54 @@ $sql = "SELECT a.InstitutionId, b.InstitutionName, a.CollegeName, c.ProgramName
              INNER JOIN programs c 
                    ON a.InstitutionId = c.InstitutionId";
 $result = $conn->query($sql);
+?>
+<!-- Table -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Program Details</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div id="Institution" class="col-lg-12">                            
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>InstitutionID</th>
+                    <th>Institution Name</th>
+                    <th>College Name</th>
+                    <th>Program Name</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+<?php
 
-if ($result->num_rows > 0) {
-    
-    // Output data of each row
-    while($row = mysqli_fetch_array($result)) {
-        echo "<tr>";
-        //echo "<td><button data-toggle='modal' data-target='#programModal' data-id='".$row["InstitutionId"]."' id='getProgram'  class='btn btn-sm btn-info'>View</button></td>";
-        echo "<td>" .$row["InstitutionName"]. "</td>";
-        echo "<td>" .$row["CollegeName"]. "</td>";
-        echo "<td>" .$row["ProgramName"]. "</td>";
+// Output data of each row
+while($row = mysqli_fetch_assoc($result)) :
+        echo '<tr>';
+        echo '<td>' .$row['InstitutionId']. '</td>';
+        echo '<td>' .$row['InstitutionName']. '</td>';
+        echo '<td>' .$row['CollegeName']. '</td>';
+        echo '<td>' .$row['ProgramName']. '</td>';
         echo '<td>
                     <a class="btn btn-small btn-primary"
                        data-toggle="modal"
                        data-target="#exampleModal"
-                       data-whatever=".$row["InstitutionId"].">Edit</a>
+                       data-whatever="'.$row['InstitutionId'].' ">Edit</a>
                  </td>';
-        echo "<tr>";
-    }
-} else {
-    echo "0 results";
-}
- $conn->close();
+        echo '<tr>';
+        endwhile;
+        $result->close();
+ 
 ?>
-</table>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -81,7 +93,7 @@ if ($result->num_rows > 0) {
 <script>
     $('#exampleModal').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget) // Button that triggered the modal
-          var recipient = button.data('whatever') // Extract info from data-* attributes
+          var recipient = button.data('InstitutionId') // Extract info from data-* attributes
           var modal = $(this);
           var dataString = 'id=' + recipient;
 

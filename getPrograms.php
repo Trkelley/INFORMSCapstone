@@ -4,16 +4,14 @@ $id = $_GET['InstitutionId'];
 
 if (isset($_POST['submit'])) {
     $id = $_POST['InstitutionId'];
-    $name = $_POST['name'];
-    $phone = $_POST['phone'];
-    $address = $_POST['address'];
-    $email = $_POST['email'];
-    $mysqli->query("UPDATE `details` SET `name` = '$name', `phone` = '$phone', `address`='$address', `email`='$email' WHERE `sn`=$id");
-    header("location:HelloBro.php");
+    $collegeName = $_POST['CollegeName'];
+    $institutionName = $_POST['InstitutionName'];
+    $mysqli->query("UPDATE `details` SET `CollegeName` = '$collegeName, `InstitutionName` = '$institutionName', WHERE `InstitutionId`=$id");
+    header("location:Index.php");
 }
 
-$members = $mysqli->query("SELECT * FROM `details` WHERE `sn`='$id'");
-$mem = mysqli_fetch_assoc($members);
+$result = $mysqli->query("SELECT * FROM `colleges` WHERE `InstitutionId`='$id'");
+$sqlRes = mysqli_fetch_assoc($result);
 
 ?>
 <!DOCTYPE html>
@@ -28,27 +26,19 @@ $mem = mysqli_fetch_assoc($members);
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<form method="post" action="editdata.php" role="form">
+<form method="post" action="Index.php" role="form">
 	<div class="modal-body">
 		<div class="form-group">
 		    <label for="id">ID</label>
-		    <input type="text" class="form-control" id="id" name="id" value="<?php echo $mem['sn'];?>"/>
+		    <input type="text" class="form-control" id="id" name="id" value="<?php echo $sqlRes['InstitutionId'];?>"/>
 		</div>
 		<div class="form-group">
-		    <label for="name">Name</label>
-	            <input type="text" class="form-control" id="name" name="name" value="<?php echo $mem['name'];?>" />
+		    <label for="name">Institution Name</label>
+	            <input type="text" class="form-control" id="name" name="name" value="<?php echo $sqlRes['InstitutionName'];?>" />
 		</div>
 		<div class="form-group">
-		    <label for="phone">Phone</label>
-	            <input type="text" class="form-control" id="phone" name="phone" value="<?php echo $mem['phone'];?>" />
-		</div>
-		<div class="form-group">
-		     <label for="address">Address</label>
-		     <input type="text" class="form-control" id="address" name="address" value="<?php echo $mem['address'];?>" />
-		</div>
-		<div class="form-group">
-                     <label for="email">Email</label>
-		     <input type="text" class="form-control" id="email" name="email" value="<?php echo $mem['email'];?>" />
+		    <label for="phone">College Name</label>
+	            <input type="text" class="form-control" id="phone" name="phone" value="<?php echo $sqlRes['CollegeName'];?>" />
 		</div>
 		</div>
 		<div class="modal-footer">
