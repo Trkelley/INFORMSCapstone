@@ -49,7 +49,7 @@ $result = $conn->query($sql);
             <table class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th>InstitutionID</th>
+                    <th>Status</th>
                     <th>Institution Name</th>
                     <th>College Name</th>
                     <th>Program Name</th>
@@ -63,7 +63,7 @@ $result = $conn->query($sql);
 // Output data of each row
 while($row = mysqli_fetch_assoc($result)) :
         echo '<tr>';
-        echo '<td>' .$row['InstitutionId']. '</td>';
+        echo '<td>  </td>';
         echo '<td>' .$row['InstitutionName']. '</td>';
         echo '<td>' .$row['CollegeName']. '</td>';
         echo '<td>' .$row['ProgramName']. '</td>';
