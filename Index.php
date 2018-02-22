@@ -9,8 +9,14 @@
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet"></link>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+    html: margin 10% auto;
+    </style>
 </head>
 <body>
+
+<!--  Log Out Button -->
+<div style = "text-align:right; margin-right: 5%;" ><button>Log Out</button></div>;
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="programModalLabel" aria-hidden="true">
@@ -27,7 +33,6 @@
     </div>
 </div>
 <?php
-
 require('conn.php');
 // Display table
 $sql = "SELECT a.InstitutionId, b.InstitutionName, a.CollegeName, c.ProgramName
@@ -42,7 +47,9 @@ $result = $conn->query($sql);
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Program Details</h1>
+            <p class="page-header"><center>Hello (University Administrator Name), Below are the different programs listed for (University Name). </br>
+            To make edits to an individual program, press the edit button.</center></p>
+            <h3 class = "page-header">Program Overview</h3>
         </div>
     </div>
     <div class="row">
@@ -54,13 +61,13 @@ $result = $conn->query($sql);
                     <th>Institution Name</th>
                     <th>College Name</th>
                     <th>Program Name</th>
+                    <th>Date Last Updated</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr>
 <?php
-
 // Output data of each row
 while($row = mysqli_fetch_assoc($result)) :
         echo '<tr>';
@@ -68,6 +75,7 @@ while($row = mysqli_fetch_assoc($result)) :
         echo '<td>' .$row['InstitutionName']. '</td>';
         echo '<td>' .$row['CollegeName']. '</td>';
         echo '<td>' .$row['ProgramName']. '</td>';
+        echo '<td>' .date("m/d/Y"). '</td>';
         echo '<td>
                     <a class="btn btn-small btn-primary"
                        data-toggle="modal"
@@ -97,7 +105,6 @@ while($row = mysqli_fetch_assoc($result)) :
           var recipient = button.data('whatever') // Extract info from data-* attributes
           var modal = $(this);
           var dataString = 'id=' + recipient;
-
             $.ajax({
                 type: "GET",
                 url: "getPrograms.php",
