@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
     html: margin 10% auto;
+    a.btnDrop {
+     padding: 20px 400px;
+    }
     </style>
 </head>
 <body>
@@ -47,8 +50,6 @@ $result = $conn->query($sql);
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <p class="page-header">Hello (University Administrator Name), Below are the different programs listed for (University Name).
-            To make edits to an individual program, press the edit button.</p>
             <h3 class = "page-header">Program Overview</h3>
         </div>
     </div>
