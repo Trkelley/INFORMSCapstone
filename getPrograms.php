@@ -1,27 +1,24 @@
-<?php 
+<?php
 require('conn.php');
 $id = $_GET['id'];
-
 /* if (isset($_POST['submit'])) {
-    $id = $_POST['InstitutionId'];
-    $collegeName = $_POST['CollegeName'];
-    $institutionName = $_POST['InstitutionName'];
-    $conn->query("UPDATE `details` SET `CollegeName` = '$collegeName', `InstitutionName` = '$institutionName', WHERE `InstitutionId`='$id'");
-    header("location:Index.php");
-} */
-
-$result = $conn->query("SELECT  i.InstitutionName, p.ProgramName, p.ProgramType, p.DeliveryMethod, p.ProgramObjectives, p.FullTimeDuration, p.PartTimeDuration, 
+ $id = $_POST['InstitutionId'];
+ $collegeName = $_POST['CollegeName'];
+ $institutionName = $_POST['InstitutionName'];
+ $conn->query("UPDATE `details` SET `CollegeName` = '$collegeName', `InstitutionName` = '$institutionName', WHERE `InstitutionId`='$id'");
+ header("location:Index.php");
+ } */
+$result = $conn->query("SELECT  i.InstitutionName, p.ProgramName, p.ProgramType, p.DeliveryMethod, p.ProgramObjectives, p.FullTimeDuration, p.PartTimeDuration,
 	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit,
 	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, co.CollegeName, co.CollegeType
     FROM programs p
-	JOIN institutions i 
+	JOIN institutions i
 	ON p.InstitutionId = i.InstitutionId
 	JOIN colleges co
 	ON p.InstitutionId = co.InstitutionId
 	JOIN contacts c
 	ON p.ContactId = c.ContactId WHERE p.InstitutionId = $id ;");
 $sqlRes = mysqli_fetch_assoc($result);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +34,73 @@ $sqlRes = mysqli_fetch_assoc($result);
 <body>
 <form method="post" action="Index.php" role="form">
 	<div class="modal-body">
+	<p>
+  <button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ContactInfoCollapse" aria-expanded="false" aria-controls="ContactInfoCollapse">
+    Contact Information
+  </button>
+</p>
+<div class="collapse" id="ContactInfoCollapse">
+  <div class="card card-body">
+  <div class="form-group">
+		    <label for="c.ContactName">Contact Name</label>
+		    <input type="text" class="form-control" id="contactName" name="contactName" value="<?php echo $sqlRes['ContactName'];?>"/>
+		</div>
+		<div class="form-group">
+		    <label for="c.ContactTitle">Contact Title</label>
+		    <input type="text" class="form-control" id="contactTitle" name="contactTitle" value="<?php echo $sqlRes['ContactTitle'];?>"/>
+		</div>
+		<div class="form-group">
+		    <label for="c.ContactPhone">Contact Phone</label>
+		    <input type="text" class="form-control" id="contactPhone" name="contactPhone" value="<?php echo $sqlRes['ContactPhone'];?>"/>
+		</div>
+		<div class="form-group">
+		    <label for="c.ContactEmail">Contact Email</label>
+		    <input type="text" class="form-control" id="contactEmail" name="contactEmail" value="<?php echo $sqlRes['ContactEmail'];?>"/>
+		</div>
+  </div>
+</div>
+<p>
+<button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ProgramGeneralInfoCollapse" aria-expanded="false" aria-controls="ProgramGeneralInfoCollapse">
+    Program General Information
+  </button>
+  </p>
+<div class="collapse" id="ProgramGeneralInfoCollapse">
+  <div class="card card-body">
+	<label for="i.InstitutionName">Program Info for <?php echo $sqlRes['InstitutionName'];?></label>
+		<div class="form-group">
+		    <label for="p.ProgramName">Program Name</label>
+		    <input type="text" class="form-control" id="programName" name="programName" value="<?php echo $sqlRes['ProgramName'];?>"/>
+		</div>
+		<div class="form-group">
+		    <label for="p.ProgramType">Program Type</label>
+		    <input type="text" class="form-control" id="programType" name="programType" value="<?php echo $sqlRes['ProgramType'];?>"/>
+		</div>
+		<div class="form-group">
+		    <label for="p.DeliveryMethod">Delivery Method</label>
+		    <input type="text" class="form-control" id="deliveryMethod" name="deliveryMethod" value="<?php echo $sqlRes['DeliveryMethod'];?>"/>
+		</div>
+		<div class="form-group">
+		    <label for="p.ProgramObjectives">Program Objectives</label>
+		    <input type="text" class="form-control" id="programObjectives" name="programObjectives" value="<?php echo $sqlRes['ProgramObjectives'];?>"/>
+		</div>
+		
+  </div>
+</div>
+<p>
+<button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ProgramGeneralInfoCollapse" aria-expanded="false" aria-controls="ProgramGeneralInfoCollapse">
+    Program Details
+  </button>
+  </p>
+<p>
+<button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ProgramGeneralInfoCollapse" aria-expanded="false" aria-controls="ProgramGeneralInfoCollapse">
+    Curriculum Information
+  </button>
+  </p>
+  <p>
+<button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ProgramGeneralInfoCollapse" aria-expanded="false" aria-controls="ProgramGeneralInfoCollapse">
+    Submission
+  </button>
+  </p>
 	<label for="i.InstitutionName">Program Info for <?php echo $sqlRes['InstitutionName'];?></label>
 		<div class="form-group">
 		    <label for="p.ProgramName">Program Name</label>
@@ -82,22 +146,7 @@ $sqlRes = mysqli_fetch_assoc($result);
 		    <label for="p.CostPerCredit">Cost Per Credit</label>
 		    <input type="text" class="form-control" id="costPerCredit" name="costPerCredit" value="<?php echo $sqlRes['CostPerCredit'];?>"/>
 		</div>
-		<div class="form-group">
-		    <label for="c.ContactName">Contact Name</label>
-		    <input type="text" class="form-control" id="contactName" name="contactName" value="<?php echo $sqlRes['ContactName'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="c.ContactTitle">Contact Title</label>
-		    <input type="text" class="form-control" id="contactTitle" name="contactTitle" value="<?php echo $sqlRes['ContactTitle'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="c.ContactPhone">Contact Phone</label>
-		    <input type="text" class="form-control" id="contactPhone" name="contactPhone" value="<?php echo $sqlRes['ContactPhone'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="c.ContactEmail">Contact Email</label>
-		    <input type="text" class="form-control" id="contactEmail" name="contactEmail" value="<?php echo $sqlRes['ContactEmail'];?>"/>
-		</div>
+		
 		<div class="form-group">
 		    <label for="co.CollegeName">College Name</label>
 		    <input type="text" class="form-control" id="collegeName" name="collegeName" value="<?php echo $sqlRes['CollegeName'];?>"/>
