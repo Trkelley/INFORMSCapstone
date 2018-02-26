@@ -50,6 +50,8 @@ $result = $conn->query($sql);
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
+            <p class="page-header"><center>Hello (University Administrator Name), Below are the different programs listed for (University Name). </br>
+            To make edits to an individual program, press the edit button.</center></p>
             <h3 class = "page-header">Program Overview</h3>
         </div>
     </div>
