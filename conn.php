@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+
 <?php
 // Set Connection Variables
 $servername = "ec2-54-159-222-176.compute-1.amazonaws.com";
@@ -15,6 +16,7 @@ if ($conn->connect_error) {
 }
 =======
 <?php
+
 // Set Connection Variables
 $servername = "ec2-54-159-222-176.compute-1.amazonaws.com";
 $username = "bama_team";
