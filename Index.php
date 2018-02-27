@@ -87,6 +87,10 @@ while($row = mysqli_fetch_assoc($result)) :
                  </td>';
         echo '<tr>';
         endwhile;
+        if (!$query) {
+            echo 'MySQL Error: ' . mysqli_error();
+            exit;
+        }
         $result->close();
  
 ?>
