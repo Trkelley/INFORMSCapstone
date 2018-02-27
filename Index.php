@@ -71,8 +71,9 @@ $result = $conn->query($sql);
                 <tbody>
                     <tr>
 <?php
+require('conn.php');
 // Output data of each row
-while($row = mysqli_fetch_assoc($result)) :
+while($row = mysqli_fetch_array($result)) :
         echo '<tr>';
         echo '<td>  </td>';
         echo '<td>' .$row['InstitutionName']. '</td>';
@@ -87,10 +88,6 @@ while($row = mysqli_fetch_assoc($result)) :
                  </td>';
         echo '<tr>';
         endwhile;
-        if (!$query) {
-            echo 'MySQL Error: ' . mysqli_error();
-            exit;
-        }
         $result->close();
  
 ?>
