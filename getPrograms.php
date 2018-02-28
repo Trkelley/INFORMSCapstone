@@ -155,7 +155,18 @@ $sqlRes = mysqli_fetch_assoc($result);
 		</div>
 		<div class="form-group">
 		    <label for="co.CollegeType">College Type</label>
-		    <input type="text" class="form-control" id="CollegeType" name="CollegeType" value="<?php echo $sqlRes['CollegeType'];?>"/>
+		    <select class="form-control" id="CollegeType" name="CollegeType" >
+		    	<option value="<?php echo $sqlRes['CollegeType'];?>"><?php echo $sqlRes['CollegeType'];?></option>
+		    	<option>Arts and Sciences</option>
+		    	<option>Business</option>
+		    	<option>Center or Institute</option>
+		    	<option>Engineering</option>
+		    	<option>Informatics</option>
+		    	<option>Multiple Schools</option>
+		    	<option>Professional Studies</option>
+		    	<option>Information Systems & Management</option>
+		    </select>
+		    
 		</div>
 		<div class="form-group">
 		    <label for="p.YearEstablished">Year Established</label>
@@ -263,4 +274,3 @@ function SubmissionFunction() {
 	</form>
 </body>
 </html>
-
