@@ -11,7 +11,7 @@ $id = $_GET['id'];
 $result = $conn->query("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.InstitutionZip, i.InstitutionRegion,
     p.ProgramName, p.ProgramType, p.DeliveryMethod, p.ProgramObjectives, p.FullTimeDuration, p.PartTimeDuration, p.YearEstablished,
 	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit, p.ProgramObjectives, p.OtherRequirement,
-	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, co.CollegeName, co.CollegeType, courses.CourseTitle
+	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, co.CollegeName, co.CollegeType, courses.CourseTitle, courses.CourseType
     FROM programs p
 	JOIN institutions i
 	ON p.InstitutionId = i.InstitutionId
@@ -155,18 +155,7 @@ $sqlRes = mysqli_fetch_assoc($result);
 		</div>
 		<div class="form-group">
 		    <label for="co.CollegeType">College Type</label>
-		    <select class="form-control" id="CollegeType" name="CollegeType" >
-		    	<option value="<?php echo $sqlRes['CollegeType'];?>"><?php echo $sqlRes['CollegeType'];?></option>
-		    	<option>Arts and Sciences</option>
-		    	<option>Business</option>
-		    	<option>Center or Institute</option>
-		    	<option>Engineering</option>
-		    	<option>Informatics</option>
-		    	<option>Multiple Schools</option>
-		    	<option>Professional Studies</option>
-		    	<option>Information Systems & Management</option>
-		    </select>
-		    
+		    <input type="text" class="form-control" id="CollegeType" name="CollegeType" value="<?php echo $sqlRes['CollegeType'];?>"/>
 		</div>
 		<div class="form-group">
 		    <label for="p.YearEstablished">Year Established</label>
@@ -226,7 +215,7 @@ $sqlRes = mysqli_fetch_assoc($result);
   </p>
 
 
-       <div class="card card-body">
+    <div class="card card-body">
         <div id="CurriculumInfoCollapse" class="form-group">                            
             <table class="table table-striped table-bordered">
             <thead>
@@ -243,7 +232,7 @@ $sqlRes = mysqli_fetch_assoc($result);
 while($row = mysqli_fetch_assoc($result)) :
         echo '<tr>';
         echo '<td>' .$row['CourseTitle']. '</td>';
-        echo '<td>' .$row['CollegeType']. '</td>';
+        echo '<td>' .$row['CourseType']. '</td>';
         echo '<td>' .$row['ProgramName']. '</td>';
         echo '<tr>';
         endwhile;
@@ -255,7 +244,7 @@ while($row = mysqli_fetch_assoc($result)) :
             </table>
         </div>
     </div>
-
+</div>
 
 
 <!-- Submission -->
@@ -264,7 +253,7 @@ while($row = mysqli_fetch_assoc($result)) :
     Submission
   </button>
   </p>
-</div>
+
 <script>
 function SubmissionFunction() {
     alert("Hello! I am an alert box!");
