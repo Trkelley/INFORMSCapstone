@@ -207,14 +207,14 @@ while($row = mysqli_fetch_assoc($result)) :
 
 <!-- Submission -->
   <p>
-<button onclick="SubmissionFunction()" class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
+<button onclick="SubmissionFunction()" class="btn btn-primary" style="width:550px; height:40px;" type="submit" value="Update" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
     Submission
   </button>
   </p>
 </div>
 <script>
 function SubmissionFunction() {
-    alert("Hello! I am an alert box!");
+    alert("Your data has been submitted for approval.");
 }
 </script>
  
