@@ -225,8 +225,10 @@ $sqlRes = mysqli_fetch_assoc($result);
 
     <div class="card card-body">
         <div id="CurriculumInfoCollapse" class="form-group">                            
+
        <div class="card card-body">
         <div id="CurriculumInfoCollapse" class="collapse"> 
+        <div class="form-group">
         </div>                           
 
             <table class="table table-striped table-bordered">
