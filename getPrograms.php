@@ -271,7 +271,7 @@ while($row = mysqli_fetch_assoc($result)) :
 <!-- Submission -->
   <p>
 <button onclick="SubmissionFunction()" class="btn btn-primary" style="width:550px; height:40px;" type="submit" value="Update" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
-</button>
+Submit</button>
   </p>
 </div>
 <script>
