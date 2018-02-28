@@ -73,7 +73,7 @@ $result = $conn->query($sql);
 <?php
 require('conn.php');
 // Output data of each row
-while($row = mysqli_fetch_array($result, 1)) :
+while($row = mysqli_fetch_array($result)) :
         echo '<tr>';
         echo '<td>  </td>';
         echo '<td>' .$row['InstitutionName']. '</td>';

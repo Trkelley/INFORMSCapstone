@@ -1,7 +1,7 @@
 
 <?php
 // Set Connection Variables
-$servername = "ec2-54-159-222-176.compute-1.amazonaws.com";
+$servername = "127.0.0.1";
 $username = "bama_team";
 $password = "N@tionalChampions!2017";
 $dbname = "analytic_backup_edu";

@@ -1,3 +1,4 @@
+<!-- GET PROGRAMS -->
 <?php
 require('conn.php');
 $id = $_GET['id'];
@@ -8,8 +9,9 @@ $id = $_GET['id'];
  $conn->query("UPDATE `details` SET `CollegeName` = '$collegeName', `InstitutionName` = '$institutionName', WHERE `InstitutionId`='$id'");
  header("location:Index.php");
  } */
-$result = $conn->query("SELECT  i.InstitutionName, p.ProgramName, p.ProgramType, p.DeliveryMethod, p.ProgramObjectives, p.FullTimeDuration, p.PartTimeDuration,
-	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit,
+$result = $conn->query("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.InstitutionZip, i.InstitutionRegion,
+    p.ProgramName, p.ProgramType, p.DeliveryMethod, p.ProgramObjectives, p.FullTimeDuration, p.PartTimeDuration, p.YearEstablished,
+	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit, p.ProgramObjectives, p.OtherRequirement,
 	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, co.CollegeName, co.CollegeType
     FROM programs p
 	JOIN institutions i
@@ -26,14 +28,17 @@ $sqlRes = mysqli_fetch_assoc($result);
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Program Info</title>
+    <title>Edit Program Information</title>
  
     <!-- Bootstrap Core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+
 <form method="post" action="Index.php" role="form">
 	<div class="modal-body">
+	
+<!-- Contact Information -->
 	<p>
   <button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ContactInfoCollapse" aria-expanded="false" aria-controls="ContactInfoCollapse">
     Contact Information
@@ -59,6 +64,7 @@ $sqlRes = mysqli_fetch_assoc($result);
 		</div>
   </div>
 </div>
+<!-- Progam General Information -->
 <p>
 <button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ProgramGeneralInfoCollapse" aria-expanded="false" aria-controls="ProgramGeneralInfoCollapse">
     Program General Information
@@ -66,100 +72,152 @@ $sqlRes = mysqli_fetch_assoc($result);
   </p>
 <div class="collapse" id="ProgramGeneralInfoCollapse">
   <div class="card card-body">
-	<label for="i.InstitutionName">Program Info for <?php echo $sqlRes['InstitutionName'];?></label>
+	
+		<div class="form-group">
+		    <label for="i.InstitutionCity">Program City</label>
+		    <input type="text" class="form-control" id="InstitutionCity" name="InstitutionCity" value="<?php echo $sqlRes['InstitutionCity'];?>"/>
+		</div>
+		<div class="form-group">
+		    <label for="i.InstitutionState">Program State</label>
+		    <input type="text" class="form-control" id="InstitutionState" name="InstitutionState" value="<?php echo $sqlRes['InstitutionState'];?>"/>
+		</div>
+		<div class="form-group">
+		<label for="i.InstitutionRegion">Program Region</label>
+		<select class="form-control" id="InstitutionRegion" name="InstitutionRegion"  >
+    		<option value="<?php echo $sqlRes['InstitutionRegion'];?>"><?php echo $sqlRes['InstitutionRegion'];?></option>
+    		<option>South</option>
+    		<option>Midwest</option>
+    		<option>Northeast</option>
+    		<option>West</option>
+    		<option>Other</option>
+		</select>
+		    
+		</div>
 		<div class="form-group">
 		    <label for="p.ProgramName">Program Name</label>
 		    <input type="text" class="form-control" id="programName" name="programName" value="<?php echo $sqlRes['ProgramName'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="p.ProgramType">Program Type</label>
-		    <input type="text" class="form-control" id="programType" name="programType" value="<?php echo $sqlRes['ProgramType'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="p.DeliveryMethod">Delivery Method</label>
-		    <input type="text" class="form-control" id="deliveryMethod" name="deliveryMethod" value="<?php echo $sqlRes['DeliveryMethod'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="p.ProgramObjectives">Program Objectives</label>
-		    <input type="text" class="form-control" id="programObjectives" name="programObjectives" value="<?php echo $sqlRes['ProgramObjectives'];?>"/>
-		</div>
-		
-  </div>
-</div>
-<p>
-<button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ProgramGeneralInfoCollapse" aria-expanded="false" aria-controls="ProgramGeneralInfoCollapse">
-    Program Details
-  </button>
-  </p>
-<p>
-<button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ProgramGeneralInfoCollapse" aria-expanded="false" aria-controls="ProgramGeneralInfoCollapse">
-    Curriculum Information
-  </button>
-  </p>
-  <p>
-<button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ProgramGeneralInfoCollapse" aria-expanded="false" aria-controls="ProgramGeneralInfoCollapse">
-    Submission
-  </button>
-  </p>
-	<label for="i.InstitutionName">Program Info for <?php echo $sqlRes['InstitutionName'];?></label>
-		<div class="form-group">
-		    <label for="p.ProgramName">Program Name</label>
-		    <input type="text" class="form-control" id="programName" name="programName" value="<?php echo $sqlRes['ProgramName'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="p.ProgramType">Program Type</label>
-		    <input type="text" class="form-control" id="programType" name="programType" value="<?php echo $sqlRes['ProgramType'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="p.DeliveryMethod">Delivery Method</label>
-		    <input type="text" class="form-control" id="deliveryMethod" name="deliveryMethod" value="<?php echo $sqlRes['DeliveryMethod'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="p.ProgramObjectives">Program Objectives</label>
-		    <input type="text" class="form-control" id="programObjectives" name="programObjectives" value="<?php echo $sqlRes['ProgramObjectives'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="p.FullTimeDuration">Full Time Duration</label>
-		    <input type="text" class="form-control" id="fullTimeDuration" name="fullTimeDuration" value="<?php echo $sqlRes['FullTimeDuration'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="p.PartTimeDuration">Part Time Duration</label>
-		    <input type="text" class="form-control" id="partTimeDuration" name="partTimeDuration" value="<?php echo $sqlRes['PartTimeDuration'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="p.TestingRequirement">Testing Requirement</label>
-		    <input type="text" class="form-control" id="testingRequirement" name="testingRequirement" value="<?php echo $sqlRes['TestingRequirement'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="p.OtherRequirement">Other Requirement</label>
-		    <input type="text" class="form-control" id="otherRequirement" name="otherRequirement" value="<?php echo $sqlRes['OtherRequirement'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="p.EstimatedResidentTuition">Estimated Resident Tuition</label>
-		    <input type="text" class="form-control" id="estimatedResidentTuition" name="estimatedResidentTuition" value="<?php echo $sqlRes['EstimatedResidentTuition'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="p.EstimatedNonresidentTuition">Estimated Nonresident Tuition</label>
-		    <input type="text" class="form-control" id="estimatedNonresidentTuition" name="estimatedNonresidentTuition" value="<?php echo $sqlRes['EstimatedNonresidentTuition'];?>"/>
-		</div>
-		<div class="form-group">
-		    <label for="p.CostPerCredit">Cost Per Credit</label>
-		    <input type="text" class="form-control" id="costPerCredit" name="costPerCredit" value="<?php echo $sqlRes['CostPerCredit'];?>"/>
-		</div>
-		
-		<div class="form-group">
-		    <label for="co.CollegeName">College Name</label>
-		    <input type="text" class="form-control" id="collegeName" name="collegeName" value="<?php echo $sqlRes['CollegeName'];?>"/>
 		</div>
 		<div class="form-group">
 		    <label for="co.CollegeType">College Type</label>
-		    <input type="text" class="form-control" id="collegeType" name="collegeType" value="<?php echo $sqlRes['CollegeType'];?>"/>
+		    <input type="text" class="form-control" id="CollegeType" name="CollegeType" value="<?php echo $sqlRes['CollegeType'];?>"/>
 		</div>
+		<div class="form-group">
+		    <label for="p.YearEstablished">Year Established</label>
+		    <input type="text" class="form-control" id="YearEstablished" name="YearEstablished" value="<?php echo $sqlRes['YearEstablished'];?>"/>
 		</div>
-		<div class="modal-footer">
-		     <input type="submit" class="btn btn-primary" name="submit" value="Update" />&nbsp;
-		     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  </div>
+</div>
+
+<!-- Program Details -->
+<p>
+<button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ProgramDetailsCollapse" aria-expanded="false" aria-controls="ProgramDetailsCollapse">
+    Program Details
+  </button>
+  </p>
+<div class="collapse" id="ProgramDetailsCollapse">
+  <div class="card card-body">
+  <div class="form-group">
+		    <label for="p.ProgramObjectives">Program Objectives</label>
+		    <input type="text" class="form-control" id="ProgramObjectives" name="ProgramObjectives" value="<?php echo $sqlRes['ProgramObjectives'];?>"/>
 		</div>
+		<div class="form-group">
+		    <label for="c.ContactTitle">Program URL</label>
+		    <input type="text" class="form-control" id="contactTitle" name="contactTitle" value=""/>
+		</div>
+		<div class="form-group">
+		    <label for="p.ProgramType">Program Type</label>
+		    <input type="text" class="form-control" id="ProgramType" name="ProgramType" value="<?php echo $sqlRes['ProgramType'];?>"/>
+		</div>
+		<div class="form-group">
+		    <label for="p.DeliveryMethod">Program Delivery</label>
+		    <input type="text" class="form-control" id="DeliveryMethod" name="DeliveryMethod" value="<?php echo $sqlRes['DeliveryMethod'];?>"/>
+		</div>
+		<div class="form-group">
+		    <label for="p.DeliveryMethod">Program Duration</label>
+		    <input type="text" class="form-control" id="DeliveryMethod" name="DeliveryMethod" value=""/>
+		</div>
+		<div class="form-group">
+		    <label for="p.FullTimeDuration">Full-Time Duration</label>
+		    <input type="text" class="form-control" id="FullTimeDuration" name="FullTimeDuration" value="<?php echo $sqlRes['FullTimeDuration'];?>"/>
+		</div>
+		<div class="form-group">
+		    <label for="p.PartTimeDuration">Part-Time Duration</label>
+		    <input type="text" class="form-control" id="PartTimeDuration" name="PartTimeDuration" value="<?php echo $sqlRes['PartTimeDuration'];?>"/>
+		</div>
+		<div class="form-group">
+		    <label for="p.OtherRequirement">Other Requirements</label>
+		    <input type="text" class="form-control" id="OtherRequirement" name="OtherRequirement" value="<?php echo $sqlRes['OtherRequirement'];?>"/>
+		</div>
+  </div>
+</div>
+
+<!-- Curriculum Information -->
+<p>
+<button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#CurriculumInfoCollapse" aria-expanded="false" aria-controls="CurriculumInfoCollapse">
+    Curriculum Information
+  </button>
+  </p>
+
+
+    <div class="card card-body">
+        <div id="CurriculumInfoCollapse" class="form-group">                            
+            <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Course Title</th>
+                    <th>Course Type</th>
+                    <th>Course Department</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+<?php
+if($result == false)
+{
+    echo '<p> There is no data here </p>';
+}
+else{
+// Output data of each row
+while($row = mysqli_fetch_assoc($result)) :
+        echo '<tr>';
+        echo '<td>  </td>';
+        echo '<td>' .$row['CourseTitle']. '</td>';
+        echo '<td>' .$row['CollegeType']. '</td>';
+        echo '<td>' .$row['ProgramName']. '</td>';
+        echo '<td>
+                    <a class="btn btn-small btn-primary"
+                       data-toggle="modal"
+                       data-target="#exampleModal"
+                       data-whatever="'.$row['InstitutionId'].' ">Edit</a>
+                 </td>';
+        echo '<tr>';
+        endwhile;
+}
+        $result->close();
+ 
+?>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+<!-- Submission -->
+  <p>
+<button onclick="SubmissionFunction()" class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
+    Submission
+  </button>
+  </p>
+</div>
+<script>
+function SubmissionFunction() {
+    alert("Hello! I am an alert box!");
+}
+</script>
+ 
 	</form>
 </body>
 </html>
