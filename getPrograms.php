@@ -1,3 +1,4 @@
+<!-- GET PROGRAMS -->
 <?php
 require('conn.php');
 $id = $_GET['id'];
@@ -156,8 +157,6 @@ $sqlRes = mysqli_fetch_assoc($result);
 		<div class="form-group">
 		    <label for="co.CollegeType">College Type</label>
 
-		    <input type="text" class="form-control" id="CollegeType" name="CollegeType" value="<?php echo $sqlRes['CollegeType'];?>"/>
-
 		    <select class="form-control" id="CollegeType" name="CollegeType" >
 		    	<option value="<?php echo $sqlRes['CollegeType'];?>"><?php echo $sqlRes['CollegeType'];?></option>
 		    	<option>Arts and Sciences</option>
@@ -209,10 +208,6 @@ $sqlRes = mysqli_fetch_assoc($result);
     		<option>Online: Part-Time</option>
     		<option>Online: Full-Time and Part-Time</option>
 		</select>
-		</div>
-		<div class="form-group">
-		    <label for="p.DeliveryMethod">Program Duration</label>
-		    <input type="text" class="form-control" id="DeliveryMethod" name="DeliveryMethod" value=""/>
 		</div>
 		<div class="form-group">
 		    <label for="p.FullTimeDuration">Full-Time Duration</label>
@@ -288,3 +283,5 @@ function SubmissionFunction() {
 	</form>
 </body>
 </html>
+
+
