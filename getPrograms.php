@@ -11,14 +11,18 @@ $id = $_GET['id'];
 $result = $conn->query("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.InstitutionZip, i.InstitutionRegion,
     p.ProgramName, p.ProgramType, p.DeliveryMethod, p.ProgramObjectives, p.FullTimeDuration, p.PartTimeDuration, p.YearEstablished,
 	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit, p.ProgramObjectives, p.OtherRequirement,
-	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, co.CollegeName, co.CollegeType
+	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, co.CollegeName, co.CollegeType, courses.CourseTitle
     FROM programs p
 	JOIN institutions i
 	ON p.InstitutionId = i.InstitutionId
 	JOIN colleges co
 	ON p.InstitutionId = co.InstitutionId
 	JOIN contacts c
-	ON p.ContactId = c.ContactId WHERE p.InstitutionId = $id ;");
+	ON p.ContactId = c.ContactId
+    JOIN program_courses pc
+    ON p.ProgramId = pc.ProgramId
+    JOIN courses
+    ON pc.CourseId = courses.CourseId WHERE p.InstitutionId = $id;");
 $sqlRes = mysqli_fetch_assoc($result);
 ?>
 <!DOCTYPE html>
@@ -211,7 +215,7 @@ $sqlRes = mysqli_fetch_assoc($result);
   </p>
 
 
-    <div class="card card-body">
+       <div class="card card-body">
         <div id="CurriculumInfoCollapse" class="form-group">                            
             <table class="table table-striped table-bordered">
             <thead>
@@ -219,7 +223,6 @@ $sqlRes = mysqli_fetch_assoc($result);
                     <th>Course Title</th>
                     <th>Course Type</th>
                     <th>Course Department</th>
-                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -228,16 +231,9 @@ $sqlRes = mysqli_fetch_assoc($result);
 // Output data of each row
 while($row = mysqli_fetch_assoc($result)) :
         echo '<tr>';
-        echo '<td>  </td>';
         echo '<td>' .$row['CourseTitle']. '</td>';
         echo '<td>' .$row['CollegeType']. '</td>';
         echo '<td>' .$row['ProgramName']. '</td>';
-        echo '<td>
-                    <a class="btn btn-small btn-primary"
-                       data-toggle="modal"
-                       data-target="#exampleModal"
-                       data-whatever="'.$row['InstitutionId'].' ">Edit</a>
-                 </td>';
         echo '<tr>';
         endwhile;
         $result->close();
@@ -248,7 +244,7 @@ while($row = mysqli_fetch_assoc($result)) :
             </table>
         </div>
     </div>
-</div>
+
 
 
 <!-- Submission -->
@@ -257,7 +253,7 @@ while($row = mysqli_fetch_assoc($result)) :
     Submission
   </button>
   </p>
-
+</div>
 <script>
 function SubmissionFunction() {
     alert("Hello! I am an alert box!");
