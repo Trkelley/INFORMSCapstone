@@ -155,9 +155,9 @@ $sqlRes = mysqli_fetch_assoc($result);
 		</div>
 		<div class="form-group">
 		    <label for="co.CollegeType">College Type</label>
-<<<<<<< HEAD
+
 		    <input type="text" class="form-control" id="CollegeType" name="CollegeType" value="<?php echo $sqlRes['CollegeType'];?>"/>
-=======
+
 		    <select class="form-control" id="CollegeType" name="CollegeType" >
 		    	<option value="<?php echo $sqlRes['CollegeType'];?>"><?php echo $sqlRes['CollegeType'];?></option>
 		    	<option>Arts and Sciences</option>
@@ -170,7 +170,6 @@ $sqlRes = mysqli_fetch_assoc($result);
 		    	<option>Information Systems &amp; Management</option>
 		    </select>
 		    
->>>>>>> dadc27af72a449aa244ca3abab7fdc5bf4dc7fa3
 		</div>
 		<div class="form-group">
 		    <label for="p.YearEstablished">Year Established</label>
@@ -238,8 +237,6 @@ $sqlRes = mysqli_fetch_assoc($result);
   </p>
 
 
-    <div class="card card-body">
-        <div id="CurriculumInfoCollapse" class="form-group">                            
 
        <div class="card card-body">
         <div id="CurriculumInfoCollapse" class="collapse"> 
@@ -273,7 +270,7 @@ while($row = mysqli_fetch_assoc($result)) :
             </table>
         </div>
     </div>
-</div>
+
 
 
 <!-- Submission -->
@@ -281,7 +278,7 @@ while($row = mysqli_fetch_assoc($result)) :
 <button onclick="SubmissionFunction()" class="btn btn-primary" style="width:550px; height:40px;" type="submit" value="Update" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
 Submit</button>
   </p>
-
+</div>
 <script>
 function SubmissionFunction() {
 	alert("Your data has been submitted for approval.");
