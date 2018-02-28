@@ -164,7 +164,7 @@ $sqlRes = mysqli_fetch_assoc($result);
 		    	<option>Informatics</option>
 		    	<option>Multiple Schools</option>
 		    	<option>Professional Studies</option>
-		    	<option>Information Systems & Management</option>
+		    	<option>Information Systems &amp; Management</option>
 		    </select>
 		    
 		</div>
@@ -270,14 +270,13 @@ while($row = mysqli_fetch_assoc($result)) :
 
 <!-- Submission -->
   <p>
-<button onclick="SubmissionFunction()" class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
-    Submission
-  </button>
+<button onclick="SubmissionFunction()" class="btn btn-primary" style="width:550px; height:40px;" type="submit" value="Update" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
+</button>
   </p>
 </div>
 <script>
 function SubmissionFunction() {
-    alert("Hello! I am an alert box!");
+	alert("Your data has been submitted for approval.");
 }
 </script>
  
