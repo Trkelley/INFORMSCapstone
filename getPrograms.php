@@ -1,4 +1,3 @@
-<!-- GET PROGRAMS -->
 <?php
 require('conn.php');
 $id = $_GET['id'];
@@ -64,6 +63,7 @@ $sqlRes = mysqli_fetch_assoc($result);
 		</div>
   </div>
 </div>
+
 <!-- Progam General Information -->
 <p>
 <button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ProgramGeneralInfoCollapse" aria-expanded="false" aria-controls="ProgramGeneralInfoCollapse">
@@ -79,7 +79,59 @@ $sqlRes = mysqli_fetch_assoc($result);
 		</div>
 		<div class="form-group">
 		    <label for="i.InstitutionState">Program State</label>
-		    <input type="text" class="form-control" id="InstitutionState" name="InstitutionState" value="<?php echo $sqlRes['InstitutionState'];?>"/>
+		    <select class="form-control" id="InstitutionState" name="InstitutionState" >
+		    	<option value="<?php echo $sqlRes['InstitutionState'];?>"><?php echo $sqlRes['InstitutionState'];?></option>
+		    	<option>Alabama</option>
+		    	<option>Alaska</option>
+		    	<option>Arizona</option>
+		    	<option>Arkansas</option>
+		    	<option>California</option>
+		    	<option>Colorado</option>
+		    	<option>Connecticut</option>
+		    	<option>Delaware</option>
+		    	<option>Florida</option>
+		    	<option>Georgia</option>
+		    	<option>Hawaii</option>
+		    	<option>Idaho</option>
+		    	<option>Illinois</option>
+		    	<option>Indiana</option>
+		    	<option>Iowa</option>
+		    	<option>Kansas</option>
+		    	<option>Kentucky</option>
+		    	<option>Louisiana</option>
+		    	<option>Maine</option>
+		    	<option>Maryland</option>
+		    	<option>Massachusetts</option>
+		    	<option>Michigan</option>
+		    	<option>Minnesota</option>
+		    	<option>Mississippi</option>
+		    	<option>Missouri</option>
+		    	<option>Montana</option>
+		    	<option>Nebraska</option>
+		    	<option>Nevada</option>
+		    	<option>New Hampshire</option>
+		    	<option>New Jersey</option>
+		    	<option>New Mexico</option>
+		    	<option>New York</option>
+		    	<option>North Carolina</option>
+		    	<option>North Dakota</option>
+		    	<option>Ohio</option>
+		    	<option>Oklahoma</option>
+		    	<option>Oregon</option>
+		    	<option>Pennsylvania</option>
+		    	<option>Rhode Island</option>
+		    	<option>South Carolina</option>
+		    	<option>South Dakota</option>
+		    	<option>Tennessee</option>
+		    	<option>Texas</option>
+		    	<option>Utah</option>
+		    	<option>Vermont</option>
+		    	<option>Virginia</option>
+		    	<option>Washington</option>
+		    	<option>West Virginia</option>
+		    	<option>Wisconsin</option>
+		    	<option>Wyoming</option>
+		    </select>
 		</div>
 		<div class="form-group">
 		<label for="i.InstitutionRegion">Program Region</label>
@@ -173,11 +225,6 @@ $sqlRes = mysqli_fetch_assoc($result);
                 <tbody>
                     <tr>
 <?php
-if($result == false)
-{
-    echo '<p> There is no data here </p>';
-}
-else{
 // Output data of each row
 while($row = mysqli_fetch_assoc($result)) :
         echo '<tr>';
@@ -193,7 +240,6 @@ while($row = mysqli_fetch_assoc($result)) :
                  </td>';
         echo '<tr>';
         endwhile;
-}
         $result->close();
  
 ?>
@@ -202,7 +248,7 @@ while($row = mysqli_fetch_assoc($result)) :
             </table>
         </div>
     </div>
-
+</div>
 
 
 <!-- Submission -->
@@ -211,7 +257,7 @@ while($row = mysqli_fetch_assoc($result)) :
     Submission
   </button>
   </p>
-</div>
+
 <script>
 function SubmissionFunction() {
     alert("Hello! I am an alert box!");
@@ -221,3 +267,4 @@ function SubmissionFunction() {
 	</form>
 </body>
 </html>
+
