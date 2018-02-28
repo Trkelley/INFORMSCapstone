@@ -174,7 +174,7 @@ $sqlRes = mysqli_fetch_assoc($result);
   <div class="card card-body">
   <div class="form-group">
 		    <label for="p.ProgramObjectives">Program Objectives</label>
-		    <input type="text" class="form-control" id="ProgramObjectives" name="ProgramObjectives" value="<?php echo $sqlRes['ProgramObjectives'];?>"/>
+		    <textarea  class="form-control" rows="6" id="ProgramObjectives" name="ProgramObjectives"><?php echo $sqlRes['ProgramObjectives'];?></textarea>
 		</div>
 		<div class="form-group">
 		    <label for="c.ContactTitle">Program URL</label>
@@ -185,8 +185,16 @@ $sqlRes = mysqli_fetch_assoc($result);
 		    <input type="text" class="form-control" id="ProgramType" name="ProgramType" value="<?php echo $sqlRes['ProgramType'];?>"/>
 		</div>
 		<div class="form-group">
-		    <label for="p.DeliveryMethod">Program Delivery</label>
-		    <input type="text" class="form-control" id="DeliveryMethod" name="DeliveryMethod" value="<?php echo $sqlRes['DeliveryMethod'];?>"/>
+		<label for="p.DeliveryMethod">Program Delivery</label>
+		<select class="form-control" id="DeliveryMethod" name="DeliveryMethod"  >
+    		<option value="<?php echo $sqlRes['DeliveryMethod'];?>"><?php echo $sqlRes['DeliveryMethod'];?></option>
+    		<option>On Campus: Full-Time</option>
+    		<option>On Campus: Part-Time</option>
+    		<option>On Campus: Full-Time and Part-Time</option>
+    		<option>Online: Full-Time</option>
+    		<option>Online: Part-Time</option>
+    		<option>Online: Full-Time and Part-Time</option>
+		</select>
 		</div>
 		<div class="form-group">
 		    <label for="p.DeliveryMethod">Program Duration</label>
@@ -202,7 +210,7 @@ $sqlRes = mysqli_fetch_assoc($result);
 		</div>
 		<div class="form-group">
 		    <label for="p.OtherRequirement">Other Requirements</label>
-		    <input type="text" class="form-control" id="OtherRequirement" name="OtherRequirement" value="<?php echo $sqlRes['OtherRequirement'];?>"/>
+		    <textarea  class="form-control" rows="6" id="OtherRequirement" name="OtherRequirement"><?php echo $sqlRes['OtherRequirement'];?></textarea>
 		</div>
   </div>
 </div>
@@ -217,6 +225,10 @@ $sqlRes = mysqli_fetch_assoc($result);
 
     <div class="card card-body">
         <div id="CurriculumInfoCollapse" class="form-group">                            
+       <div class="card card-body">
+        <div id="CurriculumInfoCollapse" class="collapse"> 
+        </div>                           
+
             <table class="table table-striped table-bordered">
             <thead>
                 <tr>
