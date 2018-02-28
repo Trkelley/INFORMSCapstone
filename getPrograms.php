@@ -164,7 +164,7 @@ $sqlRes = mysqli_fetch_assoc($result);
 		    	<option>Informatics</option>
 		    	<option>Multiple Schools</option>
 		    	<option>Professional Studies</option>
-		    	<option>Information Systems & Management</option>
+		    	<option>Information Systems &amp; Management</option>
 		    </select>
 		    
 		</div>
