@@ -48,11 +48,12 @@ $result = $conn->query($sql);
 ?>
 <!-- Table -->
 <div class="container">
-    <div class="row">
+	<div class="row">
         <div class="col-lg-12">
-            <p class="page-header">Hello (University Administrator Name), Below are the different programs listed for (University Name).
-            To make edits to an individual program, press the edit button.</p>
-            <h3 class = "page-header">Program Overview</h3>
+            <p class="text-center" class="page-header"> <font size="5">Hello (University Administrator Name) </font></p>
+            <p class="text-center" class="page-header"><font size="4"> Below are the different programs listed for (University Name)</font></p>
+            <p class = "text-center" class="page-header"> <font size="3">  To make edits to an individual program, press the edit button.</font></p>
+            
         </div>
     </div>
     <div class="row">
