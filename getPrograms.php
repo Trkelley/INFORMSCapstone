@@ -38,7 +38,11 @@ $sqlRes = mysqli_fetch_assoc($result);
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
+<div class="text-center">
+	<p class="h3 font-weight-bold"><?php echo $sqlRes['InstitutionName']?> </p>
+	<p class="h4"><?php echo $sqlRes['CollegeName']?></p>
+	<p class="h6 text-muted"><?php echo $sqlRes['ProgramName']?></p>
+</div>
 <form method="post" action="Index.php" role="form">
 	<div class="modal-body">
 	
