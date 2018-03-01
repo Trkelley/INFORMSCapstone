@@ -38,13 +38,14 @@
 <?php
 require('conn.php');
 // Display table
-$sql = "SELECT a.InstitutionId, b.InstitutionName, a.CollegeName, c.ProgramName
+$sql = "SELECT a.InstitutionId, b.InstitutionName, a.CollegeName, c.ProgramName, c.ProgramId
         FROM colleges a
              INNER JOIN institutions b 
                    ON a.InstitutionId = b.InstitutionId
              INNER JOIN programs c 
                    ON a.InstitutionId = c.InstitutionId";
 $result = $conn->query($sql);
+
 ?>
 <!-- Table -->
 <div class="container">
@@ -74,9 +75,10 @@ $result = $conn->query($sql);
 <?php
 require('conn.php');
 // Output data of each row
-while($row = mysqli_fetch_array($result)) :
+
+while($row = mysqli_fetch_assoc($result)){
         echo '<tr>';
-        echo '<td>  </td>';
+        echo '<td></td>';
         echo '<td>' .$row['InstitutionName']. '</td>';
         echo '<td>' .$row['CollegeName']. '</td>';
         echo '<td>' .$row['ProgramName']. '</td>';
@@ -85,10 +87,10 @@ while($row = mysqli_fetch_array($result)) :
                     <a class="btn btn-small btn-primary"
                        data-toggle="modal"
                        data-target="#exampleModal"
-                       data-whatever="'.$row['InstitutionId'].' ">Edit</a>
+                       data-whatever="'.$row['ProgramId'].' ">Edit</a>
                  </td>';
         echo '<tr>';
-        endwhile;
+}
         $result->close();
  
 ?>

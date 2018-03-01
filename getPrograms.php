@@ -2,17 +2,33 @@
 <?php
 require('conn.php');
 $id = $_GET['id'];
-/* if (isset($_POST['submit'])) {
+/*if (isset($_POST['submit'])) {
  $id = $_POST['InstitutionId'];
  $collegeName = $_POST['CollegeName'];
  $institutionName = $_POST['InstitutionName'];
- $conn->query("UPDATE `details` SET `CollegeName` = '$collegeName', `InstitutionName` = '$institutionName', WHERE `InstitutionId`='$id'");
+ $programName = $_POST['ProgramName'];
+ $programType = $_POST['ProgramType'];
+ $deliveryMethod = $_POST['DeliveryMethod'];
+ $programAccess = $_POST['ProgramAccess'];
+ $programObjectives = $_POST['ProgramObjectives'];
+ $fullTimeDuration = $_POST['FullTimeDuration'];
+ $partTimeDuration = $_POST['PartTimeDuration'];
+ $testingRequirement = $_POST['TestingRequirement'];
+ $otherRequirement = $_POST['OtherRequirement'];
+ $credits = $_POST['Credits'];
+ $yearEstablished = $_POST['YearEstablished'];
+ $referenceID = $_POST['ReferenceID'];
+ $updateType = $_POST['UpdateType'];
+ $lastUpdate = $_POST['LastUpdate'];
+ $conn->query("INSERT INTO programs(ProgramName, ProgramType, DeliveryMethod, ProgramAccess, ProgramObjectives, FullTimeDuration, PartTimeDuration
+ , TestingRequirement, OtherRequirement, Credits, YearEstablished, ReferenceID, UpdateType, LastUpdate) VALUES( '$programName', 
+ '$programType', '$id')");
  header("location:Index.php");
- } */
-$result = $conn->query("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.InstitutionZip, i.InstitutionRegion,
+ }*/
+ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.InstitutionZip, i.InstitutionRegion,
     p.ProgramName, p.ProgramType, p.DeliveryMethod, p.ProgramObjectives, p.FullTimeDuration, p.PartTimeDuration, p.YearEstablished,
 	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit, p.ProgramObjectives, p.OtherRequirement,
-	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, co.CollegeName, co.CollegeType, courses.CourseTitle, courses.CourseType
+	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, co.CollegeName, co.CollegeType, courses.CourseTitle, courses.CourseType, pc.RequirementType
     FROM programs p
 	JOIN institutions i
 	ON p.InstitutionId = i.InstitutionId
@@ -23,8 +39,9 @@ $result = $conn->query("SELECT  i.InstitutionName, i.InstitutionCity, i.Institut
     JOIN program_courses pc
     ON p.ProgramId = pc.ProgramId
     JOIN courses
-    ON pc.CourseId = courses.CourseId WHERE p.InstitutionId = $id;");
-$sqlRes = mysqli_fetch_assoc($result);
+    ON pc.CourseId = courses.CourseId WHERE p.programId = $id;");
+ $result = $conn->query($sql);
+ $modalData = $conn->query($sql)->fetch_array()
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,9 +56,9 @@ $sqlRes = mysqli_fetch_assoc($result);
 </head>
 <body>
 <div class="text-center">
-	<p class="h3 font-weight-bold"><?php echo $sqlRes['InstitutionName']?> </p>
-	<p class="h4"><?php echo $sqlRes['CollegeName']?></p>
-	<p class="h6 text-muted"><?php echo $sqlRes['ProgramName']?></p>
+	<p class="h3 font-weight-bold"><?php echo $modalData['InstitutionName']?> </p>
+	<p class="h4"><?php echo $modalData['CollegeName']?></p>
+	<p class="h6 text-muted"><?php echo $modalData['ProgramName']?></p>
 </div>
 <form method="post" action="Index.php" role="form">
 	<div class="modal-body">
@@ -56,19 +73,19 @@ $sqlRes = mysqli_fetch_assoc($result);
   <div class="card card-body">
   <div class="form-group">
 		    <label for="c.ContactName">Contact Name</label>
-		    <input type="text" class="form-control" id="contactName" name="contactName" value="<?php echo $sqlRes['ContactName'];?>"/>
+		    <input type="text" class="form-control" id="contactName" name="contactName" value="<?php echo $modalData['ContactName'];?>"/>
 		</div>
 		<div class="form-group">
 		    <label for="c.ContactTitle">Contact Title</label>
-		    <input type="text" class="form-control" id="contactTitle" name="contactTitle" value="<?php echo $sqlRes['ContactTitle'];?>"/>
+		    <input type="text" class="form-control" id="contactTitle" name="contactTitle" value="<?php echo $modalData['ContactTitle'];?>"/>
 		</div>
 		<div class="form-group">
 		    <label for="c.ContactPhone">Contact Phone</label>
-		    <input type="text" class="form-control" id="contactPhone" name="contactPhone" value="<?php echo $sqlRes['ContactPhone'];?>"/>
+		    <input type="text" class="form-control" id="contactPhone" name="contactPhone" value="<?php echo $modalData['ContactPhone'];?>"/>
 		</div>
 		<div class="form-group">
 		    <label for="c.ContactEmail">Contact Email</label>
-		    <input type="text" class="form-control" id="contactEmail" name="contactEmail" value="<?php echo $sqlRes['ContactEmail'];?>"/>
+		    <input type="text" class="form-control" id="contactEmail" name="contactEmail" value="<?php echo $modalData['ContactEmail'];?>"/>
 		</div>
   </div>
 </div>
@@ -84,12 +101,12 @@ $sqlRes = mysqli_fetch_assoc($result);
 	
 		<div class="form-group">
 		    <label for="i.InstitutionCity">Program City</label>
-		    <input type="text" class="form-control" id="InstitutionCity" name="InstitutionCity" value="<?php echo $sqlRes['InstitutionCity'];?>"/>
+		    <input type="text" class="form-control" id="InstitutionCity" name="InstitutionCity" value="<?php echo $modalData['InstitutionCity'];?>"/>
 		</div>
 		<div class="form-group">
 		    <label for="i.InstitutionState">Program State</label>
 		    <select class="form-control" id="InstitutionState" name="InstitutionState" >
-		    	<option value="<?php echo $sqlRes['InstitutionState'];?>"><?php echo $sqlRes['InstitutionState'];?></option>
+		    	<option value="<?php echo $modalData['InstitutionState'];?>"><?php echo $modalData['InstitutionState'];?></option>
 		    	<option>Alabama</option>
 		    	<option>Alaska</option>
 		    	<option>Arizona</option>
@@ -145,7 +162,7 @@ $sqlRes = mysqli_fetch_assoc($result);
 		<div class="form-group">
 		<label for="i.InstitutionRegion">Program Region</label>
 		<select class="form-control" id="InstitutionRegion" name="InstitutionRegion"  >
-    		<option value="<?php echo $sqlRes['InstitutionRegion'];?>"><?php echo $sqlRes['InstitutionRegion'];?></option>
+    		<option value="<?php echo $modalData['InstitutionRegion'];?>"><?php echo $modalData['InstitutionRegion'];?></option>
     		<option>South</option>
     		<option>Midwest</option>
     		<option>Northeast</option>
@@ -156,13 +173,13 @@ $sqlRes = mysqli_fetch_assoc($result);
 		</div>
 		<div class="form-group">
 		    <label for="p.ProgramName">Program Name</label>
-		    <input type="text" class="form-control" id="programName" name="programName" value="<?php echo $sqlRes['ProgramName'];?>"/>
+		    <input type="text" class="form-control" id="programName" name="programName" value="<?php echo $modalData['ProgramName'];?>"/>
 		</div>
 		<div class="form-group">
 		    <label for="co.CollegeType">College Type</label>
 
 		    <select class="form-control" id="CollegeType" name="CollegeType" >
-		    	<option value="<?php echo $sqlRes['CollegeType'];?>"><?php echo $sqlRes['CollegeType'];?></option>
+		    	<option value="<?php echo $modalData['CollegeType'];?>"><?php echo $modalData['CollegeType'];?></option>
 		    	<option>Arts and Sciences</option>
 		    	<option>Business</option>
 		    	<option>Center or Institute</option>
@@ -176,7 +193,7 @@ $sqlRes = mysqli_fetch_assoc($result);
 		</div>
 		<div class="form-group">
 		    <label for="p.YearEstablished">Year Established</label>
-		    <input type="text" class="form-control" id="YearEstablished" name="YearEstablished" value="<?php echo $sqlRes['YearEstablished'];?>"/>
+		    <input type="text" class="form-control" id="YearEstablished" name="YearEstablished" value="<?php echo $modalData['YearEstablished'];?>"/>
 		</div>
   </div>
 </div>
@@ -191,7 +208,7 @@ $sqlRes = mysqli_fetch_assoc($result);
   <div class="card card-body">
   <div class="form-group">
 		    <label for="p.ProgramObjectives">Program Objectives</label>
-		    <textarea  class="form-control" rows="6" id="ProgramObjectives" name="ProgramObjectives"><?php echo $sqlRes['ProgramObjectives'];?></textarea>
+		    <textarea  class="form-control" rows="6" id="ProgramObjectives" name="ProgramObjectives"><?php echo $modalData['ProgramObjectives'];?></textarea>
 		</div>
 		<div class="form-group">
 		    <label for="c.ContactTitle">Program URL</label>
@@ -199,12 +216,12 @@ $sqlRes = mysqli_fetch_assoc($result);
 		</div>
 		<div class="form-group">
 		    <label for="p.ProgramType">Program Type</label>
-		    <input type="text" class="form-control" id="ProgramType" name="ProgramType" value="<?php echo $sqlRes['ProgramType'];?>"/>
+		    <input type="text" class="form-control" id="ProgramType" name="ProgramType" value="<?php echo $modalData['ProgramType'];?>"/>
 		</div>
 		<div class="form-group">
 		<label for="p.DeliveryMethod">Program Delivery</label>
 		<select class="form-control" id="DeliveryMethod" name="DeliveryMethod"  >
-    		<option value="<?php echo $sqlRes['DeliveryMethod'];?>"><?php echo $sqlRes['DeliveryMethod'];?></option>
+    		<option value="<?php echo $modalData['DeliveryMethod'];?>"><?php echo $modalData['DeliveryMethod'];?></option>
     		<option>On Campus: Full-Time</option>
     		<option>On Campus: Part-Time</option>
     		<option>On Campus: Full-Time and Part-Time</option>
@@ -215,15 +232,15 @@ $sqlRes = mysqli_fetch_assoc($result);
 		</div>
 		<div class="form-group">
 		    <label for="p.FullTimeDuration">Full-Time Duration</label>
-		    <input type="text" class="form-control" id="FullTimeDuration" name="FullTimeDuration" value="<?php echo $sqlRes['FullTimeDuration'];?>"/>
+		    <input type="text" class="form-control" id="FullTimeDuration" name="FullTimeDuration" value="<?php echo $modalData['FullTimeDuration'];?>"/>
 		</div>
 		<div class="form-group">
 		    <label for="p.PartTimeDuration">Part-Time Duration</label>
-		    <input type="text" class="form-control" id="PartTimeDuration" name="PartTimeDuration" value="<?php echo $sqlRes['PartTimeDuration'];?>"/>
+		    <input type="text" class="form-control" id="PartTimeDuration" name="PartTimeDuration" value="<?php echo $modalData['PartTimeDuration'];?>"/>
 		</div>
 		<div class="form-group">
 		    <label for="p.OtherRequirement">Other Requirements</label>
-		    <textarea  class="form-control" rows="6" id="OtherRequirement" name="OtherRequirement"><?php echo $sqlRes['OtherRequirement'];?></textarea>
+		    <textarea  class="form-control" rows="6" id="OtherRequirement" name="OtherRequirement"><?php echo $modalData['OtherRequirement'];?></textarea>
 		</div>
   </div>
 </div>
@@ -254,15 +271,15 @@ $sqlRes = mysqli_fetch_assoc($result);
                     <tr>
 <?php
 // Output data of each row
-while($row = mysqli_fetch_assoc($result)) :
+while($row = mysqli_fetch_assoc($result)){
         echo '<tr>';
         echo '<td>' .$row['CourseTitle']. '</td>';
         echo '<td>' .$row['CourseType']. '</td>';
         echo '<td>' .$row['ProgramName']. '</td>';
         echo '<tr>';
-        endwhile;
+};
         $result->close();
- 
+
 ?>
                     </tr>
                 </tbody>
