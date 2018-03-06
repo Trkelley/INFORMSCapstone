@@ -28,7 +28,7 @@ $id = $_GET['id'];
  $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.InstitutionZip, i.InstitutionRegion,
     p.ProgramName, p.ProgramType, p.DeliveryMethod, p.ProgramObjectives, p.FullTimeDuration, p.PartTimeDuration, p.YearEstablished,
 	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit, p.ProgramObjectives, p.OtherRequirement,
-	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, co.CollegeName, co.CollegeType, courses.CourseTitle, courses.CourseType, pc.RequirementType
+	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, co.CollegeName, co.CollegeType, courses.CourseTitle, courses.CourseType
     FROM programs p
 	JOIN institutions i
 	ON p.InstitutionId = i.InstitutionId
@@ -53,6 +53,11 @@ $id = $_GET['id'];
  
     <!-- Bootstrap Core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    .error {
+        border:2px solid red;
+    }
+    </style>
 </head>
 <body>
 <div class="text-center">
@@ -60,7 +65,7 @@ $id = $_GET['id'];
 	<p class="h4"><?php echo $modalData['CollegeName']?></p>
 	<p class="h6 text-muted"><?php echo $modalData['ProgramName']?></p>
 </div>
-<form method="post" action="Index.php" role="form">
+<form method="post" action="Index.php" role="form" id="programForm" onsubmit="return validateForm()">
 	<div class="modal-body">
 	
 <!-- Contact Information -->
@@ -211,8 +216,8 @@ $id = $_GET['id'];
 		    <textarea  class="form-control" rows="6" id="ProgramObjectives" name="ProgramObjectives"><?php echo $modalData['ProgramObjectives'];?></textarea>
 		</div>
 		<div class="form-group">
-		    <label for="c.ContactTitle">Program URL</label>
-		    <input type="text" class="form-control" id="contactTitle" name="contactTitle" value=""/>
+		    <label for="">Program URL</label>
+		    <input type="text" class="form-control" id="" name="" value=""/>
 		</div>
 		<div class="form-group">
 		    <label for="p.ProgramType">Program Type</label>
@@ -291,14 +296,79 @@ while($row = mysqli_fetch_assoc($result)){
 
 <!-- Submission -->
   <p>
-<button onclick="SubmissionFunction()" class="btn btn-primary" style="width:550px; height:40px;" type="submit" value="Update" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
+<button class="btn btn-primary" style="width:550px; height:40px;" type="submit" value="Update" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
 Submit</button>
   </p>
 </div>
 <script>
+//function validateForm() {
+//    var cn = document.forms["myForm"]["contactName"].value;
+    
+ //   if (cn == "") {
+ //       alert("Contact Name must be filled out");
+ //       return false;
+//    }
+
+ function validateEmail(contactEmail) {
+  var re = /\S+@\S+\.\S+/;
+  return re.test(contactEmail);
+}
+ 
+function validateForm() {
+    var cn = document.forms["programForm"]["contactName"].value; var inputValcn = document.getElementById("contactName");
+    var ct = document.forms["programForm"]["contactTitle"].value; var inputValct = document.getElementById("contactTitle");
+    var cp = document.forms["programForm"]["contactPhone"].value; var inputValcp = document.getElementById("contactPhone");
+    var ce = document.forms["programForm"]["contactEmail"].value; var inputValce = document.getElementById("contactEmail");
+    
+     if (cn == "") {
+        alert("Contact Name must be filled out");
+        inputValcn.style.border="1px solid red";
+        return false;
+    }
+     if (ct == ""){
+      	alert("Contact Title must be filled out");
+      	inputValct.style.border="1px solid red";
+        return false;
+      }
+     if (cp == ""){
+       	alert("Contact Phone must be filled out");
+       	inputValcp.style.border="1px solid red";
+        return false;
+       }
+     if (ce == ""){
+         alert("Contact Email must be filled out");
+         inputValce.style.border="1px solid red";
+         return false;
+        }
+     var email = $("#contactEmail").val();
+     if (validateEmail(email) == false)
+     {
+    	 alert("Contact Email must be filled out with a valid email");
+         inputValce.style.border="1px solid red";
+         return false;
+     }
+     var pn = document.forms["programForm"]["programName"].value; var inputValpn = document.getElementById("programName");
+     if (pn == ""){
+        	alert("Program Name must be filled out");
+        	inputValpn.style.border="1px solid red";
+         return false;
+        }
+     var po = document.forms["programForm"]["ProgramObjectives"].value; var inputValpo = document.getElementById("ProgramObjectives");
+     if (po == ""){
+        	alert("Program Objectives must be filled out");
+        	inputValpo.style.border="1px solid red";
+         return false;
+        }
+    else
+    {
+        SubmissionFunction();
+        return true;
+    }
+}
 function SubmissionFunction() {
 	alert("Your data has been submitted for approval.");
 }
+
 </script>
  
 	</form>
