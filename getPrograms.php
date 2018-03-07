@@ -333,8 +333,6 @@ return re.test(contactEmail);
 }
 
 function validateForm() {
-     var pn = document.forms["programForm"]["programName"].value; var inputValpn = document.getElementById("programName");
-     if (pn == ""){
 var cn = document.forms["programForm"]["contactName"].value; var inputValcn = document.getElementById("contactName");
 var ct = document.forms["programForm"]["contactTitle"].value; var inputValct = document.getElementById("contactTitle");
 var cp = document.forms["programForm"]["contactPhone"].value; var inputValcp = document.getElementById("contactPhone");
