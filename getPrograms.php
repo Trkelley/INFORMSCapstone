@@ -2,6 +2,7 @@
 <?php
 require('conn.php');
 $id = $_GET['id'];
+$i = 0;
 /*if (isset($_POST['submit'])) {
  $id = $_POST['InstitutionId'];
  $collegeName = $_POST['CollegeName'];
@@ -28,7 +29,7 @@ $id = $_GET['id'];
  $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.InstitutionZip, i.InstitutionRegion,
     p.ProgramName, p.ProgramType, p.DeliveryMethod, p.ProgramObjectives, p.FullTimeDuration, p.PartTimeDuration, p.YearEstablished,
 	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit, p.ProgramObjectives, p.OtherRequirement,
-	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, co.CollegeName, co.CollegeType, courses.CourseTitle, courses.CourseType
+	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, co.CollegeName, co.CollegeType, courses.CourseTitle, courses.CourseType, pc.RequirementType
     FROM programs p
 	JOIN institutions i
 	ON p.InstitutionId = i.InstitutionId
@@ -65,7 +66,7 @@ $id = $_GET['id'];
 	<p class="h4"><?php echo $modalData['CollegeName']?></p>
 	<p class="h6 text-muted"><?php echo $modalData['ProgramName']?></p>
 </div>
-<form method="post" action="Index.php" role="form" id="programForm" onsubmit="return validateForm()">
+<form method="post" action="Index.php" role="form"id="programForm" onsubmit="return validateForm()">
 	<div class="modal-body">
 	
 <!-- Contact Information -->
@@ -103,7 +104,22 @@ $id = $_GET['id'];
   </p>
 <div class="collapse" id="ProgramGeneralInfoCollapse">
   <div class="card card-body">
-	
+  <div class="form-group">
+		    <label for="co.CollegeName">College Name</label>
+		    <input type="text" class="form-control" id="CollegeName" name="CollegeName" value="<?php echo $modalData['CollegeName'];?>"/>
+		</div>
+	<div class="form-group">
+		    <label for="co.CollegeType">College Type</label>
+
+		    <select class="form-control" id="CollegeType" name="CollegeType" >
+		    	<option value="<?php echo $modalData['CollegeType'];?>"><?php echo $modalData['CollegeType'];?></option>
+		    	<option>Arts and Sciences</option>
+		    	<option>Business</option>
+		    	<option>Center or Institute</option>
+		    	<option>Engineering</option>
+		    	<option>Other</option>
+		    </select> 
+		</div>
 		<div class="form-group">
 		    <label for="i.InstitutionCity">Program City</label>
 		    <input type="text" class="form-control" id="InstitutionCity" name="InstitutionCity" value="<?php echo $modalData['InstitutionCity'];?>"/>
@@ -112,58 +128,60 @@ $id = $_GET['id'];
 		    <label for="i.InstitutionState">Program State</label>
 		    <select class="form-control" id="InstitutionState" name="InstitutionState" >
 		    	<option value="<?php echo $modalData['InstitutionState'];?>"><?php echo $modalData['InstitutionState'];?></option>
-		    	<option>Alabama</option>
-		    	<option>Alaska</option>
-		    	<option>Arizona</option>
-		    	<option>Arkansas</option>
-		    	<option>California</option>
-		    	<option>Colorado</option>
-		    	<option>Connecticut</option>
-		    	<option>Delaware</option>
-		    	<option>Florida</option>
-		    	<option>Georgia</option>
-		    	<option>Hawaii</option>
-		    	<option>Idaho</option>
-		    	<option>Illinois</option>
-		    	<option>Indiana</option>
-		    	<option>Iowa</option>
-		    	<option>Kansas</option>
-		    	<option>Kentucky</option>
-		    	<option>Louisiana</option>
-		    	<option>Maine</option>
-		    	<option>Maryland</option>
-		    	<option>Massachusetts</option>
-		    	<option>Michigan</option>
-		    	<option>Minnesota</option>
-		    	<option>Mississippi</option>
-		    	<option>Missouri</option>
-		    	<option>Montana</option>
-		    	<option>Nebraska</option>
-		    	<option>Nevada</option>
-		    	<option>New Hampshire</option>
-		    	<option>New Jersey</option>
-		    	<option>New Mexico</option>
-		    	<option>New York</option>
-		    	<option>North Carolina</option>
-		    	<option>North Dakota</option>
-		    	<option>Ohio</option>
-		    	<option>Oklahoma</option>
-		    	<option>Oregon</option>
-		    	<option>Pennsylvania</option>
-		    	<option>Rhode Island</option>
-		    	<option>South Carolina</option>
-		    	<option>South Dakota</option>
-		    	<option>Tennessee</option>
-		    	<option>Texas</option>
-		    	<option>Utah</option>
-		    	<option>Vermont</option>
-		    	<option>Virginia</option>
-		    	<option>Washington</option>
-		    	<option>West Virginia</option>
-		    	<option>Wisconsin</option>
-		    	<option>Wyoming</option>
+		    	<option>AL</option>
+		    	<option>AK</option>
+		    	<option>AZ</option>
+		    	<option>AR</option>
+		    	<option>CA</option>
+		    	<option>CO</option>
+		    	<option>CT</option>
+		    	<option>DE</option>
+		    	<option>FL</option>
+		    	<option>GA</option>
+		    	<option>HI</option>
+		    	<option>ID</option>
+		    	<option>IL</option>
+		    	<option>IN</option>
+		    	<option>IA</option>
+		    	<option>KS</option>
+		    	<option>KY</option>
+		    	<option>LA</option>
+		    	<option>ME</option>
+		    	<option>MD</option>
+		    	<option>MA</option>
+		    	<option>MI</option>
+		    	<option>MN</option>
+		    	<option>MS</option>
+		    	<option>MO</option>
+		    	<option>MT</option>
+		    	<option>NE</option>
+		    	<option>NV</option>
+		    	<option>NH</option>
+		    	<option>NJ</option>
+		    	<option>NM</option>
+		    	<option>NY</option>
+		    	<option>NC</option>
+		    	<option>ND</option>
+		    	<option>OH</option>
+		    	<option>OK</option>
+		    	<option>OR</option>
+		    	<option>PA</option>
+		    	<option>RI</option>
+		    	<option>SC</option>
+		    	<option>SD</option>
+		    	<option>TN</option>
+		    	<option>TX</option>
+		    	<option>UT</option>
+		    	<option>VT</option>
+		    	<option>VA</option>
+		    	<option>WA</option>
+		    	<option>WV</option>
+		    	<option>WI</option>
+		    	<option>WY</option>
 		    </select>
 		</div>
+		
+		<fieldset disabled>
 		<div class="form-group">
 		<label for="i.InstitutionRegion">Program Region</label>
 		<select class="form-control" id="InstitutionRegion" name="InstitutionRegion"  >
@@ -174,28 +192,13 @@ $id = $_GET['id'];
     		<option>West</option>
     		<option>Other</option>
 		</select>
-		    
 		</div>
+		</fieldset>
 		<div class="form-group">
 		    <label for="p.ProgramName">Program Name</label>
 		    <input type="text" class="form-control" id="programName" name="programName" value="<?php echo $modalData['ProgramName'];?>"/>
 		</div>
-		<div class="form-group">
-		    <label for="co.CollegeType">College Type</label>
-
-		    <select class="form-control" id="CollegeType" name="CollegeType" >
-		    	<option value="<?php echo $modalData['CollegeType'];?>"><?php echo $modalData['CollegeType'];?></option>
-		    	<option>Arts and Sciences</option>
-		    	<option>Business</option>
-		    	<option>Center or Institute</option>
-		    	<option>Engineering</option>
-		    	<option>Informatics</option>
-		    	<option>Multiple Schools</option>
-		    	<option>Professional Studies</option>
-		    	<option>Information Systems &amp; Management</option>
-		    </select>
-		    
-		</div>
+		
 		<div class="form-group">
 		    <label for="p.YearEstablished">Year Established</label>
 		    <input type="text" class="form-control" id="YearEstablished" name="YearEstablished" value="<?php echo $modalData['YearEstablished'];?>"/>
@@ -212,16 +215,30 @@ $id = $_GET['id'];
 <div class="collapse" id="ProgramDetailsCollapse">
   <div class="card card-body">
   <div class="form-group">
-		    <label for="p.ProgramObjectives">Program Objectives</label>
-		    <textarea  class="form-control" rows="6" id="ProgramObjectives" name="ProgramObjectives"><?php echo $modalData['ProgramObjectives'];?></textarea>
+		    <label for="p.ProgramObjectives">Program Description</label>
+		    <textarea  maxlength = "255" class="form-control" rows="6" id="ProgramObjectives" name="ProgramObjectives"><?php echo $modalData['ProgramObjectives'];?></textarea>
 		</div>
 		<div class="form-group">
 		    <label for="">Program URL</label>
 		    <input type="text" class="form-control" id="" name="" value=""/>
 		</div>
 		<div class="form-group">
-		    <label for="p.ProgramType">Program Type</label>
-		    <input type="text" class="form-control" id="ProgramType" name="ProgramType" value="<?php echo $modalData['ProgramType'];?>"/>
+		<label for="p.ProgramType">Program Type</label>
+		<select class="form-control" id="ProgramType" name="ProgramType"  >
+    		<option value="<?php echo $modalData['ProgramType'];?>"><?php echo $modalData['ProgramType'];?></option>
+    		<option>B.B.A</option>
+    		<option>B.S.</option>
+    		<option>B.S. - Track Certificate</option>
+    		<option>Graduate Certificate</option>
+    		<option>M.B.A.</option>
+    		<option>M.B.A. - Concentration</option>
+    		<option>M.S.</option>
+    		<option>M.S. - Concentration</option>
+    		<option>M.S. and Graduate Certificate</option>
+    		<option>M.S. Concentration - Professional Track</option>
+    		<option>PhD</option>
+    		<option>PhD - Concentration</option>
+		</select>
 		</div>
 		<div class="form-group">
 		<label for="p.DeliveryMethod">Program Delivery</label>
@@ -245,7 +262,7 @@ $id = $_GET['id'];
 		</div>
 		<div class="form-group">
 		    <label for="p.OtherRequirement">Other Requirements</label>
-		    <textarea  class="form-control" rows="6" id="OtherRequirement" name="OtherRequirement"><?php echo $modalData['OtherRequirement'];?></textarea>
+		    <textarea  maxlength = "255" class="form-control" rows="6" id="OtherRequirement" name="OtherRequirement"><?php echo $modalData['OtherRequirement'];?></textarea>
 		</div>
   </div>
 </div>
@@ -296,79 +313,81 @@ while($row = mysqli_fetch_assoc($result)){
 
 <!-- Submission -->
   <p>
-<button class="btn btn-primary" style="width:550px; height:40px;" type="submit" value="Update" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
+<button class = "btn btn-primary" style="width:550px; height:40px;" type="submit" value="Update" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
 Submit</button>
   </p>
 </div>
 <script>
-//function validateForm() {
-//    var cn = document.forms["myForm"]["contactName"].value;
-    
- //   if (cn == "") {
- //       alert("Contact Name must be filled out");
- //       return false;
-//    }
 
- function validateEmail(contactEmail) {
-  var re = /\S+@\S+\.\S+/;
-  return re.test(contactEmail);
+//function validateForm() {
+//var cn = document.forms["myForm"]["contactName"].value;
+
+//   if (cn == "") {
+//       alert("Contact Name must be filled out");
+//       return false;
+//}
+
+function validateEmail(contactEmail) {
+var re = /\S+@\S+\.\S+/;
+return re.test(contactEmail);
 }
- 
+
 function validateForm() {
-    var cn = document.forms["programForm"]["contactName"].value; var inputValcn = document.getElementById("contactName");
-    var ct = document.forms["programForm"]["contactTitle"].value; var inputValct = document.getElementById("contactTitle");
-    var cp = document.forms["programForm"]["contactPhone"].value; var inputValcp = document.getElementById("contactPhone");
-    var ce = document.forms["programForm"]["contactEmail"].value; var inputValce = document.getElementById("contactEmail");
-    
-     if (cn == "") {
-        alert("Contact Name must be filled out");
-        inputValcn.style.border="1px solid red";
-        return false;
-    }
-     if (ct == ""){
-      	alert("Contact Title must be filled out");
-      	inputValct.style.border="1px solid red";
-        return false;
-      }
-     if (cp == ""){
-       	alert("Contact Phone must be filled out");
-       	inputValcp.style.border="1px solid red";
-        return false;
-       }
-     if (ce == ""){
-         alert("Contact Email must be filled out");
-         inputValce.style.border="1px solid red";
-         return false;
-        }
-     var email = $("#contactEmail").val();
-     if (validateEmail(email) == false)
-     {
-    	 alert("Contact Email must be filled out with a valid email");
-         inputValce.style.border="1px solid red";
-         return false;
-     }
      var pn = document.forms["programForm"]["programName"].value; var inputValpn = document.getElementById("programName");
      if (pn == ""){
-        	alert("Program Name must be filled out");
-        	inputValpn.style.border="1px solid red";
-         return false;
-        }
-     var po = document.forms["programForm"]["ProgramObjectives"].value; var inputValpo = document.getElementById("ProgramObjectives");
-     if (po == ""){
-        	alert("Program Objectives must be filled out");
-        	inputValpo.style.border="1px solid red";
-         return false;
-        }
-    else
-    {
-        SubmissionFunction();
-        return true;
-    }
+var cn = document.forms["programForm"]["contactName"].value; var inputValcn = document.getElementById("contactName");
+var ct = document.forms["programForm"]["contactTitle"].value; var inputValct = document.getElementById("contactTitle");
+var cp = document.forms["programForm"]["contactPhone"].value; var inputValcp = document.getElementById("contactPhone");
+var ce = document.forms["programForm"]["contactEmail"].value; var inputValce = document.getElementById("contactEmail");
+
+if (cn == "") {
+  alert("Contact Name must be filled out");
+  inputValcn.style.border="1px solid red";
+  return false;
+}
+if (ct == ""){
+	alert("Contact Title must be filled out");
+	inputValct.style.border="1px solid red";
+  return false;
+}
+if (cp == ""){
+ 	alert("Contact Phone must be filled out");
+ 	inputValcp.style.border="1px solid red";
+  return false;
+ }
+if (ce == ""){
+   alert("Contact Email must be filled out");
+   inputValce.style.border="1px solid red";
+   return false;
+  }
+var email = $("#contactEmail").val();
+if (validateEmail(email) == false)
+{
+	 alert("Contact Email must be filled out with a valid email");
+   inputValce.style.border="1px solid red";
+   return false;
+}
+var pn = document.forms["programForm"]["programName"].value; var inputValpn = document.getElementById("programName");
+if (pn == ""){
+  	alert("Program Name must be filled out");
+  	inputValpn.style.border="1px solid red";
+   return false;
+  }
+var po = document.forms["programForm"]["ProgramObjectives"].value; var inputValpo = document.getElementById("ProgramObjectives");
+if (po == ""){
+  	alert("Program Objectives must be filled out");
+  	inputValpo.style.border="1px solid red";
+   return false;
+  }
+else
+{
+  SubmissionFunction();
+  return true;
+}
 }
 function SubmissionFunction() {
 	alert("Your data has been submitted for approval.");
 }
-
 </script>
  
 	</form>
