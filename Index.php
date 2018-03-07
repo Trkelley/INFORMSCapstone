@@ -22,7 +22,7 @@
 <div style = "text-align:right; margin-right: 5%;" ><button>Log Out</button></div>;
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="programModalLabel" aria-hidden="true">
+<div class="modal fade" id="programModal" tabindex="-1" role="dialog" aria-labelledby="programModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -86,7 +86,7 @@ while($row = mysqli_fetch_assoc($result)){
         echo '<td>
                     <a class="btn btn-small btn-primary"
                        data-toggle="modal"
-                       data-target="#exampleModal"
+                       data-target="#programModal"
                        data-whatever="'.$row['ProgramId'].' ">Edit</a>
                  </td>';
         echo '<tr>';
@@ -107,7 +107,7 @@ while($row = mysqli_fetch_assoc($result)){
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
-    $('#exampleModal').on('show.bs.modal', function (event) {
+    $('#programModal').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget) // Button that triggered the modal
           var recipient = button.data('whatever') // Extract info from data-* attributes
           var modal = $(this);
