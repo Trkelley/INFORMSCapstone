@@ -51,7 +51,7 @@ $id = $_GET['id'];
 	<input type="hidden" name="contactId" value="<?php echo $modalData['ContactId']; ?>">
 <!-- Contact Information -->
 	<p>
-  <button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ContactInfoCollapse" aria-expanded="false" aria-controls="ContactInfoCollapse">
+  <button class="btn btn-primary" style="width:870px; height:40px;" type="button" data-toggle="collapse" data-target="#ContactInfoCollapse" aria-expanded="false" aria-controls="ContactInfoCollapse">
     Contact Information
   </button>
 </p>
@@ -78,7 +78,7 @@ $id = $_GET['id'];
 
 <!-- Progam General Information -->
 <p>
-<button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ProgramGeneralInfoCollapse" aria-expanded="false" aria-controls="ProgramGeneralInfoCollapse">
+<button class="btn btn-primary" style="width:870px; height:40px;" type="button" data-toggle="collapse" data-target="#ProgramGeneralInfoCollapse" aria-expanded="false" aria-controls="ProgramGeneralInfoCollapse">
     Program General Information
   </button>
   </p>
@@ -204,7 +204,7 @@ $id = $_GET['id'];
 
 <!-- Program Details -->
 <p>
-<button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ProgramDetailsCollapse" aria-expanded="false" aria-controls="ProgramDetailsCollapse">
+<button class="btn btn-primary" style="width:870px; height:40px;" type="button" data-toggle="collapse" data-target="#ProgramDetailsCollapse" aria-expanded="false" aria-controls="ProgramDetailsCollapse">
     Program Details
   </button>
   </p>
@@ -265,7 +265,7 @@ $id = $_GET['id'];
 
 <!-- Curriculum Information -->
 <p>
-<button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#CurriculumInfoCollapse" aria-expanded="false" aria-controls="CurriculumInfoCollapse">
+<button class="btn btn-primary" style="width:870px; height:40px;" type="button" data-toggle="collapse" data-target="#CurriculumInfoCollapse" aria-expanded="false" aria-controls="CurriculumInfoCollapse">
     Curriculum Information
   </button>
   </p>
@@ -292,7 +292,11 @@ $id = $_GET['id'];
 while($row = mysqli_fetch_assoc($result)){
         echo '<tr>';
         echo '<td>' .$row['CourseTitle']. '</td>';
-        echo '<td>' .$row['CourseType']. '</td>';
+        echo '<td>';
+        echo '<select><option value= "'.$row['RequirementType'].'">'.$row['RequirementType'].'</option>
+        <option>Required</option>
+        <option>Elective</option>';
+        echo "</td>";
         echo '<td>' .$row['ProgramName']. '</td>';
         echo '<tr>';
 };
@@ -309,7 +313,7 @@ while($row = mysqli_fetch_assoc($result)){
 
 <!-- Submission -->
   <p>
-<button class = "btn btn-primary" style="width:550px; height:40px;" type="submit" value="Update" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
+<button class = "btn btn-primary" style="width:870px; height:40px;" type="submit" value="Update" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
 Submit</button>
   </p>
 </div>
