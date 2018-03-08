@@ -22,10 +22,10 @@
 <div style = "text-align:right; margin-right: 5%;" ><button>Log Out</button></div>;
 
 <!-- Modal -->
-<div class="modal fade" id="programModal" tabindex="-1" role="dialog" aria-labelledby="programModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
+<div class="modal fade bs-modal-lg" id="programModal" tabindex="-1" role="dialog" aria-labelledby="programModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content modal-lg">
+            <div class="modal-header modal-lg">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title" id="programModalLabel">Edit Program Detail</h4>
             </div>
