@@ -2,34 +2,11 @@
 <?php
 require('conn.php');
 $id = $_GET['id'];
-$i = 0;
-/*if (isset($_POST['submit'])) {
- $id = $_POST['InstitutionId'];
- $collegeName = $_POST['CollegeName'];
- $institutionName = $_POST['InstitutionName'];
- $programName = $_POST['ProgramName'];
- $programType = $_POST['ProgramType'];
- $deliveryMethod = $_POST['DeliveryMethod'];
- $programAccess = $_POST['ProgramAccess'];
- $programObjectives = $_POST['ProgramObjectives'];
- $fullTimeDuration = $_POST['FullTimeDuration'];
- $partTimeDuration = $_POST['PartTimeDuration'];
- $testingRequirement = $_POST['TestingRequirement'];
- $otherRequirement = $_POST['OtherRequirement'];
- $credits = $_POST['Credits'];
- $yearEstablished = $_POST['YearEstablished'];
- $referenceID = $_POST['ReferenceID'];
- $updateType = $_POST['UpdateType'];
- $lastUpdate = $_POST['LastUpdate'];
- $conn->query("INSERT INTO programs(ProgramName, ProgramType, DeliveryMethod, ProgramAccess, ProgramObjectives, FullTimeDuration, PartTimeDuration
- , TestingRequirement, OtherRequirement, Credits, YearEstablished, ReferenceID, UpdateType, LastUpdate) VALUES( '$programName', 
- '$programType', '$id')");
- header("location:Index.php");
- }*/
+
  $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.InstitutionZip, i.InstitutionRegion,
     p.ProgramName, p.ProgramType, p.DeliveryMethod, p.ProgramObjectives, p.FullTimeDuration, p.PartTimeDuration, p.YearEstablished,
 	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit, p.ProgramObjectives, p.OtherRequirement,
-	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, co.CollegeName, co.CollegeType, courses.CourseTitle, courses.CourseType, pc.RequirementType
+	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, c.ContactId, co.CollegeName, co.CollegeType, courses.CourseTitle, courses.CourseType, pc.RequirementType
     FROM programs p
 	JOIN institutions i
 	ON p.InstitutionId = i.InstitutionId
@@ -42,7 +19,9 @@ $i = 0;
     JOIN courses
     ON pc.CourseId = courses.CourseId WHERE p.programId = $id;");
  $result = $conn->query($sql);
- $modalData = $conn->query($sql)->fetch_array()
+ $modalData = $conn->query($sql)->fetch_array();
+ 
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,10 +44,11 @@ $i = 0;
 	<p class="h3 font-weight-bold"><?php echo $modalData['InstitutionName']?> </p>
 	<p class="h4"><?php echo $modalData['CollegeName']?></p>
 	<p class="h6 text-muted"><?php echo $modalData['ProgramName']?></p>
-</div>
-<form method="post" action="Index.php" role="form"id="programForm" onsubmit="return validateForm()">
-	<div class="modal-body">
 	
+</div>
+<form method="post" action="insert.php" role="form" id="programForm" onsubmit="return validateForm()">
+	<div class="modal-body">
+	<input type="hidden" name="contactId" value="<?php echo $modalData['ContactId']; ?>">
 <!-- Contact Information -->
 	<p>
   <button class="btn btn-primary" style="width:550px; height:40px;" type="button" data-toggle="collapse" data-target="#ContactInfoCollapse" aria-expanded="false" aria-controls="ContactInfoCollapse">
@@ -120,6 +100,7 @@ $i = 0;
 		    	<option>Other</option>
 		    </select> 
 		</div>
+	
 		<div class="form-group">
 		    <label for="i.InstitutionCity">Program City</label>
 		    <input type="text" class="form-control" id="InstitutionCity" name="InstitutionCity" value="<?php echo $modalData['InstitutionCity'];?>"/>
@@ -191,14 +172,29 @@ $i = 0;
     		<option>Northeast</option>
     		<option>West</option>
     		<option>Other</option>
-		</select>
+		</select> 
 		</div>
 		</fieldset>
 		<div class="form-group">
 		    <label for="p.ProgramName">Program Name</label>
 		    <input type="text" class="form-control" id="programName" name="programName" value="<?php echo $modalData['ProgramName'];?>"/>
 		</div>
-		
+		<div class="form-group">
+		    <label for="co.CollegeType">College Type</label>
+
+		    <select class="form-control" id="CollegeType" name="CollegeType" >
+		    	<option value="<?php echo $modalData['CollegeType'];?>"><?php echo $modalData['CollegeType'];?></option>
+		    	<option>Arts and Sciences</option>
+		    	<option>Business</option>
+		    	<option>Center or Institute</option>
+		    	<option>Engineering</option>
+		    	<option>Informatics</option>
+		    	<option>Multiple Schools</option>
+		    	<option>Professional Studies</option>
+		    	<option>Information Systems &amp; Management</option>
+		    </select>
+		    
+		</div>
 		<div class="form-group">
 		    <label for="p.YearEstablished">Year Established</label>
 		    <input type="text" class="form-control" id="YearEstablished" name="YearEstablished" value="<?php echo $modalData['YearEstablished'];?>"/>
@@ -223,7 +219,7 @@ $i = 0;
 		    <input type="text" class="form-control" id="" name="" value=""/>
 		</div>
 		<div class="form-group">
-		<label for="p.ProgramType">Program Type</label>
+		    <label for="p.ProgramType">Program Type</label>
 		<select class="form-control" id="ProgramType" name="ProgramType"  >
     		<option value="<?php echo $modalData['ProgramType'];?>"><?php echo $modalData['ProgramType'];?></option>
     		<option>B.B.A</option>
@@ -262,7 +258,7 @@ $i = 0;
 		</div>
 		<div class="form-group">
 		    <label for="p.OtherRequirement">Other Requirements</label>
-		    <textarea  maxlength = "255" class="form-control" rows="6" id="OtherRequirement" name="OtherRequirement"><?php echo $modalData['OtherRequirement'];?></textarea>
+		   <textarea  maxlength = "255" class="form-control" rows="6" id="OtherRequirement" name="OtherRequirement"><?php echo $modalData['OtherRequirement'];?></textarea>
 		</div>
   </div>
 </div>
@@ -322,9 +318,9 @@ Submit</button>
 //function validateForm() {
 //var cn = document.forms["myForm"]["contactName"].value;
 
-//   if (cn == "") {
-//       alert("Contact Name must be filled out");
-//       return false;
+// if (cn == "") {
+//     alert("Contact Name must be filled out");
+//     return false;
 //}
 
 function validateEmail(contactEmail) {
@@ -339,56 +335,84 @@ var cp = document.forms["programForm"]["contactPhone"].value; var inputValcp = d
 var ce = document.forms["programForm"]["contactEmail"].value; var inputValce = document.getElementById("contactEmail");
 
 if (cn == "") {
-  alert("Contact Name must be filled out");
-  inputValcn.style.border="1px solid red";
-  return false;
+alert("Contact Name must be filled out");
+inputValcn.style.border="1px solid red";
+return false;
 }
 if (ct == ""){
 	alert("Contact Title must be filled out");
 	inputValct.style.border="1px solid red";
-  return false;
+return false;
 }
 if (cp == ""){
- 	alert("Contact Phone must be filled out");
- 	inputValcp.style.border="1px solid red";
-  return false;
- }
+	alert("Contact Phone must be filled out");
+	inputValcp.style.border="1px solid red";
+return false;
+}
 if (ce == ""){
-   alert("Contact Email must be filled out");
-   inputValce.style.border="1px solid red";
-   return false;
-  }
+ alert("Contact Email must be filled out");
+ inputValce.style.border="1px solid red";
+ return false;
+}
 var email = $("#contactEmail").val();
 if (validateEmail(email) == false)
 {
 	 alert("Contact Email must be filled out with a valid email");
-   inputValce.style.border="1px solid red";
-   return false;
+ inputValce.style.border="1px solid red";
+ return false;
 }
 var pn = document.forms["programForm"]["programName"].value; var inputValpn = document.getElementById("programName");
 if (pn == ""){
-  	alert("Program Name must be filled out");
-  	inputValpn.style.border="1px solid red";
-   return false;
-  }
+	alert("Program Name must be filled out");
+	inputValpn.style.border="1px solid red";
+ return false;
+}
 var po = document.forms["programForm"]["ProgramObjectives"].value; var inputValpo = document.getElementById("ProgramObjectives");
 if (po == ""){
-  	alert("Program Objectives must be filled out");
-  	inputValpo.style.border="1px solid red";
-   return false;
-  }
+	alert("Program Objectives must be filled out");
+	inputValpo.style.border="1px solid red";
+ return false;
+}
 else
 {
-  SubmissionFunction();
-  return true;
+SubmissionFunction();
+return true;
 }
 }
 function SubmissionFunction() {
 	alert("Your data has been submitted for approval.");
 }
+
 </script>
  
 	</form>
+<?php if (isset($_POST['submit'])) {
+    
+ $contactId = $_POST['ContactId'];
+ $contactName = $_POST['ContactName'];
+ $contactTitle = $_POST['ContactTitle'];
+ $contactPhone = $_POST['ContactPhone'];
+ $contactEmail = $_POST['ContactEmail'];
+ $collegeName =  $_POST['CollegeName'];
+ $institutionName = $_POST['InstitutionName'];
+ $programName = $_POST['ProgramName'];
+ $programType = $_POST['ProgramType'];
+ $deliveryMethod = $_POST['DeliveryMethod'];
+ $programAccess = $_POST['ProgramAccess'];
+ $programObjectives = $_POST['ProgramObjectives'];
+ $fullTimeDuration = $_POST['FullTimeDuration'];
+ $partTimeDuration = $_POST['PartTimeDuration'];
+ $testingRequirement = $_POST['TestingRequirement'];
+ $otherRequirement = $_POST['OtherRequirement'];
+ $credits = $_POST['Credits'];
+ $yearEstablished = $_POST['YearEstablished'];
+ $referenceId = $_POST['ReferenceId'];
+ $lastUpdate = $_POST['LastUpdate'];
+ 
+
+}
+?>
+
 </body>
 </html>
 
