@@ -67,7 +67,7 @@ $id = $_GET['id'];
 		</div>
 		<div class="form-group">
 		    <label for="c.ContactPhone">Contact Phone</label>
-		    <input type="text" class="form-control" id="contactPhone" name="contactPhone" value="<?php echo $modalData['ContactPhone'];?>"/>
+		    <input type="text" class="form-control phone" id="contactPhone" name="contactPhone" value="<?php echo $modalData['ContactPhone'];?>"/>
 		</div>
 		<div class="form-group">
 		    <label for="c.ContactEmail">Contact Email</label>
@@ -326,6 +326,11 @@ Submit</button>
 //     alert("Contact Name must be filled out");
 //     return false;
 //}
+$(".phone").on('change', function() {
+        var number = $(this).val()
+        number = number.replace(/(\d{3})(\d{3})(\d{4})/, "($1)-$2-$3");
+        $(this).val(number)
+    });
 
 function validateEmail(contactEmail) {
 var re = /\S+@\S+\.\S+/;
