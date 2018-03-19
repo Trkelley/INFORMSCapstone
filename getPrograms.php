@@ -2,7 +2,6 @@
 <?php
 require('conn.php');
 $id = $_GET['id'];
-
 $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.InstitutionZip, i.InstitutionRegion,
     p.ProgramName, p.ProgramType, p.DeliveryMethod, p.ProgramObjectives, p.FullTimeDuration, p.PartTimeDuration, p.YearEstablished,
 	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit, p.ProgramObjectives, p.OtherRequirement,
@@ -295,7 +294,6 @@ while($row = mysqli_fetch_assoc($result))
         <option>Operations Research</option>
         <option>Statistics</option>';
         echo "</td>";
-
         echo '<td>
                     <a class="btn btn-small btn-primary"
                        data-toggle=""
@@ -305,7 +303,6 @@ while($row = mysqli_fetch_assoc($result))
  
 };
         $result->close();
-
 ?>
                     </tr>
                 </tbody>               
@@ -327,15 +324,12 @@ Submit</button>
   </p>
 </div>
 <script>
-
 //function validateForm() {
 //var cn = document.forms["myForm"]["contactName"].value;
-
 //   if (cn == "") {
 //       alert("Contact Name must be filled out");
 //       return false;
 //}
-
 $('.phone')
 .on('keypress', function(e) {
   var key = e.charCode || e.keyCode || 0;
@@ -358,7 +352,6 @@ $('.phone')
       phone.val(phone.val().slice(0, 13));
     }
   }
-
   // Allow numeric (and tab, backspace, delete) keys only
   return (key == 8 ||
     key == 9 ||
@@ -366,10 +359,8 @@ $('.phone')
     (key >= 48 && key <= 57) ||
     (key >= 96 && key <= 105));
 })
-
 .on('focus', function() {
   phone = $(this);
-
   if (phone.val().length === 0) {
     phone.val('(');
   } else {
@@ -377,26 +368,21 @@ $('.phone')
     phone.val('').val(val); // Ensure cursor remains at the end
   }
 })
-
 .on('blur', function() {
   $phone = $(this);
-
   if ($phone.val() === '(') {
     $phone.val('');
   }
 });
-
 function validateEmail(contactEmail) {
 var re = /\S+@\S+\.\S+/;
 return re.test(contactEmail);
 }
-
 function validateForm() {
 var cn = document.forms["programForm"]["contactName"].value; var inputValcn = document.getElementById("contactName");
 var ct = document.forms["programForm"]["contactTitle"].value; var inputValct = document.getElementById("contactTitle");
 var cp = document.forms["programForm"]["contactPhone"].value; var inputValcp = document.getElementById("contactPhone");
 var ce = document.forms["programForm"]["contactEmail"].value; var inputValce = document.getElementById("contactEmail");
-
 if (cn == "") {
   alert("Contact Name must be filled out");
   inputValcn.style.border="1px solid red";
@@ -445,7 +431,6 @@ else
 function SubmissionFunction() {
 	alert("Your data has been submitted for approval.");
 }
-
 function addCourse(){
 	var table = document.getElementById("currTable");
     var row = table.insertRow(<?php echo $rowCount?>);
@@ -458,9 +443,6 @@ function addCourse(){
     courseDisclipline.innerHTML = '<select class="form-control"><option></option><option>Information Systems</option><option>Operations Research</option><option>Statistics</option>';
     courseDelete.innerHTML = '<a class="btn btn-small btn-primary" data-toggle="" data-target="" data-whatever="">Delete</a>';
 }
-
-
-
 </script>
  
 	</form>
@@ -488,10 +470,7 @@ function addCourse(){
  $referenceId = $_POST['ReferenceId'];
  $lastUpdate = $_POST['LastUpdate'];
  
-
 }
 ?>
 </body>
 </html>
-
-
