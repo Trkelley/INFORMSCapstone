@@ -14,15 +14,16 @@
     a.btnDrop {
      padding: 20px 400px;
     }
+    
     </style>
 </head>
 <body>
 
 <!--  Log Out Button -->
-<div style = "text-align:right; margin-right: 5%;" ><button>Log Out</button></div>;
+<div style = "text-align:right; margin-right: 10%;" ><button>Log Out</button></div>;
 
 <!-- Modal -->
-<div class="modal fade bs-modal-lg" id="programModal" tabindex="-1" role="dialog" aria-labelledby="programModalLabel" aria-hidden="true">
+<div class="modal fade bs-example-modal-lg custom-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="programModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content modal-lg">
             <div class="modal-header modal-lg">
@@ -51,8 +52,8 @@ $result = $conn->query($sql);
 <div class="container">
 	<div class="row">
         <div class="col-lg-12">
-            <p class="text-center" class="page-header"> <font size="5">Hello (University Administrator Name) </font></p>
-            <p class="text-center" class="page-header"><font size="4"> Below are the different programs listed for (University Name)</font></p>
+            <p class="text-center" class="page-header"> <font size="5">Hello (University Administrator Name)! </font></p>
+            <p class="text-center" class="page-header"><font size="4"> Below are the programs listed for which you are the Administrator</font></p>
             <p class = "text-center" class="page-header"> <font size="3">  To make edits to an individual program, press the edit button.</font></p>
             
         </div>
