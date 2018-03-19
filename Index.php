@@ -23,7 +23,7 @@
 <div style = "text-align:right; margin-right: 10%;" ><button>Log Out</button></div>;
 
 <!-- Modal -->
-<div class="modal fade bs-example-modal-lg custom-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="programModalLabel" aria-hidden="true">
+<div class="modal fade bs-modal-lg custom-modal" id="programModal" tabindex="-1" role="dialog" aria-labelledby="programModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content modal-lg">
             <div class="modal-header modal-lg">
