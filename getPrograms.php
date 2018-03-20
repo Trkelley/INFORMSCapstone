@@ -23,8 +23,7 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Program Information</title>
  
@@ -196,7 +195,8 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
   <div class="card card-body">
   <div class="form-group">
 		    <label for="p.ProgramObjectives">Program Description</label>
-		    <textarea  maxlength = "255" class="form-control" rows="6" id="ProgramObjectives" name="ProgramObjectives"><?php echo $modalData['ProgramObjectives'];?></textarea>
+		    <textarea  maxlength = "255" class="form-control" rows="6" id="ProgramObjectives" name="ProgramObjectives"><?php ini_set('mbstring.substitute_character', "none"); 
+		    $text= mb_convert_encoding($modalData['ProgramObjectives'], 'UTF-8', 'UTF-8'); echo $text?></textarea>
 		</div>
 		<div class="form-group">
 		    <label for="">Program URL</label>
