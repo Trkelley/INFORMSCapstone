@@ -197,7 +197,7 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
   <div class="card card-body">
   <div class="form-group">
 		    <label for="p.ProgramObjectives">Program Description</label>
-		    <textarea  maxlength = "255" class="form-control" rows="6" id="ProgramObjectives" name="ProgramObjectives"><?php echo $modalData['ProgramObjectives']?></textarea>
+		    <textarea  maxlength = "2000" class="form-control" rows="6" id="ProgramObjectives" name="ProgramObjectives"><?php echo $modalData['ProgramObjectives']?></textarea>
 		</div>
 		<div class="form-group">
 		    <label for="">Program URL</label>
