@@ -4,7 +4,7 @@ require('conn.php');
 $id = $_GET['id'];
 $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.InstitutionZip, i.InstitutionRegion,
     p.ProgramName, p.ProgramType, p.DeliveryMethod, p.ProgramObjectives, p.FullTimeDuration, p.PartTimeDuration, p.YearEstablished,
-	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit, p.ProgramObjectives, p.OtherRequirement,
+	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit, p.ProgramObjectives, p.OtherRequirement, p.ProgramAccess,
 	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, c.ContactId, co.CollegeName, co.CollegeType, courses.CourseTitle, courses.CourseType, pc.RequirementType
     FROM programs p
 	JOIN institutions i
@@ -23,9 +23,8 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"></meta>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Program Information</title>
  
@@ -82,6 +81,10 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 <div class="collapse" id="ProgramGeneralInfoCollapse">
   <div class="card card-body">
   <div class="form-group">
+	<label for="p.ProgramName">Program Name</label>
+		<input type="text" class="form-control" id="programName" name="programName" value="<?php echo $modalData['ProgramName'];?>"/>
+  </div>
+  <div class="form-group">
 		    <label for="co.CollegeName">College Name</label>
 		    <input type="text" class="form-control" id="CollegeName" name="CollegeName" value="<?php echo $modalData['CollegeName'];?>"/>
 		</div>
@@ -98,17 +101,15 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 		    </select> 
 		</div>
 		
-		<fieldset disabled>
 		<div class="form-group">
 		    <label for="i.InstitutionCity">Program City</label>
-		    <input type="text" class="form-control" id="InstitutionCity" name="InstitutionCity" value="<?php echo $modalData['InstitutionCity'];?>"/>
+		    <input type="text" class="form-control" id="InstitutionCity" name="InstitutionCity" value="<?php echo $modalData['InstitutionCity'];?>" readonly/>
 		</div>
-		</fieldset>
-		<fieldset disabled>
+		
 		<div class="form-group">
 		    <label for="i.InstitutionState">Program State</label>
-		    <select class="form-control" id="InstitutionState" name="InstitutionState" >
-		    	<option value="<?php echo $modalData['InstitutionState'];?>"><?php echo $modalData['InstitutionState'];?></option>
+		    <input class="form-control" id="InstitutionState" name="InstitutionState" value="<?php echo $modalData['InstitutionState'];?>" readonly/>
+		    	<!--<option value="<?php echo $modalData['InstitutionState'];?>"><?php echo $modalData['InstitutionState'];?></option>
 		    	<option>AL</option>
 		    	<option>AK</option>
 		    	<option>AZ</option>
@@ -159,30 +160,28 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 		    	<option>WV</option>
 		    	<option>WI</option>
 		    	<option>WY</option>
-		    </select>
+		    </select>-->
 		</div>
-		</fieldset>
-		<fieldset disabled>
+	
+	
 		<div class="form-group">
 		<label for="i.InstitutionRegion">Program Region</label>
-		<select class="form-control" id="InstitutionRegion" name="InstitutionRegion"  >
-    		<option value="<?php echo $modalData['InstitutionRegion'];?>"><?php echo $modalData['InstitutionRegion'];?></option>
+		<input type="text" class="form-control" id="InstitutionRegion" name="InstitutionRegion" value="<?php echo $modalData['InstitutionRegion'];?>" readonly />
+		
+		<!--<select class="form-control" id="InstitutionRegion" name="InstitutionRegion"  >
+    		 <option value="<?php echo $modalData['InstitutionRegion'];?>"><?php echo $modalData['InstitutionRegion'];?></option>
     		<option>South</option>
     		<option>Midwest</option>
     		<option>Northeast</option>
     		<option>West</option>
     		<option>Other</option>
-		</select>
+		</select>  -->
 		</div>
-		</fieldset>
-		<div class="form-group">
-		    <label for="p.ProgramName">Program Name</label>
-		    <input type="text" class="form-control" id="programName" name="programName" value="<?php echo $modalData['ProgramName'];?>"/>
-		</div>
+
 		
 		<div class="form-group">
 		    <label for="p.YearEstablished">Year Established</label>
-		    <input type="text" class="form-control" id="YearEstablished" name="YearEstablished" value="<?php echo $modalData['YearEstablished'];?>"/>
+		    <input type="text" class="form-control" id="YearEstablished" name="YearEstablished" value="<?php echo $modalData['YearEstablished'];?>" readonly/>
 		</div>
   </div>
 </div>
@@ -201,7 +200,7 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 		</div>
 		<div class="form-group">
 		    <label for="">Program URL</label>
-		    <input type="text" class="form-control" id="" name="" value=""/>
+		    <input type="text" class="form-control" id="ProgramUrl" name="ProgramUrl" value="<?php echo $modalData['ProgramAccess'];?>" />
 		</div>
 		<div class="form-group">
 		<label for="p.ProgramType">Program Type</label>
@@ -235,14 +234,70 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 		</div>
 		<div class="form-group">
 		    <label for="p.FullTimeDuration">Full-Time Duration</label>
-		    <input type="text" class="form-control" id="FullTimeDuration" name="FullTimeDuration" value="<?php echo $modalData['FullTimeDuration'];?>"/>
+		    <select class="form-control" id="FullTimeDuration" name="FullTimeDuration">
+				<option value="<?php echo $modalData['FullTimeDuration'];?>"><?php echo $modalData['FullTimeDuration'];?></option>
+		    	<option>N/A</option>
+		    	<option>1 Months</option>
+		    	<option>2 Months</option>
+		    	<option>3 Months</option>
+		    	<option>4 Months</option>
+		    	<option>5 Months</option>
+		    	<option>6 Months</option>
+		    	<option>7 Months</option>
+		    	<option>8 Months</option>
+		    	<option>9 Months</option>
+		    	<option>10 Months</option>
+		    	<option>11 Months</option>
+		    	<option>12 Months</option>
+		    	<option>13 Months</option>
+		    	<option>14 Months</option>
+		    	<option>15 Months</option>
+		    	<option>16 Months</option>
+		    	<option>17 Months</option>
+		    	<option>18 Months</option>
+		    	<option>19 Months</option>
+		    	<option>20 Months</option>
+		    	<option>21 Months</option>
+		    	<option>22 Months</option>
+		    	<option>23 Months</option>
+		    	<option>24 Months</option>
+		    	<option>25+ Months</option>
+			</select>
 		</div>
 		<div class="form-group">
 		    <label for="p.PartTimeDuration">Part-Time Duration</label>
-		    <input type="text" class="form-control" id="PartTimeDuration" name="PartTimeDuration" value="<?php echo $modalData['PartTimeDuration'];?>"/>
+		     <select class="form-control" id="PartTimeDuration" name="PartTimeDuration">
+			<option value="<?php echo $modalData['PartTimeDuration'];?>"><?php echo $modalData['PartTimeDuration'];?></option>
+		    	<option>N/A</option>
+		    	<option>1 Months</option>
+		    	<option>2 Months</option>
+		    	<option>3 Months</option>
+		    	<option>4 Months</option>
+		    	<option>5 Months</option>
+		    	<option>6 Months</option>
+		    	<option>7 Months</option>
+		    	<option>8 Months</option>
+		    	<option>9 Months</option>
+		    	<option>10 Months</option>
+		    	<option>11 Months</option>
+		    	<option>12 Months</option>
+		    	<option>13 Months</option>
+		    	<option>14 Months</option>
+		    	<option>15 Months</option>
+		    	<option>16 Months</option>
+		    	<option>17 Months</option>
+		    	<option>18 Months</option>
+		    	<option>19 Months</option>
+		    	<option>20 Months</option>
+		    	<option>21 Months</option>
+		    	<option>22 Months</option>
+		    	<option>23 Months</option>
+		    	<option>24 Months</option>
+		    	<option>25+ Months</option>	
+		    </select>		
 		</div>
 		<div class="form-group">
-		    <label for="p.OtherRequirement">Other Requirements</label>
+		    <label for="p.OtherRequirement">Application Requirements</label>
 		    <textarea  maxlength = "255" class="form-control" rows="6" id="OtherRequirement" name="OtherRequirement"><?php echo $modalData['OtherRequirement'];?></textarea>
 		</div>
   </div>
@@ -379,11 +434,16 @@ function validateEmail(contactEmail) {
 var re = /\S+@\S+\.\S+/;
 return re.test(contactEmail);
 }
+
+	
 function validateForm() {
 var cn = document.forms["programForm"]["contactName"].value; var inputValcn = document.getElementById("contactName");
 var ct = document.forms["programForm"]["contactTitle"].value; var inputValct = document.getElementById("contactTitle");
 var cp = document.forms["programForm"]["contactPhone"].value; var inputValcp = document.getElementById("contactPhone");
 var ce = document.forms["programForm"]["contactEmail"].value; var inputValce = document.getElementById("contactEmail");
+var ft = document.forms["programForm"]["FullTimeDuration"].value; var inputValft = document.getElementById("FullTimeDuration");
+var pt = document.forms["programForm"]["PartTimeDuration"].value; var inputValpt = document.getElementById("PartTimeDuration");
+//ft pt 
 if (cn == "") {
   alert("Contact Name must be filled out");
   inputValcn.style.border="1px solid red";
@@ -404,6 +464,16 @@ if (ce == ""){
    inputValce.style.border="1px solid red";
    return false;
   }
+if (ft == ""){
+	alert("Please choose a Full Time Duration Option");
+	inputValft.style.border="1px solid red";
+	return false;
+}
+if (pt == ""){
+	alert("Please choose a Part Time Duration Option");
+	inputValpt.style.border="1px solid red";
+	return false;
+}
 var email = $("#contactEmail").val();
 if (validateEmail(email) == false)
 {
@@ -411,6 +481,23 @@ if (validateEmail(email) == false)
    inputValce.style.border="1px solid red";
    return false;
 }
+//var fullTime = $("#FullTimeDuration").val();
+if (ft.match(/Months/i)){
+
+}else{
+	alert("Full Time Duration must be in Months");
+	inputValft.style.border="1px solid red";
+	return false; 	
+}
+
+if (pt.match(/Months/i)){
+
+}else{
+	alert("Part Time Duration must be in Months");
+	inputValpt.style.border="1px solid red";
+	return false; 	
+}
+
 var pn = document.forms["programForm"]["programName"].value; var inputValpn = document.getElementById("programName");
 if (pn == ""){
   	alert("Program Name must be filled out");
