@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Edit Programs</title>
     <!-- Bootstrap Core CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet"></link>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
     html: margin 10% auto;

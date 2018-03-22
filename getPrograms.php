@@ -482,10 +482,8 @@ if (po == ""){
   	inputValpo.style.border="1px solid red";
    return false;
   }
-//var count = 3;
-
- 
- var cot = document.forms["programForm"]["courseTitle"].value; var inputValcot = document.getElementById("courseTitle"); 
+//The code below does not work--needs to be revised
+/*  var cot = document.forms["programForm"]["courseTitle"].value; var inputValcot = document.getElementById("courseTitle"); 
  if (cot == ""){
 	 alert("All Course Titles must be filled out");
 	 inputValcot.style.border="1px solid red";
@@ -493,9 +491,9 @@ if (po == ""){
  } 
 else
 {
-SubmissionFunction();
 return true;
-}
+} */
+SubmissionFunction();
 }
 function SubmissionFunction() {
 	alert("Your data has been submitted for approval.");
