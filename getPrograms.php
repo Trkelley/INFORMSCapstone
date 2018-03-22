@@ -2,10 +2,9 @@
 <?php
 require('conn.php');
 $id = $_GET['id'];
-
 $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.InstitutionZip, i.InstitutionRegion,
     p.ProgramName, p.ProgramType, p.DeliveryMethod, p.ProgramObjectives, p.FullTimeDuration, p.PartTimeDuration, p.YearEstablished,
-	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit, p.ProgramObjectives, p.OtherRequirement,
+	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit, p.ProgramObjectives, p.OtherRequirement, p.ProgramAccess,
 	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, c.ContactId, co.CollegeName, co.CollegeType, courses.CourseTitle, courses.CourseType, pc.RequirementType, pc.CourseId
     FROM programs p
 	JOIN institutions i
@@ -81,6 +80,10 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
   </p>
 <div class="collapse" id="ProgramGeneralInfoCollapse">
   <div class="card card-body">
+  <div class="form-group">
+	<label for="p.ProgramName">Program Name</label>
+		<input type="text" class="form-control" id="programName" name="programName" value="<?php echo $modalData['ProgramName'];?>"/>
+  </div>
   <div class="form-group">
 		    <label for="co.CollegeName">College Name</label>
 		    <input type="text" class="form-control" id="CollegeName" name="CollegeName" value="<?php echo $modalData['CollegeName'];?>"/>
@@ -159,7 +162,8 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 		    	<option>WY</option>
 		    </select>-->
 		</div>
-		
+	
+	
 		<div class="form-group">
 		<label for="i.InstitutionRegion">Program Region</label>
 		<input type="text" class="form-control" id="InstitutionRegion" name="InstitutionRegion" value="<?php echo $modalData['InstitutionRegion'];?>" readonly />
@@ -173,11 +177,7 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
     		<option>Other</option>
 		</select>  -->
 		</div>
-		
-		<div class="form-group">
-		    <label for="p.ProgramName">Program Name</label>
-		    <input type="text" class="form-control" id="programName" name="programName" value="<?php echo $modalData['ProgramName'];?>"/>
-		</div>
+
 		
 		<div class="form-group">
 		    <label for="p.YearEstablished">Year Established</label>
@@ -236,7 +236,7 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 		    <label for="p.FullTimeDuration">Full-Time Duration</label>
 		    <select class="form-control" id="FullTimeDuration" name="FullTimeDuration">
 				<option value="<?php echo $modalData['FullTimeDuration'];?>"><?php echo $modalData['FullTimeDuration'];?></option>
-		    	<option>N/A</option>
+		    	<option>None</option>
 		    	<option>1 Months</option>
 		    	<option>2 Months</option>
 		    	<option>3 Months</option>
@@ -268,7 +268,7 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 		    <label for="p.PartTimeDuration">Part-Time Duration</label>
 		     <select class="form-control" id="PartTimeDuration" name="PartTimeDuration">
 			<option value="<?php echo $modalData['PartTimeDuration'];?>"><?php echo $modalData['PartTimeDuration'];?></option>
-		    	<option>N/A</option>
+		    	<option>None</option>
 		    	<option>1 Months</option>
 		    	<option>2 Months</option>
 		    	<option>3 Months</option>
@@ -297,7 +297,7 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 		    </select>		
 		</div>
 		<div class="form-group">
-		    <label for="p.OtherRequirement">Other Requirements</label>
+		    <label for="p.OtherRequirement">Application Requirements</label>
 		    <textarea  maxlength = "255" class="form-control" rows="6" id="OtherRequirement" name="OtherRequirement"><?php echo $modalData['OtherRequirement'];?></textarea>
 		</div>
   </div>
@@ -315,7 +315,6 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
        <div class="card card-body">
         <div id="CurriculumInfoCollapse" class="collapse"> 
         <div class="form-group">
-        
         
             <table class="table table-striped table-bordered" id = "currTable">
             <thead>
@@ -352,14 +351,12 @@ while($row = mysqli_fetch_assoc($result))
         <option>Operations Research</option>
         <option>Statistics</option>';
         echo "</td>";
-
         echo '<td>
             <input type="checkbox" onclick = "deleteCourse(event)">  
              </td>';
  
 };
         $result->close();
-
 ?>
                     </tr>
                 </tbody>               
@@ -371,7 +368,6 @@ while($row = mysqli_fetch_assoc($result))
     </div>   
         </div>
     </div>
-    
 
 
 
@@ -382,15 +378,12 @@ Submit</button>
   </p>
 </div>
 <script>
-
 //function validateForm() {
 //var cn = document.forms["myForm"]["contactName"].value;
-
 //   if (cn == "") {
 //       alert("Contact Name must be filled out");
 //       return false;
 //}
-
 $('.phone')
 .on('keypress', function(e) {
   var key = e.charCode || e.keyCode || 0;
@@ -413,7 +406,6 @@ $('.phone')
       phone.val(phone.val().slice(0, 13));
     }
   }
-
   // Allow numeric (and tab, backspace, delete) keys only
   return (key == 8 ||
     key == 9 ||
@@ -421,10 +413,8 @@ $('.phone')
     (key >= 48 && key <= 57) ||
     (key >= 96 && key <= 105));
 })
-
 .on('focus', function() {
   phone = $(this);
-
   if (phone.val().length === 0) {
     phone.val('(');
   } else {
@@ -432,20 +422,18 @@ $('.phone')
     phone.val('').val(val); // Ensure cursor remains at the end
   }
 })
-
 .on('blur', function() {
   $phone = $(this);
-
   if ($phone.val() === '(') {
     $phone.val('');
   }
 });
-
 function validateEmail(contactEmail) {
 var re = /\S+@\S+\.\S+/;
 return re.test(contactEmail);
 }
 
+	
 function validateForm() {
 var cn = document.forms["programForm"]["contactName"].value; var inputValcn = document.getElementById("contactName");
 var ct = document.forms["programForm"]["contactTitle"].value; var inputValct = document.getElementById("contactTitle");
@@ -453,7 +441,7 @@ var cp = document.forms["programForm"]["contactPhone"].value; var inputValcp = d
 var ce = document.forms["programForm"]["contactEmail"].value; var inputValce = document.getElementById("contactEmail");
 var ft = document.forms["programForm"]["FullTimeDuration"].value; var inputValft = document.getElementById("FullTimeDuration");
 var pt = document.forms["programForm"]["PartTimeDuration"].value; var inputValpt = document.getElementById("PartTimeDuration");
-
+//ft pt 
 if (cn == "") {
   alert("Contact Name must be filled out");
   inputValcn.style.border="1px solid red";
@@ -483,6 +471,7 @@ if (pt == ""){
 	alert("Please choose a Part Time Duration Option");
 	inputValpt.style.border="1px solid red";
 	return false;
+}
 var email = $("#contactEmail").val();
 if (validateEmail(email) == false)
 {
@@ -492,16 +481,23 @@ if (validateEmail(email) == false)
 }
 //var fullTime = $("#FullTimeDuration").val();
 if (ft.match(/Months/i)){
-
-}else{
-	alert("Full Time Duration must be in Months");
-	inputValft.style.border="1px solid red";
-	return false; 	
 }
+
+else if (ft.match(/None/i)){
+	}
+		else{
+		alert("Full Time Duration must be in Months");
+		inputValft.style.border="1px solid red";
+		return false; 	
+
+		}
 
 if (pt.match(/Months/i)){
 
-}else{
+}
+else if (pt.match(/None/i)){
+}
+else{
 	alert("Part Time Duration must be in Months");
 	inputValpt.style.border="1px solid red";
 	return false; 	
@@ -513,7 +509,6 @@ if (pn == ""){
   	inputValpn.style.border="1px solid red";
    return false;
   }
-
 var po = document.forms["programForm"]["ProgramObjectives"].value; var inputValpo = document.getElementById("ProgramObjectives");
 if (po == ""){
   	alert("Program Objectives must be filled out");
@@ -534,13 +529,10 @@ else
   SubmissionFunction();
   return true;
 }
-
-
 }
 function SubmissionFunction() {
 	alert("Your data has been submitted for approval.");
 }
-
 function addCourse(){
 	var table = document.getElementById("currTable");
     var row = table.insertRow(<?php echo $rowCount?>);
@@ -552,7 +544,6 @@ function addCourse(){
     courseType.innerHTML = '<select class="form-control"><option></option><option>Required</option><option>Elective</option>';
     courseDisclipline.innerHTML = '<select class="form-control"><option></option><option>Information Systems</option><option>Operations Research</option><option>Statistics</option>';
     courseDelete.innerHTML = '<input type = "checkbox"/>';
-    
 }
 //function deleteCourse(e){ 
 	//var row = e.target.parentNode.parentNode;
@@ -563,12 +554,9 @@ function addCourse(){
     //});
    // $(this).children().not('input[type="checkbox"]').attr('disabled', true);
   //});
+ 
 
 //}
-
-
-
-
 
 </script>
  
@@ -597,10 +585,7 @@ function addCourse(){
  $referenceId = $_POST['ReferenceId'];
  $lastUpdate = $_POST['LastUpdate'];
  
-
 }
 ?>
 </body>
 </html>
-
-
