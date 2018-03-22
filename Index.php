@@ -15,7 +15,6 @@
     a.btnDrop {
      padding: 20px 400px;
     }
-    
     </style>
 </head>
 <body>
@@ -40,12 +39,12 @@
 <?php
 require('conn.php');
 // Display table
-$sql = "SELECT a.InstitutionId, b.InstitutionName, a.CollegeName, c.ProgramName, c.ProgramId
+$sql = "SELECT a.InstitutionId, b.InstitutionName, a.CollegeName, c.ProgramName, c.ProgramId, c.ReferenceId
         FROM colleges a
              INNER JOIN institutions b 
                    ON a.InstitutionId = b.InstitutionId
              INNER JOIN programs c 
-                   ON a.InstitutionId = c.InstitutionId";
+                   ON a.InstitutionId = c.InstitutionId WHERE c.ReferenceId IS NULL";
 $result = $conn->query($sql);
 
 ?>

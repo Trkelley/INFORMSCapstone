@@ -2,10 +2,8 @@
 <?php
 require('conn.php');
 $id = $_GET['id'];
-$sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.InstitutionZip, i.InstitutionRegion,
-    p.ProgramName, p.ProgramType, p.DeliveryMethod, p.ProgramObjectives, p.FullTimeDuration, p.PartTimeDuration, p.YearEstablished,
-	p.TestingRequirement, p.OtherRequirement, p.EstimatedResidentTuition, p.EstimatedNonresidentTuition, p.CostPerCredit, p.ProgramObjectives, p.OtherRequirement, p.ProgramAccess,
-	c.ContactName, c.ContactTitle, c.ContactPhone, c.ContactEmail, c.ContactId, co.CollegeName, co.CollegeType, courses.CourseTitle, courses.CourseType, pc.RequirementType, pc.CourseId
+
+ $sql = ("SELECT  *
     FROM programs p
 	JOIN institutions i
 	ON p.InstitutionId = i.InstitutionId
@@ -19,6 +17,8 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
     ON pc.CourseId = courses.CourseId WHERE p.programId = $id;");
  $result = $conn->query($sql);
  $modalData = $conn->query($sql)->fetch_array();
+ 
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,11 +41,44 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 	<p class="h3 font-weight-bold"><?php echo $modalData['InstitutionName']?> </p>
 	<p class="h4"><?php echo $modalData['CollegeName']?></p>
 	<p class="h6 text-muted"><?php echo $modalData['ProgramName']?></p>
+	
 </div>
 <form method="post" action="insert.php" role="form" id="programForm" onsubmit="return validateForm()">
 	<div class="modal-body">
+	
+	<!-- A BUNCH OF HIDDEN VALUES TO PASS INFO TO DATABASE -->
+	
+	<!-- Contacts -->
 	<input type="hidden" name="contactId" value="<?php echo $modalData['ContactId']; ?>">
-<!-- Contact Information -->
+	
+	<!-- Programs -->
+	<input type="hidden" name="programId" value="<?php echo $modalData['ProgramId']; ?>">
+	<input type="hidden" name="scholarship" value="<?php echo $modalData['Scholarship']; ?>">
+	<input type="hidden" name="estimatedResidentTuition" value="<?php echo $modalData['EstimatedResidentTuition']; ?>">
+	<input type="hidden" name="estimatedNonresidentTuition" value="<?php echo $modalData['EstimatedNonresidentTuition']; ?>">
+	<input type="hidden" name="costPerCredit" value="<?php echo $modalData['CostPerCredit']; ?>">
+	<input type="hidden" name="credits" value="<?php echo $modalData['Credits']; ?>">
+	<input type="hidden" name="costPerCredit" value="<?php echo $modalData['CostPerCredit']; ?>">
+	<input type="hidden" name="programAccess" value="<?php echo $modalData['ProgramAccess']; ?>">
+	<input type="hidden" name="testingRequirement" value="<?php echo $modalData['TestingRequirement']; ?>">
+	
+	
+	
+	
+	
+	<!-- Institutions -->
+	
+	<input type="hidden" name="institutionName" value="<?php echo $modalData['InstitutionName']; ?>">
+	<input type="hidden" name="institutionId" value="<?php echo $modalData['InstitutionId']; ?>">
+	<input type="hidden" name="institutionZip" value="<?php echo $modalData['InstitutionZip']; ?>">
+	<input type="hidden" name="institutionAddress" value="<?php echo $modalData['InstitutionAddress']; ?>">
+	<input type="hidden" name="institutionPhone" value="<?php echo $modalData['InstitutionPhone']; ?>">
+	<input type="hidden" name="institutionEmail" value="<?php echo $modalData['InstitutionEmail']; ?>">
+	<input type="hidden" name="institutionAccess" value="<?php echo $modalData['InstitutionAccess']; ?>">
+	
+    <!-- College Information -->
+    <input type="hidden" name="collegeId" value="<?php echo $modalData['CollegeId']; ?>">
+    
 	<p>
   <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#ContactInfoCollapse" aria-expanded="false" aria-controls="ContactInfoCollapse">
     Contact Information
@@ -86,12 +119,12 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
   </div>
   <div class="form-group">
 		    <label for="co.CollegeName">College Name</label>
-		    <input type="text" class="form-control" id="CollegeName" name="CollegeName" value="<?php echo $modalData['CollegeName'];?>"/>
+		    <input type="text" class="form-control" id="collegeName" name="collegeName" value="<?php echo $modalData['CollegeName'];?>"/>
 		</div>
 	<div class="form-group">
 		    <label for="co.CollegeType">College Type</label>
 
-		    <select class="form-control" id="CollegeType" name="CollegeType" >
+		    <select class="form-control" id="collegeType" name="collegeType" >
 		    	<option value="<?php echo $modalData['CollegeType'];?>"><?php echo $modalData['CollegeType'];?></option>
 		    	<option>Arts and Sciences</option>
 		    	<option>Business</option>
@@ -100,88 +133,25 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 		    	<option>Other</option>
 		    </select> 
 		</div>
-		
+	
 		<div class="form-group">
 		    <label for="i.InstitutionCity">Program City</label>
-		    <input type="text" class="form-control" id="InstitutionCity" name="InstitutionCity" value="<?php echo $modalData['InstitutionCity'];?>" readonly/>
+		    <input type="text" class="form-control" id="institutionCity" name="institutionCity" value="<?php echo $modalData['InstitutionCity'];?>" readonly/>
 		</div>
-		
 		<div class="form-group">
 		    <label for="i.InstitutionState">Program State</label>
-		    <input class="form-control" id="InstitutionState" name="InstitutionState" value="<?php echo $modalData['InstitutionState'];?>" readonly/>
-		    	<!--<option value="<?php echo $modalData['InstitutionState'];?>"><?php echo $modalData['InstitutionState'];?></option>
-		    	<option>AL</option>
-		    	<option>AK</option>
-		    	<option>AZ</option>
-		    	<option>AR</option>
-		    	<option>CA</option>
-		    	<option>CO</option>
-		    	<option>CT</option>
-		    	<option>DE</option>
-		    	<option>FL</option>
-		    	<option>GA</option>
-		    	<option>HI</option>
-		    	<option>ID</option>
-		    	<option>IL</option>
-		    	<option>IN</option>
-		    	<option>IA</option>
-		    	<option>KS</option>
-		    	<option>KY</option>
-		    	<option>LA</option>
-		    	<option>ME</option>
-		    	<option>MD</option>
-		    	<option>MA</option>
-		    	<option>MI</option>
-		    	<option>MN</option>
-		    	<option>MS</option>
-		    	<option>MO</option>
-		    	<option>MT</option>
-		    	<option>NE</option>
-		    	<option>NV</option>
-		    	<option>NH</option>
-		    	<option>NJ</option>
-		    	<option>NM</option>
-		    	<option>NY</option>
-		    	<option>NC</option>
-		    	<option>ND</option>
-		    	<option>OH</option>
-		    	<option>OK</option>
-		    	<option>OR</option>
-		    	<option>PA</option>
-		    	<option>RI</option>
-		    	<option>SC</option>
-		    	<option>SD</option>
-		    	<option>TN</option>
-		    	<option>TX</option>
-		    	<option>UT</option>
-		    	<option>VT</option>
-		    	<option>VA</option>
-		    	<option>WA</option>
-		    	<option>WV</option>
-		    	<option>WI</option>
-		    	<option>WY</option>
-		    </select>-->
+		    <input class="form-control" id="institutionState" name="institutionState" value="<?php echo $modalData['InstitutionState'];?>" readonly/>
 		</div>
-	
-	
+		
 		<div class="form-group">
 		<label for="i.InstitutionRegion">Program Region</label>
-		<input type="text" class="form-control" id="InstitutionRegion" name="InstitutionRegion" value="<?php echo $modalData['InstitutionRegion'];?>" readonly />
+		    <input type="text" class="form-control" id="institutionRegion" name="institutionRegion" value="<?php echo $modalData['InstitutionRegion'];?>" readonly />
 		
-		<!--<select class="form-control" id="InstitutionRegion" name="InstitutionRegion"  >
-    		 <option value="<?php echo $modalData['InstitutionRegion'];?>"><?php echo $modalData['InstitutionRegion'];?></option>
-    		<option>South</option>
-    		<option>Midwest</option>
-    		<option>Northeast</option>
-    		<option>West</option>
-    		<option>Other</option>
-		</select>  -->
 		</div>
-
 		
 		<div class="form-group">
 		    <label for="p.YearEstablished">Year Established</label>
-		    <input type="text" class="form-control" id="YearEstablished" name="YearEstablished" value="<?php echo $modalData['YearEstablished'];?>" readonly/>
+		    <input type="text" class="form-control" id="yearEstablished" name="yearEstablished" value="<?php echo $modalData['YearEstablished'];?>" readonly />
 		</div>
   </div>
 </div>
@@ -196,15 +166,15 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
   <div class="card card-body">
   <div class="form-group">
 		    <label for="p.ProgramObjectives">Program Description</label>
-		    <textarea  maxlength = "2000" class="form-control" rows="6" id="ProgramObjectives" name="ProgramObjectives"><?php echo $modalData['ProgramObjectives']?></textarea>
+		    <textarea  maxlength = "2000" class="form-control" rows="6" id="programObjectives" name="programObjectives"><?php echo $modalData['ProgramObjectives']?></textarea>
 		</div>
 		<div class="form-group">
 		    <label for="">Program URL</label>
-		    <input type="text" class="form-control" id="ProgramUrl" name="ProgramUrl" value="<?php echo $modalData['ProgramAccess'];?>" />
+		    <input type="text" class="form-control" id="programAccess" name="programAccess" value="<?php echo $modalData['ProgramAccess'];?>"/>
 		</div>
 		<div class="form-group">
-		<label for="p.ProgramType">Program Type</label>
-		<select class="form-control" id="ProgramType" name="ProgramType"  >
+		    <label for="p.ProgramType">Program Type</label>
+		<select class="form-control" id="programType" name="programType"  >
     		<option value="<?php echo $modalData['ProgramType'];?>"><?php echo $modalData['ProgramType'];?></option>
     		<option>B.B.A</option>
     		<option>B.S.</option>
@@ -222,7 +192,7 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 		</div>
 		<div class="form-group">
 		<label for="p.DeliveryMethod">Program Delivery</label>
-		<select class="form-control" id="DeliveryMethod" name="DeliveryMethod"  >
+		<select class="form-control" id="deliveryMethod" name="deliveryMethod"  >
     		<option value="<?php echo $modalData['DeliveryMethod'];?>"><?php echo $modalData['DeliveryMethod'];?></option>
     		<option>On Campus: Full-Time</option>
     		<option>On Campus: Part-Time</option>
@@ -234,7 +204,7 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 		</div>
 		<div class="form-group">
 		    <label for="p.FullTimeDuration">Full-Time Duration</label>
-		    <select class="form-control" id="FullTimeDuration" name="FullTimeDuration">
+		    <select class="form-control" id="fullTimeDuration" name="fullTimeDuration">
 				<option value="<?php echo $modalData['FullTimeDuration'];?>"><?php echo $modalData['FullTimeDuration'];?></option>
 		    	<option>None</option>
 		    	<option>1 Months</option>
@@ -266,7 +236,7 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 		</div>
 		<div class="form-group">
 		    <label for="p.PartTimeDuration">Part-Time Duration</label>
-		     <select class="form-control" id="PartTimeDuration" name="PartTimeDuration">
+		    <select class="form-control" id="partTimeDuration" name="partTimeDuration">
 			<option value="<?php echo $modalData['PartTimeDuration'];?>"><?php echo $modalData['PartTimeDuration'];?></option>
 		    	<option>None</option>
 		    	<option>1 Months</option>
@@ -294,11 +264,11 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
 		    	<option>23 Months</option>
 		    	<option>24 Months</option>
 		    	<option>25+ Months</option>	
-		    </select>		
+		    </select>
 		</div>
 		<div class="form-group">
 		    <label for="p.OtherRequirement">Application Requirements</label>
-		    <textarea  maxlength = "255" class="form-control" rows="6" id="OtherRequirement" name="OtherRequirement"><?php echo $modalData['OtherRequirement'];?></textarea>
+		   <textarea  maxlength = "255" class="form-control" rows="6" id="otherRequirement" name="otherRequirement"><?php echo $modalData['OtherRequirement'];?></textarea>
 		</div>
   </div>
 </div>
@@ -315,7 +285,7 @@ $sql = ("SELECT  i.InstitutionName, i.InstitutionCity, i.InstitutionState, i.Ins
        <div class="card card-body">
         <div id="CurriculumInfoCollapse" class="collapse"> 
         <div class="form-group">
-        
+               
             <table class="table table-striped table-bordered" id = "currTable">
             <thead>
                 <tr>
@@ -352,20 +322,20 @@ while($row = mysqli_fetch_assoc($result))
         <option>Statistics</option>';
         echo "</td>";
         echo '<td>
-            <input type="checkbox" onclick = "deleteCourse(event)">  
+            <input type="checkbox" onclick = "deleteCourse(event)"> 
              </td>';
- 
 };
         $result->close();
+
 ?>
                     </tr>
-                </tbody>               
+                </tbody>
             </table>
             <br>                         
     <div style = "text-align:right; margin-right: 10%;" >
             <a type = "button" onclick = "addCourse()">Add Course</a>
             </div>           
-    </div>   
+    </div> 
         </div>
     </div>
 
@@ -378,11 +348,13 @@ Submit</button>
   </p>
 </div>
 <script>
+
 //function validateForm() {
 //var cn = document.forms["myForm"]["contactName"].value;
-//   if (cn == "") {
-//       alert("Contact Name must be filled out");
-//       return false;
+
+// if (cn == "") {
+//     alert("Contact Name must be filled out");
+//     return false;
 //}
 $('.phone')
 .on('keypress', function(e) {
@@ -433,27 +405,26 @@ var re = /\S+@\S+\.\S+/;
 return re.test(contactEmail);
 }
 
-	
 function validateForm() {
 var cn = document.forms["programForm"]["contactName"].value; var inputValcn = document.getElementById("contactName");
 var ct = document.forms["programForm"]["contactTitle"].value; var inputValct = document.getElementById("contactTitle");
 var cp = document.forms["programForm"]["contactPhone"].value; var inputValcp = document.getElementById("contactPhone");
 var ce = document.forms["programForm"]["contactEmail"].value; var inputValce = document.getElementById("contactEmail");
-var ft = document.forms["programForm"]["FullTimeDuration"].value; var inputValft = document.getElementById("FullTimeDuration");
-var pt = document.forms["programForm"]["PartTimeDuration"].value; var inputValpt = document.getElementById("PartTimeDuration");
+var ft = document.forms["programForm"]["fullTimeDuration"].value; var inputValft = document.getElementById("fullTimeDuration");
+var pt = document.forms["programForm"]["partTimeDuration"].value; var inputValpt = document.getElementById("partTimeDuration");
 //ft pt 
 if (cn == "") {
-  alert("Contact Name must be filled out");
-  inputValcn.style.border="1px solid red";
-  return false;
+alert("Contact Name must be filled out");
+inputValcn.style.border="1px solid red";
+return false;
 }
 if (ct == ""){
 	alert("Contact Title must be filled out");
 	inputValct.style.border="1px solid red";
-  return false;
+return false;
 }
 if (cp == ""){
- 	alert("Contact Phone must be filled out");
+	alert("Contact Phone must be filled out");
  	inputValcp.style.border="1px solid red";
   return false;
  }
@@ -476,40 +447,36 @@ var email = $("#contactEmail").val();
 if (validateEmail(email) == false)
 {
 	 alert("Contact Email must be filled out with a valid email");
-   inputValce.style.border="1px solid red";
-   return false;
+	 inputValce.style.border="1px solid red";
+	 return false;
 }
 //var fullTime = $("#FullTimeDuration").val();
 if (ft.match(/Months/i)){
-}
-
-else if (ft.match(/None/i)){
+	}
+	else if (ft.match(/None/i)){
 	}
 		else{
 		alert("Full Time Duration must be in Months");
 		inputValft.style.border="1px solid red";
-		return false; 	
-
+		return false;
 		}
-
+			
 if (pt.match(/Months/i)){
-
 }
-else if (pt.match(/None/i)){
-}
-else{
-	alert("Part Time Duration must be in Months");
-	inputValpt.style.border="1px solid red";
-	return false; 	
-}
-
+	else if (pt.match(/None/i)){
+	}
+	else{
+		alert("Part Time Duration must be in Months");
+		inputValpt.style.border="1px solid red";
+		return false;
+		}
 var pn = document.forms["programForm"]["programName"].value; var inputValpn = document.getElementById("programName");
 if (pn == ""){
-  	alert("Program Name must be filled out");
-  	inputValpn.style.border="1px solid red";
-   return false;
-  }
-var po = document.forms["programForm"]["ProgramObjectives"].value; var inputValpo = document.getElementById("ProgramObjectives");
+	alert("Program Name must be filled out");
+	inputValpn.style.border="1px solid red";
+ return false;
+}
+var po = document.forms["programForm"]["programObjectives"].value; var inputValpo = document.getElementById("programObjectives");
 if (po == ""){
   	alert("Program Objectives must be filled out");
   	inputValpo.style.border="1px solid red";
@@ -526,8 +493,8 @@ if (po == ""){
  } 
 else
 {
-  SubmissionFunction();
-  return true;
+SubmissionFunction();
+return true;
 }
 }
 function SubmissionFunction() {
@@ -561,16 +528,18 @@ function addCourse(){
 </script>
  
 	</form>
-	
 <?php if (isset($_POST['submit'])) {
-    
+ //Contact Info   
  $contactId = $_POST['ContactId'];
  $contactName = $_POST['ContactName'];
  $contactTitle = $_POST['ContactTitle'];
  $contactPhone = $_POST['ContactPhone'];
  $contactEmail = $_POST['ContactEmail'];
+ 
+ //College Info
  $collegeName =  $_POST['CollegeName'];
- $institutionName = $_POST['InstitutionName'];
+ 
+ //Program Info
  $programName = $_POST['ProgramName'];
  $programType = $_POST['ProgramType'];
  $deliveryMethod = $_POST['DeliveryMethod'];
@@ -582,10 +551,32 @@ function addCourse(){
  $otherRequirement = $_POST['OtherRequirement'];
  $credits = $_POST['Credits'];
  $yearEstablished = $_POST['YearEstablished'];
+ $scholarship = $_POST['Scholarship'];
+ $estimatedResidentTuition = $_POST['EstimatedResidentTuition'];
+ $estimatedNonresidentTuition = $_POST['EstimatedNonresidentTuition'];
+ $costPerCredit = $_POST['CostPerCredit'];
+ 
+ //Institution Info
+ $institutionId = $_POST['InstitutionId'];
+ $institutionName = $_POST['InstitutionName'];
+ $institutionAddress = $_POST['InstitutionAddress'];
+ $institutionCity = $_POST['InstitutionCity'];
+ $institutionState = $_POST['InstitutionState'];
+ $institutionZip = $_POST['InstitutionZip'];
+ $institutionRegion = $_POST['InstitutionRegion'];
+ $institutionPhone = $_POST['InstitutionPhone'];
+ $institutionEmail = $_POST['InstitutionEmail'];
+ $institutionAccess = $_POST['InstitutionAccess'];
+ 
  $referenceId = $_POST['ReferenceId'];
  $lastUpdate = $_POST['LastUpdate'];
+ $programId = $_POST['ProgramId'];
  
+
 }
 ?>
+
 </body>
 </html>
+
+
