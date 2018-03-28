@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <img class="irc_mi" src="https://www.informs.org/var/ezflow_site/storage/images/media/or-ms-today/images/0217/new-informs-logo2/3648939-1-eng-US/New-INFORMS-logo.jpg" onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)" width="350" height="75" alt="Image result for Informs">
 
@@ -37,9 +36,9 @@ width: 72%;
 <body>
 
 <!-- Sign Up Button -->
-<div style="text-align:right; margin-right: 10%;"><a class="btn btn-small btn-primary">Sign Up</a></div>;
+<div style="text-align:right; margin-right: 10%;"><a class="btn btn-small btn-primary">Create Account</a></div>;
 
-<h1 class="text-center" class="page-header" id="loginModalLabel">University Administrator Login</h1>
+<h1 class="text-center" class="page-header" id="loginModalLabel">Program Administrator Login</h1>
   
   <form method="post" action="authenticate.php" id="loginForm" onsubmit="return validate()">
   
@@ -67,28 +66,28 @@ width: 72%;
   </form>
   
   <script>
-
+  
   function validateEmail(email) {
 	  var re = /\S+@\S+\.\S+/;
 	  return re.test(email);
 	  }
-
+  
 	function validate(){
 		var em = document.forms["loginForm"]["email"].value; var inputValem = document.getElementById("email");
 		var pw = document.forms["loginForm"]["psw"].value; var inputValpw = document.getElementById("psw");
-
+		
 		if (em == ""){
 			alert("You must provide your email address.");
 			inputValem.style.border = "1px solid red";
 			return false;
 		}
-
+		
 		if (pw == ""){
 			alert("You must provide your password.");
 			inputValpw.style.border = "1px solid red";
 			return false;
 		}
-
+		
 		var email = $("#email").val();
 		if (validateEmail(email) == false)
 		{
@@ -96,7 +95,6 @@ width: 72%;
 			 inputValem.style.border="1px solid red";
 			 return false;
 		}
-
 		
 	}
 		
