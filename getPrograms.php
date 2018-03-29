@@ -1,7 +1,7 @@
 <?php
 require('conn.php');
 $id = $_GET['id'];
- $sql = ("SELECT  *
+$sql = ("SELECT  *
     FROM programs p
 	JOIN institutions i
 	ON p.InstitutionId = i.InstitutionId
@@ -13,10 +13,10 @@ $id = $_GET['id'];
     ON p.ProgramId = pc.ProgramId
     JOIN courses
     ON pc.CourseId = courses.CourseId WHERE p.programId = $id;");
- $result = $conn->query($sql);
- $modalData = $conn->query($sql)->fetch_array();
- 
- 
+$result = $conn->query($sql);
+$modalData = $conn->query($sql)->fetch_array();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +25,6 @@ $id = $_GET['id'];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Program Information</title>
- 
     <!-- Bootstrap Core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -121,15 +120,16 @@ $id = $_GET['id'];
 		</div>
 	<div class="form-group">
 		    <label for="co.CollegeType">College Type</label>
-
-		    <select class="form-control" id="collegeType" name="collegeType" >
-		    	<option value="<?php echo $modalData['CollegeType'];?>"><?php echo $modalData['CollegeType'];?></option>
-		    	<option>Arts and Sciences</option>
-		    	<option>Business</option>
-		    	<option>Center or Institute</option>
-		    	<option>Engineering</option>
-		    	<option>Other</option>
-		    </select> 
+<div class="input-group dropdown">
+          <input type="text" class="form-control countrycode dropdown-toggle" value="<?php echo $modalData['CollegeType'];?>">
+          <ul class="dropdown-menu">
+            <li><a href="#" data-value="Arts and Sciences">Arts and Sciences</a></li>
+            <li><a href="#" data-value="Business">Business</a></li>
+            <li><a href="#" data-value="Center or Institute">Center or Institute</a></li>
+            <li><a href="#" data-value="Engineering">Engineering</a></li>
+          </ul>
+          <span role="button" class="input-group-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></span>
+          </div>
 		</div>
 	
 		<div class="form-group">
@@ -199,6 +199,7 @@ $id = $_GET['id'];
     		<option>Online: Full-Time</option>
     		<option>Online: Part-Time</option>
     		<option>Online: Full-Time and Part-Time</option>
+    		<option>Other</option>
 		</select>
 		</div>
 		<div class="form-group">
@@ -361,14 +362,14 @@ Submit All Changes</button>
   </div>
 </div>
 
-
 <script>
-//function validateForm() {
-//var cn = document.forms["myForm"]["contactName"].value;
-// if (cn == "") {
-//     alert("Contact Name must be filled out");
-//     return false;
-//}
+$(function() {
+	  $('.dropdown-menu a').click(function() {
+	    console.log($(this).attr('data-value'));
+	    $(this).closest('.dropdown').find('input.countrycode')
+	      .val( $(this).attr('data-value'));
+	  });
+	});
 $('.phone')
 .on('keypress', function(e) {
   var key = e.charCode || e.keyCode || 0;
