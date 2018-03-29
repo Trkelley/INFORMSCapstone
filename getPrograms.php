@@ -1,8 +1,6 @@
-<!-- GET PROGRAMS -->
 <?php
 require('conn.php');
 $id = $_GET['id'];
-
  $sql = ("SELECT  *
     FROM programs p
 	JOIN institutions i
@@ -95,12 +93,12 @@ $id = $_GET['id'];
 		    <input type="text" class="form-control" id="contactTitle" name="contactTitle" value="<?php echo $modalData['ContactTitle'];?>"/>
 		</div>
 		<div class="form-group">
-		    <label for="c.ContactPhone">Contact Phone</label>
-		    <input type="text" class="form-control phone" maxlength="14" id="contactPhone" name="contactPhone" value="<?php echo $modalData['ContactPhone'];?>"/>
+		    <label for="c.ContactPhone">Contact Phone (ex. +1 111 111 1111)</label>
+		    <input type="text" class="form-control phone" maxlength="15" id="contactPhone" name="contactPhone" placeholder = "+1 111 111 1111" value="<?php echo $modalData['ContactPhone'];?>"/>
 		</div>
 		<div class="form-group">
 		    <label for="c.ContactEmail">Contact Email</label>
-		    <input type="text" class="form-control" id="contactEmail" name="contactEmail" value="<?php echo $modalData['ContactEmail'];?>"/>
+		    <input type="text" class="form-control" id="contactEmail" name="contactEmail" placeholder = "example@example.com" value="<?php echo $modalData['ContactEmail'];?>"/>
 		</div>
   </div>
 </div>
@@ -151,7 +149,7 @@ $id = $_GET['id'];
 		
 		<div class="form-group">
 		    <label for="p.YearEstablished">Year Established</label>
-		    <input type="text" class="form-control" id="yearEstablished" name="yearEstablished" value="<?php echo $modalData['YearEstablished'];?>" readonly />
+		    <input type="text" class="form-control" id="yearEstablished" name="yearEstablished" value="<?php echo $modalData['YearEstablished'];?>" />
 		</div>
   </div>
 </div>
@@ -188,6 +186,7 @@ $id = $_GET['id'];
     		<option>M.S. Concentration - Professional Track</option>
     		<option>PhD</option>
     		<option>PhD - Concentration</option>
+    		<option>Other</option>
 		</select>
 		</div>
 		<div class="form-group">
@@ -206,7 +205,7 @@ $id = $_GET['id'];
 		    <label for="p.FullTimeDuration">Full-Time Duration</label>
 		    <select class="form-control" id="fullTimeDuration" name="fullTimeDuration">
 				<option value="<?php echo $modalData['FullTimeDuration'];?>"><?php echo $modalData['FullTimeDuration'];?></option>
-		    	<option>None</option>
+		    	<option>Not Available</option>
 		    	<option>1 Months</option>
 		    	<option>2 Months</option>
 		    	<option>3 Months</option>
@@ -232,13 +231,14 @@ $id = $_GET['id'];
 		    	<option>23 Months</option>
 		    	<option>24 Months</option>
 		    	<option>25+ Months</option>
+		    	<option>Other</option>
 			</select>
 		</div>
 		<div class="form-group">
 		    <label for="p.PartTimeDuration">Part-Time Duration</label>
 		    <select class="form-control" id="partTimeDuration" name="partTimeDuration">
 			<option value="<?php echo $modalData['PartTimeDuration'];?>"><?php echo $modalData['PartTimeDuration'];?></option>
-		    	<option>None</option>
+		    	<option>Not Available</option>
 		    	<option>1 Months</option>
 		    	<option>2 Months</option>
 		    	<option>3 Months</option>
@@ -263,7 +263,8 @@ $id = $_GET['id'];
 		    	<option>22 Months</option>
 		    	<option>23 Months</option>
 		    	<option>24 Months</option>
-		    	<option>25+ Months</option>	
+		    	<option>25+ Months</option>
+		    	<option>Other</option>	
 		    </select>
 		</div>
 		<div class="form-group">
@@ -316,7 +317,7 @@ while($row = mysqli_fetch_assoc($result))
         echo "</td>";
         
         echo '<td>';
-        echo '<select class="form-control" > <option value= ""></option>
+        echo '<select class="form-control" ><option></option>
         <option>Information Systems</option>
         <option>Operations Research</option>
         <option>Statistics</option>';
@@ -326,7 +327,6 @@ while($row = mysqli_fetch_assoc($result))
              </td>';
 };
         $result->close();
-
 ?>
                     </tr>
                 </tbody>
@@ -343,15 +343,28 @@ while($row = mysqli_fetch_assoc($result))
 
 <!-- Submission -->
   <p>
-<button class = "btn btn-primary btn-block" type="submit" value="Update" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
-Submit</button>
+ <button class = "btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#SubmissionButton" aria-expanded="false" aria-controls="SubmissionButton">
+Click Here After Entering All Data</button>
   </p>
+  <div class="collapse" id= "SubmissionButton">
+  <div class= "card card-body">
+  <div class= "form-group"> 
+  <div class= "text-center">
+  	<p class = "h6 font-weight-bold"> <font size = "2">By pressing the "Submit All Changes" button below, you acknowledge that all information above is correct and up-to-date.</font></p>
+  	<p class = "h6 font-weight-bold"> <font size = "2">The information submitted will be sent to an INFORMS Administrator for approval before information is made public.</font></p>
+  	<p class = "h6 font-weight-bold"> <font size = "2">You will receive an email notification confirming your submission.</font></p>
+<button class = "btn btn-success" type="submit" value="Update" data-toggle="collapse" data-target="#SubmissionCollapse" aria-expanded="false" aria-controls="SubmissionCollapse">
+Submit All Changes</button>
 </div>
-<script>
+</div>
+</div>
+  </div>
+</div>
 
+
+<script>
 //function validateForm() {
 //var cn = document.forms["myForm"]["contactName"].value;
-
 // if (cn == "") {
 //     alert("Contact Name must be filled out");
 //     return false;
@@ -361,21 +374,22 @@ $('.phone')
   var key = e.charCode || e.keyCode || 0;
   var phone = $(this);
   if (phone.val().length === 0) {
-    phone.val(phone.val() + '(');
+    phone.val(phone.val() + '+');
   }
   // Auto-format- do not expose the mask as the user begins to type
   if (key !== 8 && key !== 9) {
-    if (phone.val().length === 4) {
-      phone.val(phone.val() + ')');
-    }
-    if (phone.val().length === 5) {
+	if (phone.val().length === 2) {
+	      phone.val(phone.val() + ' ');
+	}  
+    if (phone.val().length === 6) {
       phone.val(phone.val() + ' ');
     }
-    if (phone.val().length === 9) {
-      phone.val(phone.val() + '-');
+    if (phone.val().length === 10) {
+      phone.val(phone.val() + ' ');
     }
-    if (phone.val().length >= 14) {
-      phone.val(phone.val().slice(0, 13));
+
+    if (phone.val().length >= 15) {
+      phone.val(phone.val().slice(0, 14));
     }
   }
   // Allow numeric (and tab, backspace, delete) keys only
@@ -404,7 +418,6 @@ function validateEmail(contactEmail) {
 var re = /\S+@\S+\.\S+/;
 return re.test(contactEmail);
 }
-
 function validateForm() {
 var cn = document.forms["programForm"]["contactName"].value; var inputValcn = document.getElementById("contactName");
 var ct = document.forms["programForm"]["contactTitle"].value; var inputValct = document.getElementById("contactTitle");
@@ -423,11 +436,25 @@ if (ct == ""){
 	inputValct.style.border="1px solid red";
 return false;
 }
+
 if (cp == ""){
 	alert("Contact Phone must be filled out");
  	inputValcp.style.border="1px solid red";
   return false;
- }
+}
+var checkCp = cp;
+substring = "-";
+if (cp.indexOf(substring) !== -1){
+	alert("Contact Phone must be in the correct format (+1 111 111 1111)");
+ 	inputValcp.style.border="1px solid red";
+  return false;
+}
+substring = ".";
+if (cp.indexOf(substring) !== -1){
+	alert("Contact Phone must be in the correct format (+1 111 111 1111)");
+ 	inputValcp.style.border="1px solid red";
+  return false;
+}
 if (ce == ""){
    alert("Contact Email must be filled out");
    inputValce.style.border="1px solid red";
@@ -450,10 +477,13 @@ if (validateEmail(email) == false)
 	 inputValce.style.border="1px solid red";
 	 return false;
 }
+
 //var fullTime = $("#FullTimeDuration").val();
 if (ft.match(/Months/i)){
 	}
-	else if (ft.match(/None/i)){
+	else if (ft.match(/Not Available/i)){
+	}
+	else if (ft.match(/Other/i)){
 	}
 		else{
 		alert("Full Time Duration must be in Months");
@@ -463,7 +493,9 @@ if (ft.match(/Months/i)){
 			
 if (pt.match(/Months/i)){
 }
-	else if (pt.match(/None/i)){
+	else if (pt.match(/Not Available/i)){
+	}
+	else if (pt.match(/Other/i)){
 	}
 	else{
 		alert("Part Time Duration must be in Months");
@@ -476,6 +508,7 @@ if (pn == ""){
 	inputValpn.style.border="1px solid red";
  return false;
 }
+
 var po = document.forms["programForm"]["programObjectives"].value; var inputValpo = document.getElementById("programObjectives");
 if (po == ""){
   	alert("Program Objectives must be filled out");
@@ -483,16 +516,24 @@ if (po == ""){
    return false;
   }
 //The code below does not work--needs to be revised
-/*  var cot = document.forms["programForm"]["courseTitle"].value; var inputValcot = document.getElementById("courseTitle"); 
+/*var cot = document.forms["programForm"]["courseTitle"].value; var inputValcot = document.getElementById("courseTitle"); 
  if (cot == ""){
 	 alert("All Course Titles must be filled out");
 	 inputValcot.style.border="1px solid red";
 	return false;
- } 
-else
-{
-return true;
-} */
+ }*/
+ //var di = document.forms["programForm"]["disclipline"].value; var inputValdi = document.getElementById("discipline");
+ //if (di == ""){
+   	//alert("Discipline for all courses must be filled out");
+   	//inputValdi.style.border="1px solid red";
+   	
+    //return false;
+   //}
+ 
+//else
+//{
+//return true;
+//} 
 SubmissionFunction();
 }
 function SubmissionFunction() {
@@ -509,6 +550,10 @@ function addCourse(){
     courseType.innerHTML = '<select class="form-control"><option></option><option>Required</option><option>Elective</option>';
     courseDisclipline.innerHTML = '<select class="form-control"><option></option><option>Information Systems</option><option>Operations Research</option><option>Statistics</option>';
     courseDelete.innerHTML = '<input type = "checkbox"/>';
+
+function validateCourse(){
+	
+}
 }
 //function deleteCourse(e){ 
 	//var row = e.target.parentNode.parentNode;
@@ -520,9 +565,7 @@ function addCourse(){
    // $(this).children().not('input[type="checkbox"]').attr('disabled', true);
   //});
  
-
 //}
-
 </script>
  
 	</form>
@@ -570,11 +613,8 @@ function addCourse(){
  $lastUpdate = $_POST['LastUpdate'];
  $programId = $_POST['ProgramId'];
  
-
 }
 ?>
 
 </body>
 </html>
-
-
