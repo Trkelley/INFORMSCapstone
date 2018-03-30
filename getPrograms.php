@@ -1,7 +1,13 @@
+<!-- GET PROGRAMS -->
 <?php
+
+session_start();
+
+
 require('conn.php');
 $id = $_GET['id'];
-$sql = ("SELECT  *
+
+ $sql = ("SELECT  *
     FROM programs p
 	JOIN institutions i
 	ON p.InstitutionId = i.InstitutionId
@@ -13,10 +19,10 @@ $sql = ("SELECT  *
     ON p.ProgramId = pc.ProgramId
     JOIN courses
     ON pc.CourseId = courses.CourseId WHERE p.programId = $id;");
-$result = $conn->query($sql);
-$modalData = $conn->query($sql)->fetch_array();
-
-
+ $result = $conn->query($sql);
+ $modalData = $conn->query($sql)->fetch_array();
+ 
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +31,7 @@ $modalData = $conn->query($sql)->fetch_array();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Program Information</title>
+ 
     <!-- Bootstrap Core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -43,7 +50,7 @@ $modalData = $conn->query($sql)->fetch_array();
 <form method="post" action="insert.php" role="form" id="programForm" onsubmit="return validateForm()">
 	<div class="modal-body">
 	
-	<!-- A BUNCH OF HIDDEN VALUES TO PASS INFO TO DATABASE -->
+	<!-- HIDDEN VALUES TO PASS INFO TO DATABASE -->
 	
 	<!-- Contacts -->
 	<input type="hidden" name="contactId" value="<?php echo $modalData['ContactId']; ?>">
@@ -199,7 +206,7 @@ $modalData = $conn->query($sql)->fetch_array();
     		<option>Online: Full-Time</option>
     		<option>Online: Part-Time</option>
     		<option>Online: Full-Time and Part-Time</option>
-    		<option>Other</option>
+    		<option>Other</option>    		
 		</select>
 		</div>
 		<div class="form-group">
@@ -265,7 +272,7 @@ $modalData = $conn->query($sql)->fetch_array();
 		    	<option>23 Months</option>
 		    	<option>24 Months</option>
 		    	<option>25+ Months</option>
-		    	<option>Other</option>	
+		    	<option>Other</option>		
 		    </select>
 		</div>
 		<div class="form-group">
@@ -300,34 +307,78 @@ $modalData = $conn->query($sql)->fetch_array();
                 <tbody>
                     <tr>
 <?php
+
+
+
 // Output data of each row
-$rowCount = 2;
+$rowCount = 0;
+
+$courseIdList = array ();
+$instructorIdList = array();
+$courseNumberList = array();
+$deliveryMethodList = array();
+$hasCapstoneProjectList = array();
+$courseTextList = array();
+$syllabusFileList = array();
+$syllabusFilesizeList = array();
+$businessTagList = array();
+$analyticTagList = array();
+$coureTypeList = array();
+
+
+
 while($row = mysqli_fetch_assoc($result))
-{
-    $rowCount++;
+{   
         echo '<tr>';
         echo '<td>';
-        echo '<input class="form-control" type = "text" value = "'.$row['CourseTitle'].'" name = "courseTitle" id = "courseTitle'.$rowCount.'"/>';
-        echo '<input type="hidden" name="contactId" value="'. $row['CourseId']. '">';
+        echo '<input class="form-control" type = "text" value = "'.$row['CourseTitle'].'" name = "courseTitle[]" id = "courseTitle[]"/>';
+        echo '<input type="hidden" name="courseId" value="'. $row['CourseId']. '">';
+        $courseIdList[$rowCount] = $row['CourseId'];
+        $instructorIdList[$rowCount] = $row['InstructorId'];
+        $courseNumberList[$rowCount] = $row['CourseNumber'];
+        $deliveryMethodList[$rowCount] = $row['DeliveryMethod'];
+        $hasCapstoneProjectList[$rowCount] = $row['HasCapstoneProject'];
+        $courseTextList[$rowCount] = $row['CourseText'];
+        $syllabusFileList[$rowCount] = $row['SyllabusFile'];
+        $syllabusFilesizeList[$rowCount] = $row['SyllabusFilesize'];
+        $businessTagList[$rowCount] = $row['BusinessTag'];
+        $analyticTagList[$rowCount] = $row['AnalyticTag'];
         echo "</td>";
         
         echo '<td>';
-        echo '<select class="form-control" > class="form-control" <option value= "'.$row['RequirementType'].'">'.$row['RequirementType'].'</option>
+        echo '<select class="form-control" name="requirementType[]" id = "requirementType[]" > class="form-control" <option value= "'.$row['RequirementType'].'">'.$row['RequirementType'].'</option>
         <option>Required</option>
         <option>Elective</option>';
         echo "</td>";
         
         echo '<td>';
-        echo '<select class="form-control" ><option></option>
+        echo '<select class="form-control" name = "courseDiscipline[]" id = "courseDiscipline[]"> <option value= ""></option>
         <option>Information Systems</option>
         <option>Operations Research</option>
         <option>Statistics</option>';
         echo "</td>";
         echo '<td>
-            <input type="checkbox" onclick = "deleteCourse(event)"> 
+            <input type="checkbox" name="deleteCourseBx[]" id="deleteCourseBx[]" onclick = "deleteCourse(event)"> 
              </td>';
+        $rowCount++;
 };
+echo '<input type="hidden" name="rowCount" id="rowCount" value="'. $rowCount. '">';
         $result->close();
+        //Storing the CourseID, InstructorId, CourseNumber, CourseTitle, DeliveryMethod, HasCapstoneProject, CourseText, SyllabusFile, SyllabusFilesize, AnalyticTag, BusinessTag
+        $_SESSION['courseIdList'] = $courseIdList;
+        $_SESSION['instructorIdList'] = $instructorIdList;
+        $_SESSION['courseNumberList'] = $courseNumberList;
+
+        $_SESSION['deliveryMethodList'] = $deliveryMethodList;
+        $_SESSION['hasCapstoneProjectList'] = $hasCapstoneProjectList;
+        $_SESSION['courseTextList'] = $courseTextList;
+        $_SESSION['syllabusFileList'] = $syllabusFileList;
+        $_SESSION['syllabusFilesizeList'] = $syllabusFilesizeList;
+        $_SESSION['businessTagList'] = $businessTagList;
+        $_SESSION['analyticTagList'] = $analyticTagList;
+
+        
+
 ?>
                     </tr>
                 </tbody>
@@ -375,7 +426,7 @@ $('.phone')
   var key = e.charCode || e.keyCode || 0;
   var phone = $(this);
   if (phone.val().length === 0) {
-    phone.val(phone.val() + '+');
+	  phone.val(phone.val() + '+');
   }
   // Auto-format- do not expose the mask as the user begins to type
   if (key !== 8 && key !== 9) {
@@ -388,9 +439,8 @@ $('.phone')
     if (phone.val().length === 10) {
       phone.val(phone.val() + ' ');
     }
-
     if (phone.val().length >= 15) {
-      phone.val(phone.val().slice(0, 14));
+        phone.val(phone.val().slice(0, 14));
     }
   }
   // Allow numeric (and tab, backspace, delete) keys only
@@ -419,6 +469,7 @@ function validateEmail(contactEmail) {
 var re = /\S+@\S+\.\S+/;
 return re.test(contactEmail);
 }
+
 function validateForm() {
 var cn = document.forms["programForm"]["contactName"].value; var inputValcn = document.getElementById("contactName");
 var ct = document.forms["programForm"]["contactTitle"].value; var inputValct = document.getElementById("contactTitle");
@@ -437,7 +488,6 @@ if (ct == ""){
 	inputValct.style.border="1px solid red";
 return false;
 }
-
 if (cp == ""){
 	alert("Contact Phone must be filled out");
  	inputValcp.style.border="1px solid red";
@@ -478,13 +528,12 @@ if (validateEmail(email) == false)
 	 inputValce.style.border="1px solid red";
 	 return false;
 }
-
 //var fullTime = $("#FullTimeDuration").val();
 if (ft.match(/Months/i)){
 	}
-	else if (ft.match(/Not Available/i)){
-	}
-	else if (ft.match(/Other/i)){
+    else if (ft.match(/Not Available/i)){
+    }
+    else if (ft.match(/Other/i)){
 	}
 		else{
 		alert("Full Time Duration must be in Months");
@@ -494,9 +543,9 @@ if (ft.match(/Months/i)){
 			
 if (pt.match(/Months/i)){
 }
-	else if (pt.match(/Not Available/i)){
-	}
-	else if (pt.match(/Other/i)){
+    else if (pt.match(/Not Available/i)){
+    }
+    else if (pt.match(/Other/i)){
 	}
 	else{
 		alert("Part Time Duration must be in Months");
@@ -509,7 +558,6 @@ if (pn == ""){
 	inputValpn.style.border="1px solid red";
  return false;
 }
-
 var po = document.forms["programForm"]["programObjectives"].value; var inputValpo = document.getElementById("programObjectives");
 if (po == ""){
   	alert("Program Objectives must be filled out");
@@ -517,7 +565,7 @@ if (po == ""){
    return false;
   }
 //The code below does not work--needs to be revised
-/*var cot = document.forms["programForm"]["courseTitle"].value; var inputValcot = document.getElementById("courseTitle"); 
+/*var cot = document.forms["programForm"]["courseTitle"].value; var inputValcot = document.getElementById("courseTitle");  
  if (cot == ""){
 	 alert("All Course Titles must be filled out");
 	 inputValcot.style.border="1px solid red";
@@ -536,25 +584,24 @@ if (po == ""){
 //return true;
 //} 
 SubmissionFunction();
+return true;
 }
 function SubmissionFunction() {
 	alert("Your data has been submitted for approval.");
 }
 function addCourse(){
 	var table = document.getElementById("currTable");
-    var row = table.insertRow(<?php echo $rowCount?>);
+	var numRows = 2 + <?php echo $rowCount?>;
+    var row = table.insertRow(numRows);
     var courseTitle = row.insertCell(0);
     var courseType = row.insertCell(1);
     var courseDisclipline = row.insertCell(2);
     var courseDelete = row.insertCell(3);
-    courseTitle.innerHTML ='<input class="form-control" type = "text" name = "courseTitle"/>';
-    courseType.innerHTML = '<select class="form-control"><option></option><option>Required</option><option>Elective</option>';
-    courseDisclipline.innerHTML = '<select class="form-control"><option></option><option>Information Systems</option><option>Operations Research</option><option>Statistics</option>';
-    courseDelete.innerHTML = '<input type = "checkbox"/>';
-
-function validateCourse(){
-	
-}
+    courseTitle.innerHTML ='<input class="form-control" type = "text" name = "courseTitle[]" id = "courseTitle[]"/>';
+    courseType.innerHTML = '<select class="form-control" name="requirementType[]" id = "requirementType[]"><option></option><option>Required</option><option>Elective</option>';
+    courseDisclipline.innerHTML = '<select class="form-control" name = "courseDiscipline[]" id = "courseDiscipline[]"><option></option><option>Information Systems</option><option>Operations Research</option><option>Statistics</option>';
+    courseDelete.innerHTML = '<input type = "checkbox" name="deleteCourseBx[]" id="deleteCourseBx[]"/>';
+    localstorage.setItem(numRows);
 }
 //function deleteCourse(e){ 
 	//var row = e.target.parentNode.parentNode;
@@ -566,7 +613,9 @@ function validateCourse(){
    // $(this).children().not('input[type="checkbox"]').attr('disabled', true);
   //});
  
+
 //}
+
 </script>
  
 	</form>
@@ -614,8 +663,17 @@ function validateCourse(){
  $lastUpdate = $_POST['LastUpdate'];
  $programId = $_POST['ProgramId'];
  
+ $passCount = $_POST['rowCount'];
+ 
+ /*Passing the course table information*/
+ $_POST['courseTitle'];
+ $_POST['RequirementType'];
+ $_POST['courseDiscipline'];
+ $_POST['deleteCourseBx'];
 }
 ?>
 
 </body>
 </html>
+
+
