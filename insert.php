@@ -137,7 +137,7 @@ echo "<br>";
 
 //$conn has been left out for testing
 
-/* header("location:Index.php"); */
+header("location:Index.php");
 ?>
 
 
