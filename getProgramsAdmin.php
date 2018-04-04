@@ -88,19 +88,19 @@ $id = $_GET['id'];
   <div class="card card-body">
   <div class="form-group">
 		    <label for="c.ContactName">Contact Name</label>
-		    <input type="text" class="form-control" id="contactName" name="contactName" value="<?php echo $modalData['ContactName'];?>"/>
+		    <input type="text" class="form-control" id="contactName" name="contactName" value="<?php echo $modalData['ContactName'];?>"readonly/>
 		</div>
 		<div class="form-group">
 		    <label for="c.ContactTitle">Contact Title</label>
-		    <input type="text" class="form-control" id="contactTitle" name="contactTitle" value="<?php echo $modalData['ContactTitle'];?>"/>
+		    <input type="text" class="form-control" id="contactTitle" name="contactTitle" value="<?php echo $modalData['ContactTitle'];?>"readonly/>
 		</div>
 		<div class="form-group">
 		    <label for="c.ContactPhone">Contact Phone</label>
-		    <input type="text" class="form-control phone" maxlength="14" id="contactPhone" name="contactPhone" value="<?php echo $modalData['ContactPhone'];?>"/>
+		    <input type="text" class="form-control phone" maxlength="14" id="contactPhone" name="contactPhone" value="<?php echo $modalData['ContactPhone'];?>"readonly/>
 		</div>
 		<div class="form-group">
 		    <label for="c.ContactEmail">Contact Email</label>
-		    <input type="text" class="form-control" id="contactEmail" name="contactEmail" value="<?php echo $modalData['ContactEmail'];?>"/>
+		    <input type="text" class="form-control" id="contactEmail" name="contactEmail" value="<?php echo $modalData['ContactEmail'];?>"readonly/>
 		</div>
   </div>
 </div>
@@ -115,16 +115,16 @@ $id = $_GET['id'];
   <div class="card card-body">
   <div class="form-group">
 	<label for="p.ProgramName">Program Name</label>
-		<input type="text" class="form-control" id="programName" name="programName" value="<?php echo $modalData['ProgramName'];?>"/>
+		<input type="text" class="form-control" id="programName" name="programName" value="<?php echo $modalData['ProgramName'];?>"readonly/>
   </div>
   <div class="form-group">
 		    <label for="co.CollegeName">College Name</label>
-		    <input type="text" class="form-control" id="collegeName" name="collegeName" value="<?php echo $modalData['CollegeName'];?>"/>
+		    <input type="text" class="form-control" id="collegeName" name="collegeName" value="<?php echo $modalData['CollegeName'];?>"readonly/>
 		</div>
 	<div class="form-group">
 		    <label for="co.CollegeType">College Type</label>
 
-		    <select class="form-control" id="collegeType" name="collegeType" >
+		    <select disabled class="form-control" id="collegeType" name="collegeType">
 		    	<option value="<?php echo $modalData['CollegeType'];?>"><?php echo $modalData['CollegeType'];?></option>
 		    	<option>Arts and Sciences</option>
 		    	<option>Business</option>
@@ -166,15 +166,15 @@ $id = $_GET['id'];
   <div class="card card-body">
   <div class="form-group">
 		    <label for="p.ProgramObjectives">Program Description</label>
-		    <textarea  maxlength = "2000" class="form-control" rows="6" id="programObjectives" name="programObjectives"><?php echo $modalData['ProgramObjectives']?></textarea>
+		    <textarea  maxlength = "2000" class="form-control" rows="6" id="programObjectives" name="programObjectives"readonly><?php echo $modalData['ProgramObjectives']?></textarea>
 		</div>
 		<div class="form-group">
 		    <label for="">Program URL</label>
-		    <input type="text" class="form-control" id="programAccess" name="programAccess" value="<?php echo $modalData['ProgramAccess'];?>"/>
+		    <input type="text" class="form-control" id="programAccess" name="programAccess" value="<?php echo $modalData['ProgramAccess'];?>"readonly/>
 		</div>
 		<div class="form-group">
 		    <label for="p.ProgramType">Program Type</label>
-		<select class="form-control" id="programType" name="programType"  >
+		<select disabled class="form-control" id="programType" name="programType">
     		<option value="<?php echo $modalData['ProgramType'];?>"><?php echo $modalData['ProgramType'];?></option>
     		<option>B.B.A</option>
     		<option>B.S.</option>
@@ -192,7 +192,7 @@ $id = $_GET['id'];
 		</div>
 		<div class="form-group">
 		<label for="p.DeliveryMethod">Program Delivery</label>
-		<select class="form-control" id="deliveryMethod" name="deliveryMethod"  >
+		<select disabled class="form-control" id="deliveryMethod" name="deliveryMethod">
     		<option value="<?php echo $modalData['DeliveryMethod'];?>"><?php echo $modalData['DeliveryMethod'];?></option>
     		<option>On Campus: Full-Time</option>
     		<option>On Campus: Part-Time</option>
@@ -204,7 +204,7 @@ $id = $_GET['id'];
 		</div>
 		<div class="form-group">
 		    <label for="p.FullTimeDuration">Full-Time Duration</label>
-		    <select class="form-control" id="fullTimeDuration" name="fullTimeDuration">
+		    <select disabled class="form-control" id="fullTimeDuration" name="fullTimeDuration">
 				<option value="<?php echo $modalData['FullTimeDuration'];?>"><?php echo $modalData['FullTimeDuration'];?></option>
 		    	<option>None</option>
 		    	<option>1 Months</option>
@@ -236,7 +236,7 @@ $id = $_GET['id'];
 		</div>
 		<div class="form-group">
 		    <label for="p.PartTimeDuration">Part-Time Duration</label>
-		    <select class="form-control" id="partTimeDuration" name="partTimeDuration">
+		    <select disabled class="form-control" id="partTimeDuration" name="partTimeDuration">
 			<option value="<?php echo $modalData['PartTimeDuration'];?>"><?php echo $modalData['PartTimeDuration'];?></option>
 		    	<option>None</option>
 		    	<option>1 Months</option>
@@ -268,7 +268,7 @@ $id = $_GET['id'];
 		</div>
 		<div class="form-group">
 		    <label for="p.OtherRequirement">Application Requirements</label>
-		   <textarea  maxlength = "255" class="form-control" rows="6" id="otherRequirement" name="otherRequirement"><?php echo $modalData['OtherRequirement'];?></textarea>
+		   <textarea  maxlength = "255" class="form-control" rows="6" id="otherRequirement" name="otherRequirement" readonly><?php echo $modalData['OtherRequirement'];?></textarea>
 		</div>
   </div>
 </div>
@@ -292,7 +292,6 @@ $id = $_GET['id'];
                     <th>Course Title</th>
                     <th>Course Type</th>
                     <th>Discipline</th>
-                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -305,25 +304,23 @@ while($row = mysqli_fetch_assoc($result))
     $rowCount++;
         echo '<tr>';
         echo '<td>';
-        echo '<input class="form-control" type = "text" value = "'.$row['CourseTitle'].'" name = "courseTitle" id = "courseTitle'.$rowCount.'"/>';
+        echo '<input class="form-control" type = "text" value = "'.$row['CourseTitle'].'" name = "courseTitle" id = "courseTitle'.$rowCount.'"readonly />';
         echo '<input type="hidden" name="contactId" value="'. $row['CourseId']. '">';
         echo "</td>";
         
         echo '<td>';
-        echo '<select class="form-control" > class="form-control" <option value= "'.$row['RequirementType'].'">'.$row['RequirementType'].'</option>
+        echo '<select disabled class="form-control" > class="form-control" <option value= "'.$row['RequirementType'].'">'.$row['RequirementType'].'</option>
         <option>Required</option>
         <option>Elective</option>';
         echo "</td>";
         
         echo '<td>';
-        echo '<select class="form-control" > <option value= ""></option>
+        echo '<select disabled class="form-control" > <option value= ""></option>
         <option>Information Systems</option>
         <option>Operations Research</option>
         <option>Statistics</option>';
         echo "</td>";
-        echo '<td>
-            <input type="checkbox" onclick = "deleteCourse(event)"> 
-             </td>';
+        
 };
         $result->close();
 
@@ -338,5 +335,24 @@ while($row = mysqli_fetch_assoc($result))
     </div> 
         </div>
     </div>
-    </div>
+    	<p>
+  			<button class = "btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#SubmissionButton" aria-expanded="false" aria-controls="SubmissionButton">
+			Click Here After Reviewing All Data</button>
+  		</p>
+ 			<div class="collapse" id= "SubmissionButton">
+  			<div class= "card card-body">
+  			<div class= "form-group"> 
+  			<div class= "text-center">
+  				<p class = "h6 font-weight-bold"> <font size = "2">After reviewing all data submitted by the program adminstrator, would you like to Approve or Deny the changes?</font></p>
+  				<p class = "h6 font-weight-bold"> <font size = "2">Pressing "Approve Changes" will make the updated program information public on the INFORMS website.</font></p>
+  				<p class = "h6 font-weight-bold"> <font size = "2">Pressing "Deny Changes" will let you send an email to the progam administrator detailing the reason for denial. </font></p>
+			<button class = "btn btn-success" type="submit" value= "" data-toggle="collapse" data-target="" aria-expanded="false" aria-controls="SubmissionCollapse">Approve Changes</button>
+			<button class = "btn btn-danger" type="submit" value = "" data-toggle="collapse" data-target="" aria-expanded="false" aria-controls="SubmissionCollapse">Deny Changes</button>
+
+
+			</div>
+			</div>
+			</div>
+  			</div>
+    	</div>
    </form>
