@@ -1,4 +1,3 @@
-<!-- GET PROGRAMS -->
 <?php
 
 session_start();
@@ -6,8 +5,7 @@ session_start();
 
 require('conn.php');
 $id = $_GET['id'];
-
- $sql = ("SELECT  *
+$sql = ("SELECT  *
     FROM programs p
 	JOIN institutions i
 	ON p.InstitutionId = i.InstitutionId
@@ -19,10 +17,10 @@ $id = $_GET['id'];
     ON p.ProgramId = pc.ProgramId
     JOIN courses
     ON pc.CourseId = courses.CourseId WHERE p.programId = $id;");
- $result = $conn->query($sql);
- $modalData = $conn->query($sql)->fetch_array();
- 
- 
+$result = $conn->query($sql);
+$modalData = $conn->query($sql)->fetch_array();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +29,6 @@ $id = $_GET['id'];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Program Information</title>
- 
     <!-- Bootstrap Core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -128,12 +125,13 @@ $id = $_GET['id'];
 	<div class="form-group">
 		    <label for="co.CollegeType">College Type</label>
 <div class="input-group dropdown">
-          <input type="text" class="form-control countrycode dropdown-toggle" value="<?php echo $modalData['CollegeType'];?>">
+          <input type="text" class="form-control countrycode dropdown-toggle" id = "collegeType" value="<?php echo $modalData['CollegeType'];?>">
           <ul class="dropdown-menu">
             <li><a href="#" data-value="Arts and Sciences">Arts and Sciences</a></li>
             <li><a href="#" data-value="Business">Business</a></li>
             <li><a href="#" data-value="Center or Institute">Center or Institute</a></li>
             <li><a href="#" data-value="Engineering">Engineering</a></li>
+            <li><a href="#" data-value="Other (Type Here...)">Other</a></li>
           </ul>
           <span role="button" class="input-group-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></span>
           </div>
@@ -156,7 +154,7 @@ $id = $_GET['id'];
 		
 		<div class="form-group">
 		    <label for="p.YearEstablished">Year Established</label>
-		    <input type="text" class="form-control" id="yearEstablished" name="yearEstablished" value="<?php echo $modalData['YearEstablished'];?>" />
+		    <input type="text" class="form-control" maxlength = "4" id="yearEstablished" name="yearEstablished" value="<?php echo $modalData['YearEstablished'];?>" />
 		</div>
   </div>
 </div>
@@ -177,37 +175,45 @@ $id = $_GET['id'];
 		    <label for="">Program URL</label>
 		    <input type="text" class="form-control" id="programAccess" name="programAccess" value="<?php echo $modalData['ProgramAccess'];?>"/>
 		</div>
+		
 		<div class="form-group">
-		    <label for="p.ProgramType">Program Type</label>
-		<select class="form-control" id="programType" name="programType"  >
-    		<option value="<?php echo $modalData['ProgramType'];?>"><?php echo $modalData['ProgramType'];?></option>
-    		<option>B.B.A</option>
-    		<option>B.S.</option>
-    		<option>B.S. - Track Certificate</option>
-    		<option>Graduate Certificate</option>
-    		<option>M.B.A.</option>
-    		<option>M.B.A. - Concentration</option>
-    		<option>M.S.</option>
-    		<option>M.S. - Concentration</option>
-    		<option>M.S. and Graduate Certificate</option>
-    		<option>M.S. Concentration - Professional Track</option>
-    		<option>PhD</option>
-    		<option>PhD - Concentration</option>
-    		<option>Other</option>
-		</select>
+		    <label for="co.ProgramType">Program Type</label>
+<div class="input-group dropdown">
+          <input type="text" class="form-control countrycode dropdown-toggle" id= "programType" value="<?php echo $modalData['ProgramType'];?>">
+          <ul class="dropdown-menu">
+            <li><a href="#" data-value="B.B.A">B.B.A</a></li>
+            <li><a href="#" data-value="B.S.">B.S.</a></li>
+            <li><a href="#" data-value="B.S. - Track Certificate">B.S. - Track Certificate</a></li>
+            <li><a href="#" data-value="Graduate Certificate">Graduate Certificate</a></li>
+            <li><a href="#" data-value="M.B.A.">M.B.A.</a></li>
+            <li><a href="#" data-value="M.B.A. - Concentration">M.B.A. - Concentration</a></li>
+            <li><a href="#" data-value="M.S.">M.S.</a></li>
+            <li><a href="#" data-value="M.S. - Concentration">M.S. - Concentration</a></li>
+            <li><a href="#" data-value="M.S. and Graduate Certificate">M.S. and Graduate Certificate</a></li>
+            <li><a href="#" data-value="M.S. Concentration - Professional Track">M.S. Concentration - Professional Track</a></li>
+            <li><a href="#" data-value="PhD">PhD</a></li>
+            <li><a href="#" data-value="PhD - Concentration">PhD - Concentration</a></li>
+            <li><a href="#" data-value="Other (Type Here...)">Other</a></li>
+          </ul>
+          <span role="button" class="input-group-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></span>
+          </div>
 		</div>
+		
 		<div class="form-group">
-		<label for="p.DeliveryMethod">Program Delivery</label>
-		<select class="form-control" id="deliveryMethod" name="deliveryMethod"  >
-    		<option value="<?php echo $modalData['DeliveryMethod'];?>"><?php echo $modalData['DeliveryMethod'];?></option>
-    		<option>On Campus: Full-Time</option>
-    		<option>On Campus: Part-Time</option>
-    		<option>On Campus: Full-Time and Part-Time</option>
-    		<option>Online: Full-Time</option>
-    		<option>Online: Part-Time</option>
-    		<option>Online: Full-Time and Part-Time</option>
-    		<option>Other</option>    		
-		</select>
+		    <label for="co.ProgramDelivery">Program Delivery</label>
+<div class="input-group dropdown">
+          <input type="text" class="form-control countrycode dropdown-toggle" id = "deliveryMethod" value="<?php echo $modalData['DeliveryMethod'];?>">
+          <ul class="dropdown-menu">
+            <li><a href="#" data-value="On Campus: Full-Time">On Campus: Full-Time</a></li>
+            <li><a href="#" data-value="On Campus: Part-Time">On Campus: Part-Time</a></li>
+            <li><a href="#" data-value="On Campus: Full-Time and Part-Time">On Campus: Full-Time and Part-Time</a></li>
+            <li><a href="#" data-value="Online: Full-Time">Online: Full-Time</a></li>
+            <li><a href="#" data-value="Online: Part-Time">Online: Part-Time</a></li>
+            <li><a href="#" data-value="Online: Full-Time and Part-Time">Online: Full-Time and Part-Time</a></li>
+            <li><a href="#" data-value="Other (Type Here...)">Other</a></li>
+          </ul>
+          <span role="button" class="input-group-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></span>
+          </div>
 		</div>
 		<div class="form-group">
 		    <label for="p.FullTimeDuration">Full-Time Duration</label>
@@ -272,7 +278,7 @@ $id = $_GET['id'];
 		    	<option>23 Months</option>
 		    	<option>24 Months</option>
 		    	<option>25+ Months</option>
-		    	<option>Other</option>		
+		    	<option>Other</option>	
 		    </select>
 		</div>
 		<div class="form-group">
@@ -307,9 +313,6 @@ $id = $_GET['id'];
                 <tbody>
                     <tr>
 <?php
-
-
-
 // Output data of each row
 $rowCount = 0;
 
@@ -327,8 +330,9 @@ $coureTypeList = array();
 
 
 
+
 while($row = mysqli_fetch_assoc($result))
-{   
+{
         echo '<tr>';
         echo '<td>';
         echo '<input class="form-control" type = "text" value = "'.$row['CourseTitle'].'" name = "courseTitle[]" id = "courseTitle[]"/>';
@@ -358,7 +362,7 @@ while($row = mysqli_fetch_assoc($result))
         <option>Statistics</option>';
         echo "</td>";
         echo '<td>
-            <input type="checkbox" name="deleteCourseBx[]" id="deleteCourseBx[]" onclick = "deleteCourse(event)"> 
+            <input type="checkbox" name="deleteCourseBx[]" id="deleteCourseBx[]" onclick = "deleteCourse(event)">
              </td>';
         $rowCount++;
 };
@@ -368,7 +372,7 @@ echo '<input type="hidden" name="rowCount" id="rowCount" value="'. $rowCount. '"
         $_SESSION['courseIdList'] = $courseIdList;
         $_SESSION['instructorIdList'] = $instructorIdList;
         $_SESSION['courseNumberList'] = $courseNumberList;
-
+        
         $_SESSION['deliveryMethodList'] = $deliveryMethodList;
         $_SESSION['hasCapstoneProjectList'] = $hasCapstoneProjectList;
         $_SESSION['courseTextList'] = $courseTextList;
@@ -376,9 +380,9 @@ echo '<input type="hidden" name="rowCount" id="rowCount" value="'. $rowCount. '"
         $_SESSION['syllabusFilesizeList'] = $syllabusFilesizeList;
         $_SESSION['businessTagList'] = $businessTagList;
         $_SESSION['analyticTagList'] = $analyticTagList;
-
         
-
+        
+        
 ?>
                     </tr>
                 </tbody>
@@ -426,7 +430,7 @@ $('.phone')
   var key = e.charCode || e.keyCode || 0;
   var phone = $(this);
   if (phone.val().length === 0) {
-	  phone.val(phone.val() + '+');
+    phone.val(phone.val() + '+');
   }
   // Auto-format- do not expose the mask as the user begins to type
   if (key !== 8 && key !== 9) {
@@ -440,7 +444,7 @@ $('.phone')
       phone.val(phone.val() + ' ');
     }
     if (phone.val().length >= 15) {
-        phone.val(phone.val().slice(0, 14));
+      phone.val(phone.val().slice(0, 14));
     }
   }
   // Allow numeric (and tab, backspace, delete) keys only
@@ -469,14 +473,12 @@ function validateEmail(contactEmail) {
 var re = /\S+@\S+\.\S+/;
 return re.test(contactEmail);
 }
-
 function validateForm() {
 var cn = document.forms["programForm"]["contactName"].value; var inputValcn = document.getElementById("contactName");
 var ct = document.forms["programForm"]["contactTitle"].value; var inputValct = document.getElementById("contactTitle");
 var cp = document.forms["programForm"]["contactPhone"].value; var inputValcp = document.getElementById("contactPhone");
 var ce = document.forms["programForm"]["contactEmail"].value; var inputValce = document.getElementById("contactEmail");
-var ft = document.forms["programForm"]["fullTimeDuration"].value; var inputValft = document.getElementById("fullTimeDuration");
-var pt = document.forms["programForm"]["partTimeDuration"].value; var inputValpt = document.getElementById("partTimeDuration");
+
 //ft pt 
 if (cn == "") {
 alert("Contact Name must be filled out");
@@ -488,6 +490,7 @@ if (ct == ""){
 	inputValct.style.border="1px solid red";
 return false;
 }
+
 if (cp == ""){
 	alert("Contact Phone must be filled out");
  	inputValcp.style.border="1px solid red";
@@ -511,16 +514,6 @@ if (ce == ""){
    inputValce.style.border="1px solid red";
    return false;
   }
-if (ft == ""){
-	alert("Please choose a Full Time Duration Option");
-	inputValft.style.border="1px solid red";
-	return false;
-}
-if (pt == ""){
-	alert("Please choose a Part Time Duration Option");
-	inputValpt.style.border="1px solid red";
-	return false;
-}
 var email = $("#contactEmail").val();
 if (validateEmail(email) == false)
 {
@@ -528,12 +521,65 @@ if (validateEmail(email) == false)
 	 inputValce.style.border="1px solid red";
 	 return false;
 }
-//var fullTime = $("#FullTimeDuration").val();
+
+var pn = document.forms["programForm"]["programName"].value; var inputValpn = document.getElementById("programName");
+var con = document.forms["programForm"]["collegeName"].value; var inputValcon = document.getElementById("collegeName");
+var cot = document.forms["programForm"]["collegeType"].value; var inputValcot = document.getElementById("collegeType");
+
+if (pn == ""){
+	alert("Please enter a Program Name");
+	inputValpn.style.border="1px solid red";
+	return false;
+}
+if (con == ""){
+	alert("Please enter a College Name");
+	inputValcon.style.border="1px solid red";
+	return false;
+}
+if (cot == ""){
+	alert("Please enter a College Type");
+	inputValcot.style.border="1px solid red";
+	return false;
+}
+
+var ft = document.forms["programForm"]["fullTimeDuration"].value; var inputValft = document.getElementById("fullTimeDuration");
+var pt = document.forms["programForm"]["partTimeDuration"].value; var inputValpt = document.getElementById("partTimeDuration");
+var po = document.forms["programForm"]["programObjectives"].value; var inputValpo = document.getElementById("programObjectives");
+var url = document.forms["programForm"]["programAccess"].value; var inputValurl = document.getElementById("programAccess");
+var dm = document.forms["programForm"]["deliveryMethod"].value; var inputValdm = document.getElementById("deliveryMethod");
+var ptype = document.forms["programForm"]["programType"].value; var inputValptype = document.getElementById("programType");
+if (po == ""){
+  	alert("Program Description must be filled out");
+  	inputValpo.style.border="1px solid red";
+   return false;
+  }
+if (url == ""){
+	alert("Please enter a Program URL");
+	inputValurl.style.border="1px solid red";
+	return false;
+}
+if (ptype == ""){
+  	alert("Program Type must be filled out");
+  	inputValptype.style.border="1px solid red";
+   return false;
+  }
+if (dm == ""){
+  	alert("Program Delivery must be filled out");
+  	inputValdm.style.border="1px solid red";
+   return false;
+  }
+
+if (pt == ""){
+	alert("Please choose a Part Time Duration Option");
+	inputValpt.style.border="1px solid red";
+	return false;
+}
+
 if (ft.match(/Months/i)){
 	}
-    else if (ft.match(/Not Available/i)){
-    }
-    else if (ft.match(/Other/i)){
+	else if (ft.match(/Not Available/i)){
+	}
+	else if (ft.match(/Other/i)){
 	}
 		else{
 		alert("Full Time Duration must be in Months");
@@ -543,29 +589,23 @@ if (ft.match(/Months/i)){
 			
 if (pt.match(/Months/i)){
 }
-    else if (pt.match(/Not Available/i)){
-    }
-    else if (pt.match(/Other/i)){
+	else if (pt.match(/Not Available/i)){
+	}
+	else if (pt.match(/Other/i)){
 	}
 	else{
 		alert("Part Time Duration must be in Months");
 		inputValpt.style.border="1px solid red";
 		return false;
 		}
-var pn = document.forms["programForm"]["programName"].value; var inputValpn = document.getElementById("programName");
-if (pn == ""){
-	alert("Program Name must be filled out");
-	inputValpn.style.border="1px solid red";
- return false;
-}
-var po = document.forms["programForm"]["programObjectives"].value; var inputValpo = document.getElementById("programObjectives");
-if (po == ""){
-  	alert("Program Objectives must be filled out");
-  	inputValpo.style.border="1px solid red";
-   return false;
-  }
+
+
+SubmissionFunction();
+
+
+
 //The code below does not work--needs to be revised
-/*var cot = document.forms["programForm"]["courseTitle"].value; var inputValcot = document.getElementById("courseTitle");  
+/*var cot = document.forms["programForm"]["courseTitle"].value; var inputValcot = document.getElementById("courseTitle"); 
  if (cot == ""){
 	 alert("All Course Titles must be filled out");
 	 inputValcot.style.border="1px solid red";
@@ -583,9 +623,7 @@ if (po == ""){
 //{
 //return true;
 //} 
-SubmissionFunction();
-return true;
-}
+
 function SubmissionFunction() {
 	alert("Your data has been submitted for approval.");
 }
@@ -603,6 +641,9 @@ function addCourse(){
     courseDelete.innerHTML = '<input type = "checkbox" name="deleteCourseBx[]" id="deleteCourseBx[]"/>';
     localstorage.setItem(numRows);
 }
+
+
+}
 //function deleteCourse(e){ 
 	//var row = e.target.parentNode.parentNode;
 	//$(row).children().each(function() {
@@ -613,9 +654,7 @@ function addCourse(){
    // $(this).children().not('input[type="checkbox"]').attr('disabled', true);
   //});
  
-
 //}
-
 </script>
  
 	</form>
@@ -671,9 +710,8 @@ function addCourse(){
  $_POST['courseDiscipline'];
  $_POST['deleteCourseBx'];
 }
+
 ?>
 
 </body>
 </html>
-
-
