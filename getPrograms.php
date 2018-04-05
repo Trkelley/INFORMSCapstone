@@ -131,7 +131,7 @@ $modalData = $conn->query($sql)->fetch_array();
             <li><a href="#" data-value="Business">Business</a></li>
             <li><a href="#" data-value="Center or Institute">Center or Institute</a></li>
             <li><a href="#" data-value="Engineering">Engineering</a></li>
-            <li><a href="#" data-value="Other (Type Here...)">Other</a></li>
+            <li><a href="#" data-value="Type Here..." >Other</a></li>
           </ul>
           <span role="button" class="input-group-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></span>
           </div>
@@ -193,7 +193,7 @@ $modalData = $conn->query($sql)->fetch_array();
             <li><a href="#" data-value="M.S. Concentration - Professional Track">M.S. Concentration - Professional Track</a></li>
             <li><a href="#" data-value="PhD">PhD</a></li>
             <li><a href="#" data-value="PhD - Concentration">PhD - Concentration</a></li>
-            <li><a href="#" data-value="Other (Type Here...)">Other</a></li>
+            <li><a href="#" data-value="Type Here...">Other</a></li>
           </ul>
           <span role="button" class="input-group-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></span>
           </div>
@@ -210,7 +210,7 @@ $modalData = $conn->query($sql)->fetch_array();
             <li><a href="#" data-value="Online: Full-Time">Online: Full-Time</a></li>
             <li><a href="#" data-value="Online: Part-Time">Online: Part-Time</a></li>
             <li><a href="#" data-value="Online: Full-Time and Part-Time">Online: Full-Time and Part-Time</a></li>
-            <li><a href="#" data-value="Other (Type Here...)">Other</a></li>
+            <li><a href="#" data-value="Type Here...">Other</a></li>
           </ul>
           <span role="button" class="input-group-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></span>
           </div>
@@ -541,6 +541,11 @@ if (cot == ""){
 	inputValcot.style.border="1px solid red";
 	return false;
 }
+if (cot.match(/Type Here.../i)){
+	alert("Please select a College Type from the list or type one in");
+	inputValcot.style.border="1px solid red";
+	return false;
+}
 
 var ft = document.forms["programForm"]["fullTimeDuration"].value; var inputValft = document.getElementById("fullTimeDuration");
 var pt = document.forms["programForm"]["partTimeDuration"].value; var inputValpt = document.getElementById("partTimeDuration");
@@ -563,11 +568,21 @@ if (ptype == ""){
   	inputValptype.style.border="1px solid red";
    return false;
   }
+if (ptype.match(/Type Here.../i)){
+	alert("Please select a Program Type from the list or type one in");
+	inputValptype.style.border="1px solid red";
+	return false;
+}
 if (dm == ""){
   	alert("Program Delivery must be filled out");
   	inputValdm.style.border="1px solid red";
    return false;
   }
+if (dm.match(/Type Here.../i)){
+	alert("Please select a Program Delivery from the list or type one in");
+	inputValdm.style.border="1px solid red";
+	return false;
+}
 
 if (pt == ""){
 	alert("Please choose a Part Time Duration Option");
