@@ -1,3 +1,6 @@
+<!-- This file creates the INFORMS Administrator home page. When this file runs, it populates the page with all pending changes that have been submitted by various
+Program Administrators that are involved with the INFORMS Analytics Database  -->
+
 <!DOCTYPE html>
 <html lang="en">
 <img class="irc_mi"
@@ -24,11 +27,11 @@ html: margin 10% auto ;
 
 	<!--  Log Out Button -->
 	<div style="text-align: right; margin-right: 10%;">
-		<button>Log Out</button>
+		<a class="btn btn-small btn-primary">Log Out</a>
 	</div>
 	;
 
-	<!-- Modal -->
+	<!-- Progam Information Modal -->
 	<div class="modal fade bs-modal-lg custom-modal" id="programModal"
 		tabindex="-1" role="dialog" aria-labelledby="programModalLabel"
 		aria-hidden="true">
@@ -91,9 +94,9 @@ $result = $conn->query($sql);
 					<tbody>
 						<tr>
 <?php
+//Make Connection
 require ('conn.php');
 // Output data of each row
-
 while ($row = mysqli_fetch_assoc($result)) {
     echo '<tr>';
     echo '<td>' . $row['InstitutionName'] . '</td>';

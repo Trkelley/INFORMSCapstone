@@ -1,5 +1,9 @@
-<!-- GET PROGRAMS -->
+ <!-- This file creates the " Progam Information" Modal. It creates the accordian style separation of information, populates fields with existing information, 
+ and lets an INFORMS adminstrator confirm or deny the program's information changes. All fields are disabled and are just there for reviewal  -->
+
+
 <?php
+//Retrieves Progam Information from database
 require('conn.php');
 $id = $_GET['id'];
 
@@ -37,6 +41,8 @@ $id = $_GET['id'];
     </style>
 </head>
 <body>
+
+<!-- Header -->
 <div class="text-center">
 	<p class="h3 font-weight-bold"><?php echo $modalData['InstitutionName']?> </p>
 	<p class="h4"><?php echo $modalData['CollegeName']?></p>
@@ -62,12 +68,7 @@ $id = $_GET['id'];
 	<input type="hidden" name="programAccess" value="<?php echo $modalData['ProgramAccess']; ?>">
 	<input type="hidden" name="testingRequirement" value="<?php echo $modalData['TestingRequirement']; ?>">
 	
-	
-	
-	
-	
 	<!-- Institutions -->
-	
 	<input type="hidden" name="institutionName" value="<?php echo $modalData['InstitutionName']; ?>">
 	<input type="hidden" name="institutionId" value="<?php echo $modalData['InstitutionId']; ?>">
 	<input type="hidden" name="institutionZip" value="<?php echo $modalData['InstitutionZip']; ?>">
@@ -79,6 +80,7 @@ $id = $_GET['id'];
     <!-- College Information -->
     <input type="hidden" name="collegeId" value="<?php echo $modalData['CollegeId']; ?>">
     
+    <!-- Contact Information Tab -->
 	<p>
   <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#ContactInfoCollapse" aria-expanded="false" aria-controls="ContactInfoCollapse">
     Contact Information
@@ -105,7 +107,7 @@ $id = $_GET['id'];
   </div>
 </div>
 
-<!-- Progam General Information -->
+<!-- Progam General Information tab -->
 <p>
 <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#ProgramGeneralInfoCollapse" aria-expanded="false" aria-controls="ProgramGeneralInfoCollapse">
     Program General Information
@@ -123,14 +125,9 @@ $id = $_GET['id'];
 		</div>
 	<div class="form-group">
 		    <label for="co.CollegeType">College Type</label>
-
 		    <select disabled class="form-control" id="collegeType" name="collegeType">
 		    	<option value="<?php echo $modalData['CollegeType'];?>"><?php echo $modalData['CollegeType'];?></option>
-		    	<option>Arts and Sciences</option>
-		    	<option>Business</option>
-		    	<option>Center or Institute</option>
-		    	<option>Engineering</option>
-		    	<option>Other</option>
+		    	
 		    </select> 
 		</div>
 	
@@ -156,7 +153,7 @@ $id = $_GET['id'];
   </div>
 </div>
 
-<!-- Program Details -->
+<!-- Program Details tab -->
 <p>
 <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#ProgramDetailsCollapse" aria-expanded="false" aria-controls="ProgramDetailsCollapse">
     Program Details
@@ -176,94 +173,28 @@ $id = $_GET['id'];
 		    <label for="p.ProgramType">Program Type</label>
 		<select disabled class="form-control" id="programType" name="programType">
     		<option value="<?php echo $modalData['ProgramType'];?>"><?php echo $modalData['ProgramType'];?></option>
-    		<option>B.B.A</option>
-    		<option>B.S.</option>
-    		<option>B.S. - Track Certificate</option>
-    		<option>Graduate Certificate</option>
-    		<option>M.B.A.</option>
-    		<option>M.B.A. - Concentration</option>
-    		<option>M.S.</option>
-    		<option>M.S. - Concentration</option>
-    		<option>M.S. and Graduate Certificate</option>
-    		<option>M.S. Concentration - Professional Track</option>
-    		<option>PhD</option>
-    		<option>PhD - Concentration</option>
+    		
 		</select>
 		</div>
 		<div class="form-group">
 		<label for="p.DeliveryMethod">Program Delivery</label>
 		<select disabled class="form-control" id="deliveryMethod" name="deliveryMethod">
     		<option value="<?php echo $modalData['DeliveryMethod'];?>"><?php echo $modalData['DeliveryMethod'];?></option>
-    		<option>On Campus: Full-Time</option>
-    		<option>On Campus: Part-Time</option>
-    		<option>On Campus: Full-Time and Part-Time</option>
-    		<option>Online: Full-Time</option>
-    		<option>Online: Part-Time</option>
-    		<option>Online: Full-Time and Part-Time</option>
+    		
 		</select>
 		</div>
 		<div class="form-group">
 		    <label for="p.FullTimeDuration">Full-Time Duration</label>
 		    <select disabled class="form-control" id="fullTimeDuration" name="fullTimeDuration">
 				<option value="<?php echo $modalData['FullTimeDuration'];?>"><?php echo $modalData['FullTimeDuration'];?></option>
-		    	<option>None</option>
-		    	<option>1 Months</option>
-		    	<option>2 Months</option>
-		    	<option>3 Months</option>
-		    	<option>4 Months</option>
-		    	<option>5 Months</option>
-		    	<option>6 Months</option>
-		    	<option>7 Months</option>
-		    	<option>8 Months</option>
-		    	<option>9 Months</option>
-		    	<option>10 Months</option>
-		    	<option>11 Months</option>
-		    	<option>12 Months</option>
-		    	<option>13 Months</option>
-		    	<option>14 Months</option>
-		    	<option>15 Months</option>
-		    	<option>16 Months</option>
-		    	<option>17 Months</option>
-		    	<option>18 Months</option>
-		    	<option>19 Months</option>
-		    	<option>20 Months</option>
-		    	<option>21 Months</option>
-		    	<option>22 Months</option>
-		    	<option>23 Months</option>
-		    	<option>24 Months</option>
-		    	<option>25+ Months</option>
+		    	
 			</select>
 		</div>
 		<div class="form-group">
 		    <label for="p.PartTimeDuration">Part-Time Duration</label>
 		    <select disabled class="form-control" id="partTimeDuration" name="partTimeDuration">
 			<option value="<?php echo $modalData['PartTimeDuration'];?>"><?php echo $modalData['PartTimeDuration'];?></option>
-		    	<option>None</option>
-		    	<option>1 Months</option>
-		    	<option>2 Months</option>
-		    	<option>3 Months</option>
-		    	<option>4 Months</option>
-		    	<option>5 Months</option>
-		    	<option>6 Months</option>
-		    	<option>7 Months</option>
-		    	<option>8 Months</option>
-		    	<option>9 Months</option>
-		    	<option>10 Months</option>
-		    	<option>11 Months</option>
-		    	<option>12 Months</option>
-		    	<option>13 Months</option>
-		    	<option>14 Months</option>
-		    	<option>15 Months</option>
-		    	<option>16 Months</option>
-		    	<option>17 Months</option>
-		    	<option>18 Months</option>
-		    	<option>19 Months</option>
-		    	<option>20 Months</option>
-		    	<option>21 Months</option>
-		    	<option>22 Months</option>
-		    	<option>23 Months</option>
-		    	<option>24 Months</option>
-		    	<option>25+ Months</option>	
+		    	
 		    </select>
 		</div>
 		<div class="form-group">
@@ -328,13 +259,11 @@ while($row = mysqli_fetch_assoc($result))
                     </tr>
                 </tbody>
             </table>
-            <br>                         
-    <div style = "text-align:right; margin-right: 10%;" >
-            <a type = "button" onclick = "addCourse()">Add Course</a>
-            </div>           
+            <br>                                    
     </div> 
         </div>
     </div>
+    <!-- Review Tab -->
     	<p>
   			<button class = "btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#SubmissionButton" aria-expanded="false" aria-controls="SubmissionButton">
 			Click Here After Reviewing All Data</button>
@@ -348,7 +277,6 @@ while($row = mysqli_fetch_assoc($result))
   				<p class = "h6 font-weight-bold"> <font size = "2">Pressing "Deny Changes" will let you send an email to the progam administrator detailing the reason for denial. </font></p>
 			<button class = "btn btn-success" type="submit" value= "" data-toggle="collapse" data-target="" aria-expanded="false" aria-controls="SubmissionCollapse">Approve Changes</button>
 			<button class = "btn btn-danger" type="submit" value = "" data-toggle="collapse" data-target="" aria-expanded="false" aria-controls="SubmissionCollapse">Deny Changes</button>
-
 
 			</div>
 			</div>

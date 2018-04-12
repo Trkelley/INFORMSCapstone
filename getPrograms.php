@@ -1,8 +1,11 @@
+<!-- This file creates the "Edit Progam Information" Modal. It creates the accordian style separation of information, populates fields with existing information, 
+allows for users to change fields, and lets an admin submit updates for INFORMS review -->
+
 <?php
 
 session_start();
 
-
+//Pull in progam information from database 
 require('conn.php');
 $id = $_GET['id'];
 $sql = ("SELECT  *
@@ -24,6 +27,7 @@ $modalData = $conn->query($sql)->fetch_array();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<!-- Modal Header -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,6 +42,7 @@ $modalData = $conn->query($sql)->fetch_array();
     </style>
 </head>
 <body>
+<!-- Display general program header at top of modal -->
 <div class="text-center">
 	<p class="h3 font-weight-bold"><?php echo $modalData['InstitutionName']?> </p>
 	<p class="h4"><?php echo $modalData['CollegeName']?></p>
@@ -80,6 +85,7 @@ $modalData = $conn->query($sql)->fetch_array();
     <!-- College Information -->
     <input type="hidden" name="collegeId" value="<?php echo $modalData['CollegeId']; ?>">
     
+    <!-- Contact Information Tab -->
 	<p>
   <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#ContactInfoCollapse" aria-expanded="false" aria-controls="ContactInfoCollapse">
     Contact Information
@@ -106,7 +112,7 @@ $modalData = $conn->query($sql)->fetch_array();
   </div>
 </div>
 
-<!-- Progam General Information -->
+<!-- Progam General Information tab -->
 <p>
 <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#ProgramGeneralInfoCollapse" aria-expanded="false" aria-controls="ProgramGeneralInfoCollapse">
     Program General Information
@@ -159,7 +165,7 @@ $modalData = $conn->query($sql)->fetch_array();
   </div>
 </div>
 
-<!-- Program Details -->
+<!-- Program Details tab -->
 <p>
 <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#ProgramDetailsCollapse" aria-expanded="false" aria-controls="ProgramDetailsCollapse">
     Program Details
@@ -176,6 +182,7 @@ $modalData = $conn->query($sql)->fetch_array();
 		    <input type="text" class="form-control" id="programAccess" name="programAccess" value="<?php echo $modalData['ProgramAccess'];?>"/>
 		</div>
 		
+		<!-- Editable drop down menu -->
 		<div class="form-group">
 		    <label for="co.ProgramType">Program Type</label>
 <div class="input-group dropdown">
@@ -199,6 +206,7 @@ $modalData = $conn->query($sql)->fetch_array();
           </div>
 		</div>
 		
+		<!-- Editable drop down menu -->
 		<div class="form-group">
 		    <label for="co.ProgramDelivery">Program Delivery</label>
 <div class="input-group dropdown">
@@ -215,6 +223,8 @@ $modalData = $conn->query($sql)->fetch_array();
           <span role="button" class="input-group-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></span>
           </div>
 		</div>
+		
+		<!-- Uneditable drop down menu -->
 		<div class="form-group">
 		    <label for="p.FullTimeDuration">Full-Time Duration</label>
 		    <select class="form-control" id="fullTimeDuration" name="fullTimeDuration">
@@ -248,6 +258,8 @@ $modalData = $conn->query($sql)->fetch_array();
 		    	<option>Other</option>
 			</select>
 		</div>
+		
+		<!-- Uneditable drop down menu -->
 		<div class="form-group">
 		    <label for="p.PartTimeDuration">Part-Time Duration</label>
 		    <select class="form-control" id="partTimeDuration" name="partTimeDuration">
@@ -283,12 +295,12 @@ $modalData = $conn->query($sql)->fetch_array();
 		</div>
 		<div class="form-group">
 		    <label for="p.OtherRequirement">Application Requirements</label>
-		   <textarea  maxlength = "255" class="form-control" rows="6" id="otherRequirement" name="otherRequirement"><?php echo $modalData['OtherRequirement'];?></textarea>
+		   <textarea  maxlength = "2000" class="form-control" rows="6" id="otherRequirement" name="otherRequirement"><?php echo $modalData['OtherRequirement'];?></textarea>
 		</div>
   </div>
 </div>
 
-<!-- Curriculum Information -->
+<!-- Curriculum Information tab -->
 <p>
 <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#CurriculumInfoCollapse" aria-expanded="false" aria-controls="CurriculumInfoCollapse">
     Curriculum Information
@@ -330,7 +342,7 @@ $coureTypeList = array();
 
 
 
-
+// assign variables to to course related fields
 while($row = mysqli_fetch_assoc($result))
 {
         echo '<tr>';
@@ -397,7 +409,7 @@ echo '<input type="hidden" name="rowCount" id="rowCount" value="'. $rowCount. '"
 
 
 
-<!-- Submission -->
+<!-- Submit all fields tab-->
   <p>
  <button class = "btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#SubmissionButton" aria-expanded="false" aria-controls="SubmissionButton">
 Click Here After Entering All Data</button>
@@ -473,13 +485,15 @@ function validateEmail(contactEmail) {
 var re = /\S+@\S+\.\S+/;
 return re.test(contactEmail);
 }
+
+//Contact Tab validation
 function validateForm() {
 var cn = document.forms["programForm"]["contactName"].value; var inputValcn = document.getElementById("contactName");
 var ct = document.forms["programForm"]["contactTitle"].value; var inputValct = document.getElementById("contactTitle");
 var cp = document.forms["programForm"]["contactPhone"].value; var inputValcp = document.getElementById("contactPhone");
 var ce = document.forms["programForm"]["contactEmail"].value; var inputValce = document.getElementById("contactEmail");
 
-//ft pt 
+
 if (cn == "") {
 alert("Contact Name must be filled out");
 inputValcn.style.border="1px solid red";
@@ -522,6 +536,7 @@ if (validateEmail(email) == false)
 	 return false;
 }
 
+//Program General Information Tab Validation
 var pn = document.forms["programForm"]["programName"].value; var inputValpn = document.getElementById("programName");
 var con = document.forms["programForm"]["collegeName"].value; var inputValcon = document.getElementById("collegeName");
 var cot = document.forms["programForm"]["collegeType"].value; var inputValcot = document.getElementById("collegeType");
@@ -547,6 +562,7 @@ if (cot.match(/Type Here.../i)){
 	return false;
 }
 
+//Program Detail Tab Validation
 var ft = document.forms["programForm"]["fullTimeDuration"].value; var inputValft = document.getElementById("fullTimeDuration");
 var pt = document.forms["programForm"]["partTimeDuration"].value; var inputValpt = document.getElementById("partTimeDuration");
 var po = document.forms["programForm"]["programObjectives"].value; var inputValpo = document.getElementById("programObjectives");
@@ -639,9 +655,12 @@ SubmissionFunction();
 //return true;
 //} 
 
+ //Runs when all validation is passed
 function SubmissionFunction() {
 	alert("Your data has been submitted for approval.");
 }
+
+// Add course to program
 function addCourse(){
 	var table = document.getElementById("currTable");
 	var numRows = 2 + <?php echo $rowCount?>;
@@ -659,6 +678,7 @@ function addCourse(){
 
 
 }
+//need correct code for deleting courses
 //function deleteCourse(e){ 
 	//var row = e.target.parentNode.parentNode;
 	//$(row).children().each(function() {
