@@ -1,8 +1,8 @@
-// This file contains the email function for this project that will send an email to an INFORMS administrator when a University administrator makes changes to programs within their university. 
-// ISSUES: We were never able to get an SMTP server set up on our Windows machines, therefore, we were never able to test this file.
-// Despite these issues, this code should work once an SMTP is set up. This can be done within the "php.ini" file within the [Mail Function] section of the file.
+<!-- THIS FILE CONTAINS THE EMAIL FUNCTION FOR THIS PROJECT THAT WILL SEND AN EMAIL TO AN INFORMS ADMINISTRATOR WHEN A UNIVERSITY ADMINISTRATOR MAKES CHANGES TO PROGRAMS WITHIN THEIR UNIVERSITY.  -->
+<!-- ISSUES: We were never able to get an SMTP server set up on our Windows machines, therefore, we were never able to test this file. -->
+<!-- Despite these issues, this code should work once an SMTP is set up. This can be done within the "php.ini" file within the [Mail Function] section of the file. -->
 
-// SENDING AN HTML EMAIL TO AN INFORMS ADMINISTRATOR
+<!-- SENDING AN HTML EMAIL TO AN INFORMS ADMINISTRATOR -->
 <?php
 require('conn.php');
 
