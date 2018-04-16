@@ -81,42 +81,38 @@ $result = $conn->query($sql);
 					<tbody>
 						<tr>
 <?php
-//Make Connection
-require ('conn.php');
+require('conn.php');
 // Output data of each row
-while ($row = mysqli_fetch_assoc($result)) {
-    echo '<tr>';
-    echo '<td>' . $row['InstitutionName'] . '</td>';
-    echo '<td>' . $row['CollegeName'] . '</td>';
-    echo '<td>' . $row['ProgramName'] . '</td>';
-    echo '<td>' . date("m/d/Y") . '</td>';
-    echo '<td>
+
+while($row = mysqli_fetch_assoc($result)){
+        echo '<tr>';       
+        echo '<td>' .$row['InstitutionName']. '</td>';
+        echo '<td>' .$row['CollegeName']. '</td>';
+        echo '<td>' .$row['ProgramName']. '</td>';
+        echo '<td>' .$row['LastUpdate']. '</td>';
+        echo '<td>
                     <a class="btn btn-small btn-primary"
                        data-toggle="modal"
                        data-target="#programModal"
-                       data-whatever="' . $row['ReferenceId'] . ' ">View Program Info</a>
+                       data-whatever="'.$row['ReferenceId'].' ">View Program Info</a>
                  </td>';
-    echo '<tr>';
+        echo '<tr>';
 }
         $result->close();
+ 
 ?>
                     </tr>
-					</tbody>
-				</table>
-		</div>
-	</div>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<!-- Latest compiled and minified JavaScript -->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-	<script>
 <script>
     $('#programModal').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget) // Button that triggered the modal
