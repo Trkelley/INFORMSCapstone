@@ -5,7 +5,6 @@
 <!-- A NEW TABLE WILL NEED TO BE CREATED IN THE DATABASE FOR VALIDATING EMAIL AND PASSWORD -->
 
 <?php
-
 // This redirects the page to Index.php where University administrators can make program changes.
 header("location:Index.php");
 
@@ -14,5 +13,4 @@ header("location:Index.php");
 // VALIDATE PASSWORD
 
 // VALIDATE CREATION OF NEW ACCOUNT
-
 ?>
