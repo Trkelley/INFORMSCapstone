@@ -1,35 +1,22 @@
-<!-- This file creates the INFORMS Administrator home page. When this file runs, it populates the page with all pending changes that have been submitted by various
-Program Administrators that are involved with the INFORMS Analytics Database  -->
-
 <!DOCTYPE html>
 <html lang="en">
-<img class="irc_mi"
-	src="https://www.informs.org/var/ezflow_site/storage/images/media/or-ms-today/images/0217/new-informs-logo2/3648939-1-eng-US/New-INFORMS-logo.jpg"
-	onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)"
-	width="350" height="75" alt="Image result for Informs">
+<img class="irc_mi" src="https://www.informs.org/var/ezflow_site/storage/images/media/or-ms-today/images/0217/new-informs-logo2/3648939-1-eng-US/New-INFORMS-logo.jpg" onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)" width="350" height="75" alt="Image result for Informs">
 
-<meta charset="utf-8"></meta>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Edit Programs</title>
-<!-- Bootstrap Core CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<style>
-html: margin 10% auto ;
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Edit Programs</title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+    html: margin 10% auto;
     a.btnDrop {
-	padding: 20px 400px;
-}
-</style>
+     padding: 20px 400px;
+    }
+    </style>
 </head>
 <body>
-
-	<!--  Log Out Button -->
-	<div style="text-align: right; margin-right: 10%;">
-		<a class="btn btn-small btn-primary">Log Out</a>
-	</div>
-	;
 
 	<!-- Progam Information Modal -->
 	<div class="modal fade bs-modal-lg custom-modal" id="programModal"
@@ -50,9 +37,9 @@ html: margin 10% auto ;
 		</div>
 	</div>
 <?php
-require ('conn.php');
+require('conn.php');
 // Display table
-$sql = "SELECT a.InstitutionId, b.InstitutionName, a.CollegeName, c.ProgramName, c.ProgramId, c.ReferenceId
+$sql = "SELECT a.InstitutionId, b.InstitutionName, a.CollegeName, c.ProgramName, c.ProgramId, c.ReferenceId, c.LastUpdate
         FROM colleges a
              INNER JOIN institutions b 
                    ON a.InstitutionId = b.InstitutionId
@@ -111,15 +98,15 @@ while ($row = mysqli_fetch_assoc($result)) {
                  </td>';
     echo '<tr>';
 }
-$result->close();
-
+        $result->close();
 ?>
                     </tr>
 					</tbody>
 				</table>
-			</div>
 		</div>
 	</div>
+        </div>
+    </div>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script
@@ -127,8 +114,10 @@ $result->close();
 	<!-- Latest compiled and minified JavaScript -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
 
 	<script>
+<script>
     $('#programModal').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget) // Button that triggered the modal
           var recipient = button.data('whatever') // Extract info from data-* attributes
