@@ -43,29 +43,14 @@ $syllabusFileList = $_SESSION['syllabusFileList']; //empty
 $syllabusFilesizeList = $_SESSION['syllabusFilesizeList']; //empty
 $analyticTagList = $_SESSION['analyticTagList']; //Full of zeroes
 $businessTagList = $_SESSION['businessTagList']; //empty
+$date = date('m/d/Y');
 $courseTitleList = $_POST['courseTitle'];
-foreach($courseTitleList as  $courseTitles)
-{
-    echo $courseTitles;
-}
-//Passing the course requirements. You can pass them individually (ex: echo $courseRequirementList[2]) or in a foreach loop
 $requirementList = $_POST['requirementType'];
-foreach ($requirementList as $requirements){
-    echo $requirements;
-}
-//Passing the course disciplines. You can pass them individually (ex: echo $disciplineList[2]) or in a foreach loop
 $disciplineList = $_POST['courseDiscipline'];
-foreach ($disciplineList as $disciplines){
-    echo $disciplines;
-}
-//Passing delete course checkbox, returns as either "on" or NULL
 if(isset($_POST['deleteCourseBx']))
+{
 $deleteCourseAction = $_POST['deleteCourseBx'];
-foreach ($deleteCourseAction as $deletions){
-    echo $deletions;
 }
-$x  = 3;
-$rowCount = $_POST['rowCount'];
 else{
     $deleteCourseAction = range(0,100,1);
 }
