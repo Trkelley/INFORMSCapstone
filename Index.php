@@ -38,7 +38,7 @@
 <?php
 require('conn.php');
 // Display table
-$sql = "SELECT a.InstitutionId, b.InstitutionName, a.CollegeName, c.ProgramName, c.ProgramId, c.ReferenceId
+$sql = "SELECT a.InstitutionId, b.InstitutionName, a.CollegeName, c.ProgramName, c.ProgramId, c.ReferenceId, c.LastUpdate
         FROM colleges a
              INNER JOIN institutions b 
                    ON a.InstitutionId = b.InstitutionId
@@ -82,7 +82,7 @@ while($row = mysqli_fetch_assoc($result)){
         echo '<td>' .$row['InstitutionName']. '</td>';
         echo '<td>' .$row['CollegeName']. '</td>';
         echo '<td>' .$row['ProgramName']. '</td>';
-        echo '<td>' .date("m/d/Y"). '</td>';
+        echo '<td>' .$row['LastUpdate']. '</td>';
         echo '<td>
                     <a class="btn btn-small btn-primary"
                        data-toggle="modal"

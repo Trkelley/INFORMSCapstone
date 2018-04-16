@@ -22,7 +22,13 @@ $id = $_GET['id'];
  $result = $conn->query($sql);
  $modalData = $conn->query($sql)->fetch_array();
  
- 
+$coursesSQL = "SELECT *
+ FROM programs p
+ JOIN program_courses pc
+ ON p.ProgramId = pc.ProgramId
+ JOIN courses
+ ON pc.CourseId = courses.CourseId WHERE p.programId = $id";
+$coursesResult = $conn->query($coursesSQL);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -128,7 +134,7 @@ $id = $_GET['id'];
 	<div class="form-group">
 		    <label for="co.CollegeType">College Type</label>
 <div class="input-group dropdown">
-          <input type="text" class="form-control countrycode dropdown-toggle" value="<?php echo $modalData['CollegeType'];?>">
+          <input type="text" class="form-control countrycode dropdown-toggle" name="collegeType" value="<?php echo $modalData['CollegeType'];?>">
           <ul class="dropdown-menu">
             <li><a href="#" data-value="Arts and Sciences">Arts and Sciences</a></li>
             <li><a href="#" data-value="Business">Business</a></li>
@@ -327,7 +333,7 @@ $coureTypeList = array();
 
 
 
-while($row = mysqli_fetch_assoc($result))
+while($row = mysqli_fetch_assoc($coursesResult))
 {   
         echo '<tr>';
         echo '<td>';
@@ -629,7 +635,7 @@ function addCourse(){
  
  //College Info
  $collegeName =  $_POST['CollegeName'];
- 
+ $collegeType = $_POST['CollegeType'];
  //Program Info
  $programName = $_POST['ProgramName'];
  $programType = $_POST['ProgramType'];

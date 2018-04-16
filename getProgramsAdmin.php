@@ -3,7 +3,8 @@
 require('conn.php');
 $id = $_GET['id'];
 
- $sql = ("SELECT  *
+ 
+    $sql = ("SELECT  *
     FROM programs p
 	JOIN institutions i
 	ON p.InstitutionId = i.InstitutionId
@@ -16,9 +17,15 @@ $id = $_GET['id'];
     JOIN courses
     ON pc.CourseId = courses.CourseId WHERE p.programId = $id;");
  $result = $conn->query($sql);
- $modalData = $conn->query($sql)->fetch_array();
+ $modalData = $conn->query($sql)->fetch_array(); 
  
- 
+ $coursesSQL = "SELECT *
+ FROM programs p
+ JOIN program_courses pc
+ ON p.ProgramId = pc.ProgramId
+ JOIN courses
+ ON pc.CourseId = courses.CourseId WHERE p.programId = $id";
+ $coursesResult = $conn->query($coursesSQL);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -298,34 +305,77 @@ $id = $_GET['id'];
                 <tbody>
                     <tr>
 <?php
+
+
+
 // Output data of each row
-$rowCount = 2;
-while($row = mysqli_fetch_assoc($result))
-{
-    $rowCount++;
+$rowCount = 0;
+
+$courseIdList = array ();
+$instructorIdList = array();
+$courseNumberList = array();
+$deliveryMethodList = array();
+$hasCapstoneProjectList = array();
+$courseTextList = array();
+$syllabusFileList = array();
+$syllabusFilesizeList = array();
+$businessTagList = array();
+$analyticTagList = array();
+$coureTypeList = array();
+
+
+
+while($row = mysqli_fetch_assoc($coursesResult))
+{   
         echo '<tr>';
         echo '<td>';
-        echo '<input class="form-control" type = "text" value = "'.$row['CourseTitle'].'" name = "courseTitle" id = "courseTitle'.$rowCount.'"/>';
-        echo '<input type="hidden" name="contactId" value="'. $row['CourseId']. '">';
+        echo '<input class="form-control" type = "text" value = "'.$row['CourseTitle'].'" name = "courseTitle[]" id = "courseTitle[]"/>';
+        echo '<input type="hidden" name="courseId" value="'. $row['CourseId']. '">';
+        $courseIdList[$rowCount] = $row['CourseId'];
+        $instructorIdList[$rowCount] = $row['InstructorId'];
+        $courseNumberList[$rowCount] = $row['CourseNumber'];
+        $deliveryMethodList[$rowCount] = $row['DeliveryMethod'];
+        $hasCapstoneProjectList[$rowCount] = $row['HasCapstoneProject'];
+        $courseTextList[$rowCount] = $row['CourseText'];
+        $syllabusFileList[$rowCount] = $row['SyllabusFile'];
+        $syllabusFilesizeList[$rowCount] = $row['SyllabusFilesize'];
+        $businessTagList[$rowCount] = $row['BusinessTag'];
+        $analyticTagList[$rowCount] = $row['AnalyticTag'];
         echo "</td>";
         
         echo '<td>';
-        echo '<select class="form-control" > class="form-control" <option value= "'.$row['RequirementType'].'">'.$row['RequirementType'].'</option>
+        echo '<select class="form-control" name="requirementType[]" id = "requirementType[]" > class="form-control" <option value= "'.$row['RequirementType'].'">'.$row['RequirementType'].'</option>
         <option>Required</option>
         <option>Elective</option>';
         echo "</td>";
         
         echo '<td>';
-        echo '<select class="form-control" > <option value= ""></option>
+        echo '<select class="form-control" name = "courseDiscipline[]" id = "courseDiscipline[]"> <option value= ""></option>
         <option>Information Systems</option>
         <option>Operations Research</option>
         <option>Statistics</option>';
         echo "</td>";
         echo '<td>
-            <input type="checkbox" onclick = "deleteCourse(event)"> 
+            <input type="checkbox" name="deleteCourseBx[]" id="deleteCourseBx[]" onclick = "deleteCourse(event)"> 
              </td>';
+        $rowCount++;
 };
+echo '<input type="hidden" name="rowCount" id="rowCount" value="'. $rowCount. '">';
         $result->close();
+        //Storing the CourseID, InstructorId, CourseNumber, CourseTitle, DeliveryMethod, HasCapstoneProject, CourseText, SyllabusFile, SyllabusFilesize, AnalyticTag, BusinessTag
+        $_SESSION['courseIdList'] = $courseIdList;
+        $_SESSION['instructorIdList'] = $instructorIdList;
+        $_SESSION['courseNumberList'] = $courseNumberList;
+
+        $_SESSION['deliveryMethodList'] = $deliveryMethodList;
+        $_SESSION['hasCapstoneProjectList'] = $hasCapstoneProjectList;
+        $_SESSION['courseTextList'] = $courseTextList;
+        $_SESSION['syllabusFileList'] = $syllabusFileList;
+        $_SESSION['syllabusFilesizeList'] = $syllabusFilesizeList;
+        $_SESSION['businessTagList'] = $businessTagList;
+        $_SESSION['analyticTagList'] = $analyticTagList;
+
+        
 
 ?>
                     </tr>
