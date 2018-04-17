@@ -583,11 +583,11 @@ if (po == ""){
   	inputValpo.style.border="1px solid red";
    return false;
   }
-if (url == ""){
+/* if (url == ""){
 	alert("Please enter a Program URL");
 	inputValurl.style.border="1px solid red";
 	return false;
-}
+} */
 if (ptype == ""){
   	alert("Program Type must be filled out");
   	inputValptype.style.border="1px solid red";
