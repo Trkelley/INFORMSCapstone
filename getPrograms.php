@@ -195,7 +195,7 @@ $coursesResult = $conn->query($coursesSQL);
 		<div class="form-group">
 		   		    <label for="co.ProgramType">Program Type</label>
 		<div class="input-group dropdown">
-          <input type="text" class="form-control countrycode dropdown-toggle" id= "programType" value="<?php echo $modalData['ProgramType'];?>">
+          <input type="text" class="form-control countrycode dropdown-toggle" name="programType" id= "programType" value="<?php echo $modalData['ProgramType'];?>">
           <ul class="dropdown-menu">
             <li><a href="#" data-value="B.B.A">B.B.A</a></li>
             <li><a href="#" data-value="B.S.">B.S.</a></li>
@@ -219,7 +219,7 @@ $coursesResult = $conn->query($coursesSQL);
 		<div class="form-group">
 		 <label for="co.ProgramDelivery">Program Delivery</label>
 		<div class="input-group dropdown">
-          <input type="text" class="form-control countrycode dropdown-toggle" id = "deliveryMethod" value="<?php echo $modalData['DeliveryMethod'];?>">
+          <input type="text" class="form-control countrycode dropdown-toggle" name = "deliveryMethod" id = "deliveryMethod" value="<?php echo $modalData['DeliveryMethod'];?>">
           <ul class="dropdown-menu">
             <li><a href="#" data-value="On Campus: Full-Time">On Campus: Full-Time</a></li>
             <li><a href="#" data-value="On Campus: Part-Time">On Campus: Part-Time</a></li>
