@@ -25,6 +25,7 @@ AUTHENTICATE.PHP will validate the Email address and Password by matching the in
      padding: 20px 400px;
     }
 form {border: 3px solid #f1f1f1;}
+
 input[type=text], input[type=password]{
     width: 100%;
     padding: 12px 20px;
@@ -33,11 +34,13 @@ input[type=text], input[type=password]{
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
+
 button {
 padding: 12px 20px;
 margin: 8px 0;
 width: 72%;
 }
+
 </style>
 </head>
 <body>
@@ -55,8 +58,8 @@ width: 72%;
   		<div class="modal-dialog modal-lg">
 			<div class="model-content modal-lg">
 				<div class="modal-header modal-lg">
-				
-					<!-- Email Input -->
+				    
+				    <!-- Email Input -->
 					<label for="email"><b>Email Address</b></label>
 					<input class="form-control" type="text" placeholder="Enter E-mail Address" id="email" name="email" required>
 					
@@ -65,9 +68,8 @@ width: 72%;
 					<input class="form-control" type="password" placeholder="Enter Password" id="psw" name="psw" required>
 					<p></p>
 					
-					<div class="container">
-					
 					<!-- Submit Button -->
+					<div class="container">
 					<button class="btn btn-small btn-primary" type="submit" onclick="validate()">Login</button>
 					
 					<!-- Forgot Password Button -->
@@ -81,14 +83,14 @@ width: 72%;
   
   <script>
 
-	// This function checks for email characters.
-	function validateEmail(email) {
+  //This function checks for email characters.
+  function validateEmail(email) {
 	  var re = /\S+@\S+\.\S+/;
 	  return re.test(email);
 	  }
-
-  	// This function validates the user's inputs and checks for errors.
-  	// It is called upon the click of the Submit "Login" button.
+  
+//This function validates the user's inputs and checks for errors.
+// It is called upon the click of the Submit "Login" button.
 	function validate(){
 		var em = document.forms["loginForm"]["email"].value; var inputValem = document.getElementById("email"); // Setting Email Input to email variable.
 		var pw = document.forms["loginForm"]["psw"].value; var inputValpw = document.getElementById("psw");	// Setting Password Input to password variable. 
@@ -118,8 +120,8 @@ width: 72%;
 		
 	}
 
-	// CREATE ACCOUNT FUNCTION COULD GO HERE
-		
+  // CREATE ACCOUNT FUNCTION COULD GO HERE
+  
   </script>
   
 </body>
