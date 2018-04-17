@@ -84,7 +84,7 @@ $insertProgram = 'INSERT INTO programs(InstitutionId, ContactId, ProgramName, Pr
         echo $error; 
     } 
    
-/* $x  = 0;
+$x  = 0;
 $rowCount = $_POST['rowCount'];
 for ($i = 0; $i <= $rowCount; $i ++)
 {
@@ -110,7 +110,7 @@ for ($i = 0; $i <= $rowCount; $i ++)
           
          /*A major concern with the line of SQL below, is the lack of unique parameters available to condense our search to one result.
           * Since we are only gathering CourseTitle as the only new field in the course portion of the Modal, this code can break if multiple new courses exist
-          * that share the same CourseTitle. A suggestion would be to gather CourseNumbers to decrease the chance of multiple results
+          * that share the same CourseTitle. A suggestion would be to gather CourseNumbers to decrease the chance of multiple results*/
          $addedCourseId = "SELECT courseId FROM courses WHERE UpdateType = 1 and CourseTitle = $courseTitleList[$x];";
            
          $insertProgram_courses = " INSERT INTO program_courses(ProgramId, CourseId, Concentration, RequirementType, UpdateType, LastUpdate, ReferenceId)
@@ -135,7 +135,7 @@ for ($i = 0; $i <= $rowCount; $i ++)
      }
  } 
 
-header("location:Index.php"); */
+header("location:Index.php");
 ?>
 
 
