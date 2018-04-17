@@ -1,6 +1,7 @@
 <!-- This file creates the Program Administrator home page. When this file runs, it populates the page with all programs in the INFORMS analytic progams database.
 When user authentication is implemented, this page will only display programs for the respective progam adminsitrator.  -->
 
+<!DOCTYPE html>
 <html lang="en">
 <img class="irc_mi" src="https://www.informs.org/var/ezflow_site/storage/images/media/or-ms-today/images/0217/new-informs-logo2/3648939-1-eng-US/New-INFORMS-logo.jpg" onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)" width="350" height="75" alt="Image result for Informs">
 
@@ -21,7 +22,7 @@ When user authentication is implemented, this page will only display programs fo
 <body>
 
 <!--  Log Out Button -->
-<div style = "text-align:right; margin-right: 10%;" ><a class="btn btn-small btn-primary">Log Out</a></div>;
+<div style = "text-align:right; margin-right: 10%;" ><a class="btn btn-small btn-primary">Log Out</a></div>
 
 <!-- Creates the Edit Program Information Modal -->
 <div class="modal fade bs-modal-lg custom-modal" id="programModal" tabindex="-1" role="dialog" aria-labelledby="programModalLabel" aria-hidden="true">
@@ -32,6 +33,7 @@ When user authentication is implemented, this page will only display programs fo
                 <h4 class="modal-title" id="programModalLabel">Edit Program Information</h4>
             </div>
             <div class="dash">
+             <!-- Content goes in here -->
             </div>
         </div>
     </div>
@@ -40,15 +42,16 @@ When user authentication is implemented, this page will only display programs fo
 
 //Pull in progam information from database to populate table
 require('conn.php');
-$sql = "SELECT a.InstitutionId, b.InstitutionName, a.CollegeName, c.ProgramName, c.ProgramId, c.ReferenceId
+// Display table
+$sql = "SELECT a.InstitutionId, b.InstitutionName, a.CollegeName, c.ProgramName, c.ProgramId, c.ReferenceId, c.LastUpdate
         FROM colleges a
              INNER JOIN institutions b 
                    ON a.InstitutionId = b.InstitutionId
              INNER JOIN programs c 
                    ON a.InstitutionId = c.InstitutionId WHERE c.ReferenceId IS NULL";
 $result = $conn->query($sql);
+
 ?>
-<!-- Table -->
 <!-- Header -->
 <div class="container">
 	<div class="row">
@@ -76,17 +79,17 @@ $result = $conn->query($sql);
                 <tbody>
                     <tr>
 <?php
-
 //Populate columns
 require('conn.php');
 // Output data of each row
+
 while($row = mysqli_fetch_assoc($result)){
         echo '<tr>';
         echo '<td></td>';
         echo '<td>' .$row['InstitutionName']. '</td>';
         echo '<td>' .$row['CollegeName']. '</td>';
         echo '<td>' .$row['ProgramName']. '</td>';
-        echo '<td>' .date("m/d/Y"). '</td>';
+        echo '<td>' .$row['LastUpdate']. '</td>';
         echo '<td>
                     <a class="btn btn-small btn-primary"
                        data-toggle="modal"
