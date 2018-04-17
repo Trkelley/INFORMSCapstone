@@ -352,9 +352,8 @@ $coureTypeList = array();
 
 
 
-// assign variables to to course related fields
-while($row = mysqli_fetch_assoc($result))
-{
+while($row = mysqli_fetch_assoc($coursesResult))
+{   
         echo '<tr>';
         echo '<td>';
         echo '<input class="form-control" type = "text" value = "'.$row['CourseTitle'].'" name = "courseTitle[]" id = "courseTitle[]"/>';
