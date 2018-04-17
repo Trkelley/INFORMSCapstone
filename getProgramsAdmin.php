@@ -2,12 +2,15 @@
  and lets an INFORMS adminstrator confirm or deny the program's information changes. All fields are disabled and are just there for reviewal  -->
 
 
+
+<!-- GET PROGRAMS -->
 <?php
 //Retrieves Progam Information from database
 require('conn.php');
 $id = $_GET['id'];
 
- $sql = ("SELECT  *
+ 
+    $sql = ("SELECT  *
     FROM programs p
 	JOIN institutions i
 	ON p.InstitutionId = i.InstitutionId
@@ -20,9 +23,15 @@ $id = $_GET['id'];
     JOIN courses
     ON pc.CourseId = courses.CourseId WHERE p.programId = $id;");
  $result = $conn->query($sql);
- $modalData = $conn->query($sql)->fetch_array();
+ $modalData = $conn->query($sql)->fetch_array(); 
  
- 
+ $coursesSQL = "SELECT *
+ FROM programs p
+ JOIN program_courses pc
+ ON p.ProgramId = pc.ProgramId
+ JOIN courses
+ ON pc.CourseId = courses.CourseId WHERE p.programId = $id";
+ $coursesResult = $conn->query($coursesSQL);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +77,12 @@ $id = $_GET['id'];
 	<input type="hidden" name="programAccess" value="<?php echo $modalData['ProgramAccess']; ?>">
 	<input type="hidden" name="testingRequirement" value="<?php echo $modalData['TestingRequirement']; ?>">
 	
+	
+	
+	
+	
 	<!-- Institutions -->
+	
 	<input type="hidden" name="institutionName" value="<?php echo $modalData['InstitutionName']; ?>">
 	<input type="hidden" name="institutionId" value="<?php echo $modalData['InstitutionId']; ?>">
 	<input type="hidden" name="institutionZip" value="<?php echo $modalData['InstitutionZip']; ?>">
@@ -107,7 +121,7 @@ $id = $_GET['id'];
   </div>
 </div>
 
-<!-- Progam General Information tab -->
+<!-- Progam General Information Tab-->
 <p>
 <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#ProgramGeneralInfoCollapse" aria-expanded="false" aria-controls="ProgramGeneralInfoCollapse">
     Program General Information
@@ -125,9 +139,9 @@ $id = $_GET['id'];
 		</div>
 	<div class="form-group">
 		    <label for="co.CollegeType">College Type</label>
-		    <select disabled class="form-control" id="collegeType" name="collegeType">
+			<select disabled class="form-control" id="collegeType" name="collegeType">
 		    	<option value="<?php echo $modalData['CollegeType'];?>"><?php echo $modalData['CollegeType'];?></option>
-		    	
+
 		    </select> 
 		</div>
 	
@@ -153,7 +167,7 @@ $id = $_GET['id'];
   </div>
 </div>
 
-<!-- Program Details tab -->
+<!-- Program Details Tab-->
 <p>
 <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#ProgramDetailsCollapse" aria-expanded="false" aria-controls="ProgramDetailsCollapse">
     Program Details
@@ -180,7 +194,6 @@ $id = $_GET['id'];
 		<label for="p.DeliveryMethod">Program Delivery</label>
 		<select disabled class="form-control" id="deliveryMethod" name="deliveryMethod">
     		<option value="<?php echo $modalData['DeliveryMethod'];?>"><?php echo $modalData['DeliveryMethod'];?></option>
-    		
 		</select>
 		</div>
 		<div class="form-group">
@@ -194,7 +207,7 @@ $id = $_GET['id'];
 		    <label for="p.PartTimeDuration">Part-Time Duration</label>
 		    <select disabled class="form-control" id="partTimeDuration" name="partTimeDuration">
 			<option value="<?php echo $modalData['PartTimeDuration'];?>"><?php echo $modalData['PartTimeDuration'];?></option>
-		    	
+
 		    </select>
 		</div>
 		<div class="form-group">
@@ -228,6 +241,9 @@ $id = $_GET['id'];
                 <tbody>
                     <tr>
 <?php
+
+
+
 // Output data of each row
 $rowCount = 2;
 while($row = mysqli_fetch_assoc($result))
@@ -237,6 +253,16 @@ while($row = mysqli_fetch_assoc($result))
         echo '<td>';
         echo '<input class="form-control" type = "text" value = "'.$row['CourseTitle'].'" name = "courseTitle" id = "courseTitle'.$rowCount.'"readonly />';
         echo '<input type="hidden" name="contactId" value="'. $row['CourseId']. '">';
+        $courseIdList[$rowCount] = $row['CourseId'];
+        $instructorIdList[$rowCount] = $row['InstructorId'];
+        $courseNumberList[$rowCount] = $row['CourseNumber'];
+        $deliveryMethodList[$rowCount] = $row['DeliveryMethod'];
+        $hasCapstoneProjectList[$rowCount] = $row['HasCapstoneProject'];
+        $courseTextList[$rowCount] = $row['CourseText'];
+        $syllabusFileList[$rowCount] = $row['SyllabusFile'];
+        $syllabusFilesizeList[$rowCount] = $row['SyllabusFilesize'];
+        $businessTagList[$rowCount] = $row['BusinessTag'];
+        $analyticTagList[$rowCount] = $row['AnalyticTag'];
         echo "</td>";
         
         echo '<td>';
@@ -251,19 +277,37 @@ while($row = mysqli_fetch_assoc($result))
         <option>Operations Research</option>
         <option>Statistics</option>';
         echo "</td>";
-        
+        $rowCount++;
 };
+echo '<input type="hidden" name="rowCount" id="rowCount" value="'. $rowCount. '">';
         $result->close();
+        //Storing the CourseID, InstructorId, CourseNumber, CourseTitle, DeliveryMethod, HasCapstoneProject, CourseText, SyllabusFile, SyllabusFilesize, AnalyticTag, BusinessTag
+        $_SESSION['courseIdList'] = $courseIdList;
+        $_SESSION['instructorIdList'] = $instructorIdList;
+        $_SESSION['courseNumberList'] = $courseNumberList;
+
+        $_SESSION['deliveryMethodList'] = $deliveryMethodList;
+        $_SESSION['hasCapstoneProjectList'] = $hasCapstoneProjectList;
+        $_SESSION['courseTextList'] = $courseTextList;
+        $_SESSION['syllabusFileList'] = $syllabusFileList;
+        $_SESSION['syllabusFilesizeList'] = $syllabusFilesizeList;
+        $_SESSION['businessTagList'] = $businessTagList;
+        $_SESSION['analyticTagList'] = $analyticTagList;
+
+        
 
 ?>
                     </tr>
                 </tbody>
             </table>
-            <br>                                    
+            <br>                         
+    <div style = "text-align:right; margin-right: 10%;" >
+            <a type = "button" onclick = "addCourse()">Add Course</a>
+            </div>           
     </div> 
         </div>
     </div>
-    <!-- Review Tab -->
+     <!-- Review Tab -->
     	<p>
   			<button class = "btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#SubmissionButton" aria-expanded="false" aria-controls="SubmissionButton">
 			Click Here After Reviewing All Data</button>
