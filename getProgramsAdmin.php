@@ -245,10 +245,24 @@ $id = $_GET['id'];
 
 
 // Output data of each row
-$rowCount = 2;
-while($row = mysqli_fetch_assoc($result))
-{
-    $rowCount++;
+$rowCount = 0;
+
+$courseIdList = array ();
+$instructorIdList = array();
+$courseNumberList = array();
+$deliveryMethodList = array();
+$hasCapstoneProjectList = array();
+$courseTextList = array();
+$syllabusFileList = array();
+$syllabusFilesizeList = array();
+$businessTagList = array();
+$analyticTagList = array();
+$coureTypeList = array();
+
+
+
+while($row = mysqli_fetch_assoc($coursesResult))
+{   
         echo '<tr>';
         echo '<td>';
         echo '<input class="form-control" type = "text" value = "'.$row['CourseTitle'].'" name = "courseTitle" id = "courseTitle'.$rowCount.'"readonly />';
